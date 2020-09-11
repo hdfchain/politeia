@@ -5,8 +5,8 @@
 package main
 
 import (
-	cms "github.com/decred/politeia/politeiawww/api/cms/v1"
-	"github.com/decred/politeia/politeiawww/cmd/shared"
+	cms "github.com/hdfchain/politeia/politeiawww/api/cms/v1"
+	"github.com/hdfchain/politeia/politeiawww/cmd/shared"
 )
 
 // UserDetailsCmd requests a user's information.

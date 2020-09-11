@@ -10,10 +10,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/decred/politeia/decredplugin"
-	pd "github.com/decred/politeia/politeiad/api/v1"
-	"github.com/decred/politeia/politeiad/cache"
-	"github.com/decred/politeia/util"
+	"github.com/hdfchain/politeia/decredplugin"
+	pd "github.com/hdfchain/politeia/politeiad/api/v1"
+	"github.com/hdfchain/politeia/politeiad/cache"
+	"github.com/hdfchain/politeia/util"
 )
 
 // decredGetComment sends the decred plugin getcomment command to the cache and

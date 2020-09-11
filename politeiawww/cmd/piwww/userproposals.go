@@ -7,8 +7,8 @@ package main
 import (
 	"fmt"
 
-	v1 "github.com/decred/politeia/politeiawww/api/www/v1"
-	"github.com/decred/politeia/politeiawww/cmd/shared"
+	v1 "github.com/hdfchain/politeia/politeiawww/api/www/v1"
+	"github.com/hdfchain/politeia/politeiawww/cmd/shared"
 )
 
 // UserProposalsCmd gets the proposals for the specified user.

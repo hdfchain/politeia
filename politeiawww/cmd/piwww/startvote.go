@@ -9,10 +9,10 @@ import (
 	"encoding/json"
 	"strconv"
 
-	"github.com/decred/politeia/decredplugin"
-	v2 "github.com/decred/politeia/politeiawww/api/www/v2"
-	"github.com/decred/politeia/politeiawww/cmd/shared"
-	"github.com/decred/politeia/util"
+	"github.com/hdfchain/politeia/decredplugin"
+	v2 "github.com/hdfchain/politeia/politeiawww/api/www/v2"
+	"github.com/hdfchain/politeia/politeiawww/cmd/shared"
+	"github.com/hdfchain/politeia/util"
 )
 
 // StartVoteCmd starts the voting period on the specified proposal.

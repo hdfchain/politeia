@@ -21,10 +21,10 @@ import (
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/decred/dcrd/chaincfg"
-	pd "github.com/decred/politeia/politeiad/api/v1"
-	"github.com/decred/politeia/politeiad/api/v1/mime"
-	"github.com/decred/politeia/politeiad/backend"
-	"github.com/decred/politeia/util"
+	pd "github.com/hdfchain/politeia/politeiad/api/v1"
+	"github.com/hdfchain/politeia/politeiad/api/v1/mime"
+	"github.com/hdfchain/politeia/politeiad/backend"
+	"github.com/hdfchain/politeia/util"
 	"github.com/decred/slog"
 )
 

@@ -9,8 +9,8 @@ import (
 	"image/png"
 	"time"
 
-	www "github.com/decred/politeia/politeiawww/api/www/v1"
-	"github.com/decred/politeia/politeiawww/user"
+	www "github.com/hdfchain/politeia/politeiawww/api/www/v1"
+	"github.com/hdfchain/politeia/politeiawww/user"
 	"github.com/pquerna/otp/totp"
 )
 

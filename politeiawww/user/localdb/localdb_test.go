@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/decred/politeia/politeiawww/user"
+	"github.com/hdfchain/politeia/politeiawww/user"
 	"github.com/google/uuid"
 	"github.com/gorilla/securecookie"
 )

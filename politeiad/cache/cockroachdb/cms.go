@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/decred/politeia/cmsplugin"
-	"github.com/decred/politeia/politeiad/cache"
+	"github.com/hdfchain/politeia/cmsplugin"
+	"github.com/hdfchain/politeia/politeiad/cache"
 	"github.com/jinzhu/gorm"
 )
 

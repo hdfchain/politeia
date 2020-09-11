@@ -14,10 +14,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/decred/politeia/decredplugin"
-	"github.com/decred/politeia/mdstream"
-	pd "github.com/decred/politeia/politeiad/api/v1"
-	"github.com/decred/politeia/politeiad/cache"
+	"github.com/hdfchain/politeia/decredplugin"
+	"github.com/hdfchain/politeia/mdstream"
+	pd "github.com/hdfchain/politeia/politeiad/api/v1"
+	"github.com/hdfchain/politeia/politeiad/cache"
 	"github.com/jinzhu/gorm"
 )
 

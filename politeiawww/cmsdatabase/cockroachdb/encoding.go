@@ -8,9 +8,9 @@ import (
 	"strconv"
 	"time"
 
-	cms "github.com/decred/politeia/politeiawww/api/cms/v1"
-	www "github.com/decred/politeia/politeiawww/api/www/v1"
-	database "github.com/decred/politeia/politeiawww/cmsdatabase"
+	cms "github.com/hdfchain/politeia/politeiawww/api/cms/v1"
+	www "github.com/hdfchain/politeia/politeiawww/api/www/v1"
+	database "github.com/hdfchain/politeia/politeiawww/cmsdatabase"
 )
 
 // EncodeInvoice encodes a generic database.Invoice instance into a cockroachdb

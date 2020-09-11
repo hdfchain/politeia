@@ -4,7 +4,7 @@
 
 package main
 
-import "github.com/decred/politeia/politeiawww/cmd/shared"
+import "github.com/hdfchain/politeia/politeiawww/cmd/shared"
 
 // ActiveVotesCmd retreives all dccs that are currently being voted on.
 type ActiveVotesCmd struct{}

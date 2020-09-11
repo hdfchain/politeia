@@ -22,9 +22,9 @@ import (
 	"strings"
 
 	v1 "github.com/decred/dcrtime/api/v1"
-	"github.com/decred/politeia/politeiad/sharedconfig"
-	"github.com/decred/politeia/util"
-	"github.com/decred/politeia/util/version"
+	"github.com/hdfchain/politeia/politeiad/sharedconfig"
+	"github.com/hdfchain/politeia/util"
+	"github.com/hdfchain/politeia/util/version"
 	flags "github.com/jessevdk/go-flags"
 )
 

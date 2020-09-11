@@ -9,11 +9,11 @@ import (
 	"os"
 	"path/filepath"
 
-	cachedb "github.com/decred/politeia/politeiad/cache/cockroachdb"
-	cmsdb "github.com/decred/politeia/politeiawww/cmsdatabase/cockroachdb"
-	"github.com/decred/politeia/politeiawww/user/cockroachdb"
-	"github.com/decred/politeia/politeiawww/user/localdb"
-	"github.com/decred/politeia/wsdcrdata"
+	cachedb "github.com/hdfchain/politeia/politeiad/cache/cockroachdb"
+	cmsdb "github.com/hdfchain/politeia/politeiawww/cmsdatabase/cockroachdb"
+	"github.com/hdfchain/politeia/politeiawww/user/cockroachdb"
+	"github.com/hdfchain/politeia/politeiawww/user/localdb"
+	"github.com/hdfchain/politeia/wsdcrdata"
 	"github.com/decred/slog"
 	"github.com/jrick/logrotate/rotator"
 )

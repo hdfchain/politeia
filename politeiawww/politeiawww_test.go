@@ -9,8 +9,8 @@ import (
 	"testing"
 
 	"github.com/davecgh/go-spew/spew"
-	www "github.com/decred/politeia/politeiawww/api/www/v1"
-	"github.com/decred/politeia/util/version"
+	www "github.com/hdfchain/politeia/politeiawww/api/www/v1"
+	"github.com/hdfchain/politeia/util/version"
 	"github.com/go-test/deep"
 	"github.com/gorilla/mux"
 )

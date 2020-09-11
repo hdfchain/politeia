@@ -18,10 +18,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/decred/politeia/cmsplugin"
-	"github.com/decred/politeia/politeiad/api/v1/identity"
-	"github.com/decred/politeia/politeiad/backend"
-	"github.com/decred/politeia/util"
+	"github.com/hdfchain/politeia/cmsplugin"
+	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
+	"github.com/hdfchain/politeia/politeiad/backend"
+	"github.com/hdfchain/politeia/util"
 )
 
 const (

@@ -18,16 +18,16 @@ import (
 	"strings"
 	"time"
 
-	"github.com/decred/politeia/decredplugin"
-	"github.com/decred/politeia/mdstream"
-	pd "github.com/decred/politeia/politeiad/api/v1"
-	"github.com/decred/politeia/politeiad/api/v1/identity"
-	"github.com/decred/politeia/politeiad/cache"
-	www "github.com/decred/politeia/politeiawww/api/www/v1"
-	www2 "github.com/decred/politeia/politeiawww/api/www/v2"
-	"github.com/decred/politeia/politeiawww/user"
-	wwwutil "github.com/decred/politeia/politeiawww/util"
-	"github.com/decred/politeia/util"
+	"github.com/hdfchain/politeia/decredplugin"
+	"github.com/hdfchain/politeia/mdstream"
+	pd "github.com/hdfchain/politeia/politeiad/api/v1"
+	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
+	"github.com/hdfchain/politeia/politeiad/cache"
+	www "github.com/hdfchain/politeia/politeiawww/api/www/v1"
+	www2 "github.com/hdfchain/politeia/politeiawww/api/www/v2"
+	"github.com/hdfchain/politeia/politeiawww/user"
+	wwwutil "github.com/hdfchain/politeia/politeiawww/util"
+	"github.com/hdfchain/politeia/util"
 )
 
 const (

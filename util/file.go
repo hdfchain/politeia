@@ -16,7 +16,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/decred/politeia/politeiad/api/v1/mime"
+	"github.com/hdfchain/politeia/politeiad/api/v1/mime"
 )
 
 // MimeFile returns the MIME type of a file.

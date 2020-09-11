@@ -5,8 +5,8 @@
 package main
 
 import (
-	"github.com/decred/politeia/politeiawww/api/www/v1"
-	"github.com/decred/politeia/politeiawww/cmd/shared"
+	"github.com/hdfchain/politeia/politeiawww/api/www/v1"
+	"github.com/hdfchain/politeia/politeiawww/cmd/shared"
 )
 
 // ResendVerificationCmd re-sends the user verification email for an unverified

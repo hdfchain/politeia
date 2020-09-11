@@ -7,7 +7,7 @@ package shared
 import (
 	"fmt"
 
-	v1 "github.com/decred/politeia/politeiawww/api/www/v1"
+	v1 "github.com/hdfchain/politeia/politeiawww/api/www/v1"
 )
 
 // VerifyTOTPCmd sets the TOTP key for the logged in user.

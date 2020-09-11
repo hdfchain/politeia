@@ -18,15 +18,15 @@ import (
 	"time"
 
 	"github.com/decred/dcrd/dcrutil"
-	"github.com/decred/politeia/mdstream"
-	pd "github.com/decred/politeia/politeiad/api/v1"
-	"github.com/decred/politeia/politeiad/api/v1/identity"
-	cms "github.com/decred/politeia/politeiawww/api/cms/v1"
-	www "github.com/decred/politeia/politeiawww/api/www/v1"
-	database "github.com/decred/politeia/politeiawww/cmsdatabase"
-	"github.com/decred/politeia/politeiawww/user"
-	wwwutil "github.com/decred/politeia/politeiawww/util"
-	"github.com/decred/politeia/util"
+	"github.com/hdfchain/politeia/mdstream"
+	pd "github.com/hdfchain/politeia/politeiad/api/v1"
+	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
+	cms "github.com/hdfchain/politeia/politeiawww/api/cms/v1"
+	www "github.com/hdfchain/politeia/politeiawww/api/www/v1"
+	database "github.com/hdfchain/politeia/politeiawww/cmsdatabase"
+	"github.com/hdfchain/politeia/politeiawww/user"
+	wwwutil "github.com/hdfchain/politeia/politeiawww/util"
+	"github.com/hdfchain/politeia/util"
 )
 
 const (

@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/decred/politeia/politeiawww/api/www/v1"
-	"github.com/decred/politeia/politeiawww/cmd/shared"
+	"github.com/hdfchain/politeia/politeiawww/api/www/v1"
+	"github.com/hdfchain/politeia/politeiawww/cmd/shared"
 )
 
 // EditUserCmd edits the preferences of the logged in user.

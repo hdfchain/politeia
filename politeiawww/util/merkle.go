@@ -6,8 +6,8 @@ import (
 	"encoding/hex"
 
 	"github.com/decred/dcrtime/merkle"
-	v1 "github.com/decred/politeia/politeiawww/api/www/v1"
-	"github.com/decred/politeia/util"
+	v1 "github.com/hdfchain/politeia/politeiawww/api/www/v1"
+	"github.com/hdfchain/politeia/util"
 )
 
 // MerkleRoot converts the passed in list of files and metadata into SHA256

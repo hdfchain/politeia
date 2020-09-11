@@ -7,8 +7,8 @@ package main
 import (
 	"fmt"
 
-	www "github.com/decred/politeia/politeiawww/api/www/v1"
-	"github.com/decred/politeia/politeiawww/cmd/shared"
+	www "github.com/hdfchain/politeia/politeiawww/api/www/v1"
+	"github.com/hdfchain/politeia/politeiawww/cmd/shared"
 )
 
 // ProposalDetailsCmd retrieves the details of a proposal.

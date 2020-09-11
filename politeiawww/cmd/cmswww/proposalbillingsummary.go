@@ -5,8 +5,8 @@
 package main
 
 import (
-	v1 "github.com/decred/politeia/politeiawww/api/cms/v1"
-	"github.com/decred/politeia/politeiawww/cmd/shared"
+	v1 "github.com/hdfchain/politeia/politeiawww/api/cms/v1"
+	"github.com/hdfchain/politeia/politeiawww/cmd/shared"
 )
 
 // ProposalBillingCmd gets the invoices for the specified user.

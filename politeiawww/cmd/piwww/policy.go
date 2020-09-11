@@ -4,7 +4,7 @@
 
 package main
 
-import "github.com/decred/politeia/politeiawww/cmd/shared"
+import "github.com/hdfchain/politeia/politeiawww/cmd/shared"
 
 // PolicyCmd gets the server policy information.
 type PolicyCmd struct{}

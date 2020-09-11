@@ -14,10 +14,10 @@ import (
 	"os"
 
 	"github.com/agl/ed25519"
-	"github.com/decred/politeia/politeiad/api/v1/identity"
-	v1 "github.com/decred/politeia/politeiawww/api/www/v1"
-	wwwutil "github.com/decred/politeia/politeiawww/util"
-	"github.com/decred/politeia/util"
+	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
+	v1 "github.com/hdfchain/politeia/politeiawww/api/www/v1"
+	wwwutil "github.com/hdfchain/politeia/politeiawww/util"
+	"github.com/hdfchain/politeia/util"
 	"golang.org/x/crypto/sha3"
 )
 

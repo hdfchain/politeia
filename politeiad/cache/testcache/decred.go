@@ -10,10 +10,10 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/decred/politeia/decredplugin"
-	decred "github.com/decred/politeia/decredplugin"
-	"github.com/decred/politeia/mdstream"
-	www "github.com/decred/politeia/politeiawww/api/www/v1"
+	"github.com/hdfchain/politeia/decredplugin"
+	decred "github.com/hdfchain/politeia/decredplugin"
+	"github.com/hdfchain/politeia/mdstream"
+	www "github.com/hdfchain/politeia/politeiawww/api/www/v1"
 )
 
 func (c *testcache) getComments(payload string) (string, error) {

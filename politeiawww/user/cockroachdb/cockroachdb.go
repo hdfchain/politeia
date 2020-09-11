@@ -13,8 +13,8 @@ import (
 	"net/url"
 	"sync"
 
-	"github.com/decred/politeia/politeiawww/user"
-	"github.com/decred/politeia/util"
+	"github.com/hdfchain/politeia/politeiawww/user"
+	"github.com/hdfchain/politeia/util"
 	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
 	"github.com/marcopeereboom/sbox"

@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"regexp"
 
-	v1 "github.com/decred/politeia/politeiad/api/v1"
+	v1 "github.com/hdfchain/politeia/politeiad/api/v1"
 )
 
 var (

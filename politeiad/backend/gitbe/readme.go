@@ -14,7 +14,7 @@ This is the repository for the Decred Politeia service.
 
 ## Source Code 
 
-https://github.com/decred/politeia
+https://github.com/hdfchain/politeia
 
 ## Contact
 

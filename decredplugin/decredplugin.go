@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/decred/politeia/politeiad/api/v1/identity"
-	"github.com/decred/politeia/util"
+	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
+	"github.com/hdfchain/politeia/util"
 )
 
 type ErrorStatusT int

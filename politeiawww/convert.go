@@ -12,15 +12,15 @@ import (
 	"strings"
 
 	"github.com/decred/dcrd/dcrutil"
-	"github.com/decred/politeia/cmsplugin"
-	"github.com/decred/politeia/decredplugin"
-	"github.com/decred/politeia/mdstream"
-	pd "github.com/decred/politeia/politeiad/api/v1"
-	"github.com/decred/politeia/politeiad/cache"
-	cms "github.com/decred/politeia/politeiawww/api/cms/v1"
-	www "github.com/decred/politeia/politeiawww/api/www/v1"
-	www2 "github.com/decred/politeia/politeiawww/api/www/v2"
-	"github.com/decred/politeia/politeiawww/cmsdatabase"
+	"github.com/hdfchain/politeia/cmsplugin"
+	"github.com/hdfchain/politeia/decredplugin"
+	"github.com/hdfchain/politeia/mdstream"
+	pd "github.com/hdfchain/politeia/politeiad/api/v1"
+	"github.com/hdfchain/politeia/politeiad/cache"
+	cms "github.com/hdfchain/politeia/politeiawww/api/cms/v1"
+	www "github.com/hdfchain/politeia/politeiawww/api/www/v1"
+	www2 "github.com/hdfchain/politeia/politeiawww/api/www/v2"
+	"github.com/hdfchain/politeia/politeiawww/cmsdatabase"
 )
 
 func convertCastVoteReplyFromDecredPlugin(cvr decredplugin.CastVoteReply) www.CastVoteReply {

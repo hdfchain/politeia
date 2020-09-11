@@ -5,7 +5,7 @@
 package util_test
 
 import (
-	"github.com/decred/politeia/util"
+	"github.com/hdfchain/politeia/util"
 	"testing"
 )
 

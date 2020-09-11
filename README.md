@@ -1,5 +1,5 @@
 # Politeia
-[![Build Status](https://github.com/decred/politeia/workflows/Build%20and%20Test/badge.svg)](https://github.com/decred/politeia/actions)
+[![Build Status](https://github.com/hdfchain/politeia/workflows/Build%20and%20Test/badge.svg)](https://github.com/hdfchain/politeia/actions)
 [![ISC License](https://img.shields.io/badge/license-ISC-blue.svg)](http://copyfree.org)
 
 **Politeia is the Decred proposal system.**
@@ -34,11 +34,11 @@ The politeia stack is as follows:
 
 ### v1
 
-* [politeiawww API Specification v1](https://github.com/decred/politeia/blob/master/politeiawww/api/www/v1/api.md) - This document describes the REST API provided by a politeiawww server. The politeiawww server is the web server backend and it interacts with a JSON REST API. This document also describes websockets for server side notifications. It does not render HTML.
+* [politeiawww API Specification v1](https://github.com/hdfchain/politeia/blob/master/politeiawww/api/www/v1/api.md) - This document describes the REST API provided by a politeiawww server. The politeiawww server is the web server backend and it interacts with a JSON REST API. This document also describes websockets for server side notifications. It does not render HTML.
 
 ### v2
 
-* [politeiawww API Specification v2](https://github.com/decred/politeia/blob/master/politeiawww/api/www/v2/api.md) - This document describes the v2 REST API provided by a politeiawww server. The politeiawww server is the web server backend that interacts with clients using a JSON REST API.
+* [politeiawww API Specification v2](https://github.com/hdfchain/politeia/blob/master/politeiawww/api/www/v2/api.md) - This document describes the v2 REST API provided by a politeiawww server. The politeiawww server is the web server backend that interacts with clients using a JSON REST API.
 
 ## Components
 
@@ -49,15 +49,15 @@ The politeia stack is as follows:
 
 ### Tools and reference clients
 
-* [politeia](https://github.com/decred/politeia/tree/master/politeiad/cmd/politeia) - Reference client application for politeiad.
-* [politeia_verify](https://github.com/decred/politeia/tree/master/politeiad/cmd/politeia_verify) - Reference verification tool.
-* [politeiawwwcli](https://github.com/decred/politeia/tree/master/politeiawww/cmd/politeiawwwcli) - Command-line tool for interacting with politeiawww.
-* [politeiawww_dbutil](https://github.com/decred/politeia/tree/master/politeiawww/cmd/politeiawww_dbutil) - Tool for debugging and creating admin users within the politeiawww database.
-* [politeiawww_dataload](https://github.com/decred/politeia/tree/master/politeiawww/cmd/politeiawww_dataload) - Tool using politeiawwwcli to load a basic dataset into politeiawww.
+* [politeia](https://github.com/hdfchain/politeia/tree/master/politeiad/cmd/politeia) - Reference client application for politeiad.
+* [politeia_verify](https://github.com/hdfchain/politeia/tree/master/politeiad/cmd/politeia_verify) - Reference verification tool.
+* [politeiawwwcli](https://github.com/hdfchain/politeia/tree/master/politeiawww/cmd/politeiawwwcli) - Command-line tool for interacting with politeiawww.
+* [politeiawww_dbutil](https://github.com/hdfchain/politeia/tree/master/politeiawww/cmd/politeiawww_dbutil) - Tool for debugging and creating admin users within the politeiawww database.
+* [politeiawww_dataload](https://github.com/hdfchain/politeia/tree/master/politeiawww/cmd/politeiawww_dataload) - Tool using politeiawwwcli to load a basic dataset into politeiawww.
 
 **Note:** politeiawww does not provide HTML output.  It strictly handles the
 JSON REST RPC commands only.  The GUI for politeiawww can be found at:
-https://github.com/decred/politeiagui
+https://github.com/hdfchain/politeiagui
 
 ## Development
 
@@ -94,8 +94,8 @@ under the following paths:
    ~/.politeiawww/politeiawww.conf
    ```
 
-Copy and change the [`sample-politeiawww.conf`](https://github.com/decred/politeia/blob/master/politeiawww/sample-politeiawww.conf)
-and [`sample-politeiad.conf`](https://github.com/decred/politeia/blob/master/politeiad/sample-politeiad.conf) files.
+Copy and change the [`sample-politeiawww.conf`](https://github.com/hdfchain/politeia/blob/master/politeiawww/sample-politeiawww.conf)
+and [`sample-politeiad.conf`](https://github.com/hdfchain/politeia/blob/master/politeiad/sample-politeiad.conf) files.
 
 You can also use the following default configurations:
 
@@ -169,7 +169,7 @@ Documentation](https://www.cockroachlabs.com/docs/stable/install-cockroachdb-mac
 Run the following commands to create the CockroachDB certificates required for
 running CockroachDB with Politeia.
 
-    cd $GOPATH/src/github.com/decred/politeia
+    cd $GOPATH/src/github.com/hdfchain/politeia
     ./scripts/cockroachcerts.sh
 
 The script creates following certificates and directories.
@@ -219,7 +219,7 @@ script that is run next requires that a CockroachDB is running.
 Once CockroachDB is running, you can setup the cache databases using the
 commands below.
 
-    cd $GOPATH/src/github.com/decred/politeia
+    cd $GOPATH/src/github.com/hdfchain/politeia
     ./scripts/cachesetup.sh
 
 The database setup is now complete.  If you want to run database commands
@@ -236,7 +236,7 @@ has been setup using the instructions above, you can setup the CMS database
 using the script below.  CockroachDB must be running when you execute this
 script.
 
-    cd $GOPATH/src/github.com/decred/politeia
+    cd $GOPATH/src/github.com/hdfchain/politeia
     ./scripts/cmssetup.sh
     
 
@@ -250,7 +250,7 @@ Usage is simple and nothing is required except Go 1.11. If building in a folder
 under `GOPATH`, it is necessary to explicitly build with modules enabled:
 
 ```
-cd $GOPATH/src/github.com/decred/politeia
+cd $GOPATH/src/github.com/hdfchain/politeia
 export GO111MODULE=on
 go install -v ./...
 ```
@@ -295,10 +295,10 @@ The result should look something like this:
 
 At this point, you can:
 
-* Follow the instructions at [decred/politeiagui](https://github.com/decred/politeiagui)
+* Follow the instructions at [decred/politeiagui](https://github.com/hdfchain/politeiagui)
 to setup Politeia and access it through the UI.
-* Use the [politeiawwwcli](https://github.com/decred/politeia/tree/master/politeiawww/cmd/politeiawwwcli) tool to interact with politeiawww.
-* Use the [politeia](https://github.com/decred/politeia/tree/master/politeiad/cmd/politeia) tool to interact directly with politeiad.
+* Use the [politeiawwwcli](https://github.com/hdfchain/politeia/tree/master/politeiawww/cmd/politeiawwwcli) tool to interact with politeiawww.
+* Use the [politeia](https://github.com/hdfchain/politeia/tree/master/politeiad/cmd/politeia) tool to interact directly with politeiad.
 * Use any other tools or clients that are listed above.
 
 
@@ -320,7 +320,7 @@ you've followed the instructions above and have a CockroachDB instance running.
 
 Create a CockroachDB user database and assign user privileges:
 
-    cd $GOPATH/src/github.com/decred/politeia
+    cd $GOPATH/src/github.com/hdfchain/politeia
     ./scripts/userdbsetup.sh
 
 Create an encryption key to be used to encrypt data at rest:
@@ -345,7 +345,7 @@ params set will kick off a key rotation.
 
 If you need to migrate a LevelDB user database to CockroachDB, instructions are
 provided in the README of
-[politeiawww_dbutil](https://github.com/decred/politeia/tree/master/politeiawww/cmd/politeiawww_dbutil).
+[politeiawww_dbutil](https://github.com/hdfchain/politeia/tree/master/politeiawww/cmd/politeiawww_dbutil).
 
 #### Paywall
 
@@ -355,7 +355,7 @@ transaction with 2 confirmations to accept the payment.
 
 Setting up the paywall requires a master public key for an account to
 derive payment addresses.  You may either use one of the pre-generated test
-keys (see [`sample-politeiawww.conf`](https://github.com/decred/politeia/blob/master/politeiawww/sample-politeiawww.conf))
+keys (see [`sample-politeiawww.conf`](https://github.com/hdfchain/politeia/blob/master/politeiawww/sample-politeiawww.conf))
 or you may acquire one by creating accounts and retrieving the public keys
 for those accounts:
 
@@ -406,14 +406,14 @@ return `v1.0.0-<date>-<short commit hash>`. This build version is logged on
 startup and returned from the version API call. Below are examples on how
 to build politeia from outside of `GOPATH` and your local repository:
 
-`GO111MODULE=on go get github.com/decred/politeia/...@master`
+`GO111MODULE=on go get github.com/hdfchain/politeia/...@master`
 
 This will fetch and install politeia from gh master branch, and will include 
 the build version information. If you need to add build flags and/or 
 environment variables, do it normally as building from source:
 
 `env GOOS=linux GOARCH=amd64 CGO_ENABLED=0 GO111MODULE=on go get -trimpath 
--tags 'net,go' github.com/decred/politeia/...@master@master`
+-tags 'net,go' github.com/hdfchain/politeia/...@master@master`
 
 ## Integrated Projects / External APIs / Official URLs
 

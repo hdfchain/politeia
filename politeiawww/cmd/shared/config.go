@@ -17,8 +17,8 @@ import (
 	"strings"
 
 	"github.com/decred/dcrd/dcrutil"
-	"github.com/decred/politeia/politeiad/api/v1/identity"
-	"github.com/decred/politeia/util/version"
+	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
+	"github.com/hdfchain/politeia/util/version"
 	flags "github.com/jessevdk/go-flags"
 )
 

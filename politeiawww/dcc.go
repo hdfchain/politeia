@@ -16,17 +16,17 @@ import (
 	"strings"
 	"time"
 
-	"github.com/decred/politeia/cmsplugin"
-	"github.com/decred/politeia/decredplugin"
-	"github.com/decred/politeia/mdstream"
-	pd "github.com/decred/politeia/politeiad/api/v1"
-	"github.com/decred/politeia/politeiad/api/v1/identity"
-	cms "github.com/decred/politeia/politeiawww/api/cms/v1"
-	www "github.com/decred/politeia/politeiawww/api/www/v1"
-	"github.com/decred/politeia/politeiawww/cmsdatabase"
-	"github.com/decred/politeia/politeiawww/user"
-	wwwutil "github.com/decred/politeia/politeiawww/util"
-	"github.com/decred/politeia/util"
+	"github.com/hdfchain/politeia/cmsplugin"
+	"github.com/hdfchain/politeia/decredplugin"
+	"github.com/hdfchain/politeia/mdstream"
+	pd "github.com/hdfchain/politeia/politeiad/api/v1"
+	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
+	cms "github.com/hdfchain/politeia/politeiawww/api/cms/v1"
+	www "github.com/hdfchain/politeia/politeiawww/api/www/v1"
+	"github.com/hdfchain/politeia/politeiawww/cmsdatabase"
+	"github.com/hdfchain/politeia/politeiawww/user"
+	wwwutil "github.com/hdfchain/politeia/politeiawww/util"
+	"github.com/hdfchain/politeia/util"
 )
 
 const (

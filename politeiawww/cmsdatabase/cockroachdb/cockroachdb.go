@@ -11,8 +11,8 @@ import (
 	"sync"
 	"time"
 
-	v1 "github.com/decred/politeia/politeiawww/api/cms/v1"
-	database "github.com/decred/politeia/politeiawww/cmsdatabase"
+	v1 "github.com/hdfchain/politeia/politeiawww/api/cms/v1"
+	database "github.com/hdfchain/politeia/politeiawww/cmsdatabase"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )

@@ -5,7 +5,7 @@
 package main
 
 import (
-	"github.com/decred/politeia/politeiawww/cmd/shared"
+	"github.com/hdfchain/politeia/politeiawww/cmd/shared"
 )
 
 // VoteDetailsCmd fetches the vote parameters and vote options from the

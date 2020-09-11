@@ -7,7 +7,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/decred/politeia/util"
+	"github.com/hdfchain/politeia/util"
 )
 
 // SendFaucetTxCmd uses the Decred testnet faucet to send the specified amount

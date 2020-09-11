@@ -17,10 +17,10 @@ import (
 
 	"github.com/decred/dcrd/chaincfg/chainhash"
 	"github.com/decred/dcrd/dcrutil"
-	"github.com/decred/politeia/politeiad/api/v1/mime"
-	v1 "github.com/decred/politeia/politeiawww/api/www/v1"
-	"github.com/decred/politeia/politeiawww/cmd/shared"
-	"github.com/decred/politeia/util"
+	"github.com/hdfchain/politeia/politeiad/api/v1/mime"
+	v1 "github.com/hdfchain/politeia/politeiawww/api/www/v1"
+	"github.com/hdfchain/politeia/politeiawww/cmd/shared"
+	"github.com/hdfchain/politeia/util"
 )
 
 const (

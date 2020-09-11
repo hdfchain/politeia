@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/decred/dcrd/dcrutil"
-	"github.com/decred/politeia/cmsplugin"
-	www "github.com/decred/politeia/politeiawww/api/www/v1"
+	"github.com/hdfchain/politeia/cmsplugin"
+	www "github.com/hdfchain/politeia/politeiawww/api/www/v1"
 )
 
 type ErrorStatusT int

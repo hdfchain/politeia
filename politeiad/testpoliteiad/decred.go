@@ -10,8 +10,8 @@ import (
 	"strconv"
 	"time"
 
-	decred "github.com/decred/politeia/decredplugin"
-	v1 "github.com/decred/politeia/politeiad/api/v1"
+	decred "github.com/hdfchain/politeia/decredplugin"
+	v1 "github.com/hdfchain/politeia/politeiad/api/v1"
 )
 
 const (

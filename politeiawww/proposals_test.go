@@ -12,13 +12,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/decred/politeia/decredplugin"
-	pd "github.com/decred/politeia/politeiad/api/v1"
-	"github.com/decred/politeia/politeiad/testpoliteiad"
-	www "github.com/decred/politeia/politeiawww/api/www/v1"
-	www2 "github.com/decred/politeia/politeiawww/api/www/v2"
-	"github.com/decred/politeia/politeiawww/user"
-	"github.com/decred/politeia/util"
+	"github.com/hdfchain/politeia/decredplugin"
+	pd "github.com/hdfchain/politeia/politeiad/api/v1"
+	"github.com/hdfchain/politeia/politeiad/testpoliteiad"
+	www "github.com/hdfchain/politeia/politeiawww/api/www/v1"
+	www2 "github.com/hdfchain/politeia/politeiawww/api/www/v2"
+	"github.com/hdfchain/politeia/politeiawww/user"
+	"github.com/hdfchain/politeia/util"
 )
 
 const (

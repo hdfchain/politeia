@@ -13,9 +13,9 @@ import (
 
 	"github.com/decred/dcrd/chaincfg/chainhash"
 	"github.com/decred/dcrwallet/rpc/walletrpc"
-	"github.com/decred/politeia/politeiad/api/v1/identity"
-	"github.com/decred/politeia/politeiawww/api/www/v1"
-	"github.com/decred/politeia/util"
+	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
+	"github.com/hdfchain/politeia/politeiawww/api/www/v1"
+	"github.com/hdfchain/politeia/util"
 	"golang.org/x/crypto/ssh/terminal"
 )
 

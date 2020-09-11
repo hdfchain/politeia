@@ -12,7 +12,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/decred/politeia/politeiad/api/v1/identity"
+	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
 	"github.com/google/uuid"
 )
 

@@ -15,12 +15,12 @@ import (
 
 	"github.com/decred/dcrd/chaincfg"
 	"github.com/decred/dcrd/hdkeychain"
-	"github.com/decred/politeia/cmsplugin"
-	"github.com/decred/politeia/politeiad/api/v1/mime"
-	cms "github.com/decred/politeia/politeiawww/api/cms/v1"
-	www "github.com/decred/politeia/politeiawww/api/www/v1"
-	"github.com/decred/politeia/politeiawww/cmd/shared"
-	"github.com/decred/politeia/util"
+	"github.com/hdfchain/politeia/cmsplugin"
+	"github.com/hdfchain/politeia/politeiad/api/v1/mime"
+	cms "github.com/hdfchain/politeia/politeiawww/api/cms/v1"
+	www "github.com/hdfchain/politeia/politeiawww/api/www/v1"
+	"github.com/hdfchain/politeia/politeiawww/cmd/shared"
+	"github.com/hdfchain/politeia/util"
 )
 
 // TestRunCmd performs a test run of cmswww routes.

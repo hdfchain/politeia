@@ -23,10 +23,10 @@ import (
 
 	"github.com/decred/dcrd/dcrutil"
 	"github.com/decred/dcrtime/merkle"
-	"github.com/decred/politeia/politeiad/api/v1"
-	"github.com/decred/politeia/politeiad/api/v1/identity"
-	"github.com/decred/politeia/politeiad/api/v1/mime"
-	"github.com/decred/politeia/util"
+	"github.com/hdfchain/politeia/politeiad/api/v1"
+	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
+	"github.com/hdfchain/politeia/politeiad/api/v1/mime"
+	"github.com/hdfchain/politeia/util"
 )
 
 const allowInteractive = "i-know-this-is-a-bad-idea"

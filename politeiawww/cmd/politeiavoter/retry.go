@@ -9,9 +9,9 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/decred/politeia/decredplugin"
-	v1 "github.com/decred/politeia/politeiawww/api/www/v1"
-	"github.com/decred/politeia/util"
+	"github.com/hdfchain/politeia/decredplugin"
+	v1 "github.com/hdfchain/politeia/politeiawww/api/www/v1"
+	"github.com/hdfchain/politeia/util"
 )
 
 type retry struct {
