@@ -15,9 +15,9 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/decred/dcrd/chaincfg"
-	exptypes "github.com/decred/dcrdata/explorer/types/v2"
-	pstypes "github.com/decred/dcrdata/pubsub/types/v3"
+	"github.com/hdfchain/hdfd/chaincfg"
+	exptypes "github.com/hdfchain/hdfdata/explorer/types/v2"
+	pstypes "github.com/hdfchain/hdfdata/pubsub/types/v3"
 	"github.com/hdfchain/politeia/politeiad/api/v1/mime"
 	"github.com/hdfchain/politeia/politeiad/cache"
 	www "github.com/hdfchain/politeia/politeiawww/api/www/v1"
@@ -896,7 +896,7 @@ func (p *politeiawww) updateBestBlock(bestBlock uint64) {
 
 // getBestBlock returns the cached best block if there is an active websocket
 // connection to dcrdata. Otherwise, it requests the best block from politeiad
-// using the the decred plugin best block command.
+// using the the hdfchain plugin best block command.
 func (p *politeiawww) getBestBlock() (uint64, error) {
 	p.bbMtx.RLock()
 	bb := p.bestBlock

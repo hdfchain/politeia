@@ -20,8 +20,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/decred/dcrtime/merkle"
-	decred "github.com/hdfchain/politeia/decredplugin"
+	"github.com/hdfchain/dcrtime/merkle"
+	hdfchain "github.com/hdfchain/politeia/decredplugin"
 	v1 "github.com/hdfchain/politeia/politeiad/api/v1"
 	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
 	"github.com/hdfchain/politeia/politeiad/cache"
@@ -49,11 +49,11 @@ type TestPoliteiad struct {
 	records  map[string]map[string]v1.Record // [token][version]Record
 
 	// Decred plugin
-	authorizeVotes          map[string]map[string]decred.AuthorizeVote // [token][version]AuthorizeVote
-	startVotes              map[string]decred.StartVoteV2              // [token]StartVote
-	startVoteReplies        map[string]decred.StartVoteReply           // [token]StartVoteReply
-	startVotesRunoff        map[string]decred.StartVoteRunoff          // [token]StartVoteRunoff
-	startVotesRunoffReplies map[string]decred.StartVoteRunoffReply     // [token]StartVoteRunoffReply
+	authorizeVotes          map[string]map[string]hdfchain.AuthorizeVote // [token][version]AuthorizeVote
+	startVotes              map[string]hdfchain.StartVoteV2              // [token]StartVote
+	startVoteReplies        map[string]hdfchain.StartVoteReply           // [token]StartVoteReply
+	startVotesRunoff        map[string]hdfchain.StartVoteRunoff          // [token]StartVoteRunoff
+	startVotesRunoffReplies map[string]hdfchain.StartVoteRunoffReply     // [token]StartVoteRunoffReply
 
 }
 
@@ -430,7 +430,7 @@ func (p *TestPoliteiad) Plugin(t *testing.T, pc v1.PluginCommand) {
 	var payload string
 	var err error
 	switch pc.ID {
-	case decred.ID:
+	case hdfchain.ID:
 		payload, err = p.decredExec(pc)
 	default:
 		t.Fatalf("invalid plugin")
@@ -490,11 +490,11 @@ func New(t *testing.T, c cache.Cache) *TestPoliteiad {
 		identity:                id,
 		cache:                   c,
 		records:                 make(map[string]map[string]v1.Record),
-		authorizeVotes:          make(map[string]map[string]decred.AuthorizeVote),
-		startVotes:              make(map[string]decred.StartVoteV2),
-		startVoteReplies:        make(map[string]decred.StartVoteReply),
-		startVotesRunoff:        make(map[string]decred.StartVoteRunoff),
-		startVotesRunoffReplies: make(map[string]decred.StartVoteRunoffReply),
+		authorizeVotes:          make(map[string]map[string]hdfchain.AuthorizeVote),
+		startVotes:              make(map[string]hdfchain.StartVoteV2),
+		startVoteReplies:        make(map[string]hdfchain.StartVoteReply),
+		startVotesRunoff:        make(map[string]hdfchain.StartVoteRunoff),
+		startVotesRunoffReplies: make(map[string]hdfchain.StartVoteRunoffReply),
 	}
 
 	// Setup routes

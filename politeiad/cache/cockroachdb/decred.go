@@ -23,7 +23,7 @@ import (
 
 const (
 	// decredVersion is the version of the cache implementation of
-	// decred plugin. This may differ from the decredplugin package
+	// hdfchain plugin. This may differ from the decredplugin package
 	// version.
 	decredVersion = "1.2"
 
@@ -42,11 +42,11 @@ const (
 	voteOptionIDApproved = "yes"
 )
 
-// decred implements the PluginDriver interface.
-type decred struct {
+// hdfchain implements the PluginDriver interface.
+type hdfchain struct {
 	sync.RWMutex
 	recordsdb *gorm.DB              // Database context
-	version   string                // Version of decred cache plugin
+	version   string                // Version of hdfchain cache plugin
 	settings  []cache.PluginSetting // Plugin settings
 }
 
@@ -62,7 +62,7 @@ func publicStatuses() []int {
 
 // bestBlockSet sets the best block used to update the VoteResults table
 // in the key-value store.
-func (d *decred) bestBlockSet(bb uint64) error {
+func (d *hdfchain) bestBlockSet(bb uint64) error {
 	b := make([]byte, binary.MaxVarintLen64)
 	binary.LittleEndian.PutUint64(b, bb)
 	kv := KeyValue{
@@ -74,7 +74,7 @@ func (d *decred) bestBlockSet(bb uint64) error {
 
 // BestBlockGet gets the best block used to update the VoteResults table
 // from the key-value store.
-func (d *decred) bestBlockGet() (uint64, error) {
+func (d *hdfchain) bestBlockGet() (uint64, error) {
 	kv := KeyValue{
 		Key: keyBestBlock,
 	}
@@ -88,7 +88,7 @@ func (d *decred) bestBlockGet() (uint64, error) {
 // authorizeVotes returns a map[token]AuthorizeVote for the given records. An
 // entry in the returned map will only exist if an AuthorizeVote is found for
 // the record.
-func (d *decred) authorizeVotes(records []Record) (map[string]AuthorizeVote, error) {
+func (d *hdfchain) authorizeVotes(records []Record) (map[string]AuthorizeVote, error) {
 	authorizeVotes := make(map[string]AuthorizeVote, len(records))
 
 	if len(records) == 0 {
@@ -119,7 +119,7 @@ func (d *decred) authorizeVotes(records []Record) (map[string]AuthorizeVote, err
 
 // startVotes returns a map[token]StartVote for the given tokens. An entry in
 // the returned map will only exist for tokens where a StartVote was found.
-func (d *decred) startVotes(tokens []string) (map[string]StartVote, error) {
+func (d *hdfchain) startVotes(tokens []string) (map[string]StartVote, error) {
 	startVotes := make(map[string]StartVote, len(tokens))
 
 	if len(tokens) == 0 {
@@ -148,7 +148,7 @@ func (d *decred) startVotes(tokens []string) (map[string]StartVote, error) {
 // VoteOptions. The results are looked up manually from the CastVotes table
 // instead of using the VoteResults table. This allows results to be looked up
 // when a VoteResults entry does not yet exist, such as for ongoing votes.
-func (d *decred) voteOptionResults(options []VoteOption) ([]VoteOptionResult, error) {
+func (d *hdfchain) voteOptionResults(options []VoteOption) ([]VoteOptionResult, error) {
 	results := make([]VoteOptionResult, 0, len(options))
 
 	for _, v := range options {
@@ -182,7 +182,7 @@ func (d *decred) voteOptionResults(options []VoteOption) ([]VoteOptionResult, er
 // voteResultsMissing returns the tokens of the standard proposal votes and
 // runoff proposal votes that have finished voting but are missing from the
 // lazy loaded VoteResults table.
-func (d *decred) voteResultsMissing(bestBlock uint64) ([]string, []string, error) {
+func (d *hdfchain) voteResultsMissing(bestBlock uint64) ([]string, []string, error) {
 	// Check if the vote results table has already been built for this
 	// block. If so, there is no need to run these queries.
 	bb, err := d.bestBlockGet()
@@ -316,7 +316,7 @@ func voteResultsCompile(sv StartVote, votes []CastVote) VoteResults {
 // proposal vote and inserts a VoteResults record into the cache. A VoteResults
 // record should only be created for proposals once the voting period has
 // ended.
-func (d *decred) voteResultsInsertStandard(token string) error {
+func (d *hdfchain) voteResultsInsertStandard(token string) error {
 	log.Tracef("insertVoteResults %v", token)
 
 	// Lookup start vote
@@ -359,7 +359,7 @@ func (d *decred) voteResultsInsertStandard(token string) error {
 
 // voteResultsInsertRunoff calculates the results of a runoff vote and inserts
 // a VoteResults record into the cache for each of the runoff vote submissions.
-func (d *decred) voteResultsInsertRunoff(rfpToken string) error {
+func (d *hdfchain) voteResultsInsertRunoff(rfpToken string) error {
 	log.Tracef("voteResultsInsertRunoffVote: %v", rfpToken)
 
 	linkedFrom, err := d.linkedFrom(rfpToken)
@@ -487,7 +487,7 @@ func (d *decred) voteResultsInsertRunoff(rfpToken string) error {
 	return nil
 }
 
-func (d *decred) voteResultsLoad(bestBlock uint64) error {
+func (d *hdfchain) voteResultsLoad(bestBlock uint64) error {
 	// Check to see if the VoteResults table needs to be updated.
 	standard, runoff, err := d.voteResultsMissing(bestBlock)
 	if err != nil {
@@ -555,7 +555,7 @@ func (d *decred) voteResultsLoad(bestBlock uint64) error {
 //
 // The VoteResults table is lazy loaded. A cache.ErrRecordNotFound error is
 // returned if the VoteResults table is not up-to-date.
-func (d *decred) voteResults(tokens []string, bestBlock uint64) (map[string]VoteResults, error) {
+func (d *hdfchain) voteResults(tokens []string, bestBlock uint64) (map[string]VoteResults, error) {
 	// Check to see if the VoteResults table needs to be updated.
 	standard, runoff, err := d.voteResultsMissing(bestBlock)
 	if err != nil {
@@ -599,7 +599,7 @@ func (d *decred) voteResults(tokens []string, bestBlock uint64) (map[string]Vote
 // This function pulls data from the the lazy loaded VoteResults table. A
 // cache.ErrRecordNotFound error is returned if the VoteResults table is not
 // up-to-date.
-func (d *decred) voteSummaries(tokens []string, bestBlock uint64) (map[string]decredplugin.VoteSummaryReply, error) {
+func (d *hdfchain) voteSummaries(tokens []string, bestBlock uint64) (map[string]decredplugin.VoteSummaryReply, error) {
 	// This query returns the latest version of the given records.
 	query := `SELECT a.* 
             FROM records a
@@ -717,8 +717,8 @@ func (d *decred) voteSummaries(tokens []string, bestBlock uint64) (map[string]de
 
 // cmdNewComment creates a Comment record using the passed in payloads and
 // inserts it into the database.
-func (d *decred) cmdNewComment(cmdPayload, replyPayload string) (string, error) {
-	log.Tracef("decred cmdNewComment")
+func (d *hdfchain) cmdNewComment(cmdPayload, replyPayload string) (string, error) {
+	log.Tracef("hdfchain cmdNewComment")
 
 	nc, err := decredplugin.DecodeNewComment([]byte(cmdPayload))
 	if err != nil {
@@ -737,8 +737,8 @@ func (d *decred) cmdNewComment(cmdPayload, replyPayload string) (string, error) 
 
 // cmdLikeComment creates a LikeComment record using the passed in payloads
 // and inserts it into the database.
-func (d *decred) cmdLikeComment(cmdPayload, replyPayload string) (string, error) {
-	log.Tracef("decred cmdLikeComment")
+func (d *hdfchain) cmdLikeComment(cmdPayload, replyPayload string) (string, error) {
+	log.Tracef("hdfchain cmdLikeComment")
 
 	dlc, err := decredplugin.DecodeLikeComment([]byte(cmdPayload))
 	if err != nil {
@@ -753,8 +753,8 @@ func (d *decred) cmdLikeComment(cmdPayload, replyPayload string) (string, error)
 
 // cmdCensorComment censors an existing comment.  A censored comment has its
 // comment message removed and is marked as censored.
-func (d *decred) cmdCensorComment(cmdPayload, replyPayload string) (string, error) {
-	log.Tracef("decred cmdCensorComment")
+func (d *hdfchain) cmdCensorComment(cmdPayload, replyPayload string) (string, error) {
+	log.Tracef("hdfchain cmdCensorComment")
 
 	cc, err := decredplugin.DecodeCensorComment([]byte(cmdPayload))
 	if err != nil {
@@ -773,7 +773,7 @@ func (d *decred) cmdCensorComment(cmdPayload, replyPayload string) (string, erro
 	return replyPayload, err
 }
 
-func (d *decred) commentGetByID(token string, commentID string) (*Comment, error) {
+func (d *hdfchain) commentGetByID(token string, commentID string) (*Comment, error) {
 	c := Comment{
 		Key: token + commentID,
 	}
@@ -787,7 +787,7 @@ func (d *decred) commentGetByID(token string, commentID string) (*Comment, error
 	return &c, nil
 }
 
-func (d *decred) commentGetBySignature(token string, sig string) (*Comment, error) {
+func (d *hdfchain) commentGetBySignature(token string, sig string) (*Comment, error) {
 	var c Comment
 	err := d.recordsdb.
 		Where("token = ? AND signature = ?", token, sig).
@@ -803,8 +803,8 @@ func (d *decred) commentGetBySignature(token string, sig string) (*Comment, erro
 }
 
 // cmdGetComment retreives the passed in comment from the database.
-func (d *decred) cmdGetComment(payload string) (string, error) {
-	log.Tracef("decred cmdGetComment")
+func (d *hdfchain) cmdGetComment(payload string) (string, error) {
+	log.Tracef("hdfchain cmdGetComment")
 
 	gc, err := decredplugin.DecodeGetComment([]byte(payload))
 	if err != nil {
@@ -840,8 +840,8 @@ func (d *decred) cmdGetComment(payload string) (string, error) {
 }
 
 // cmdGetComments returns all of the comments for the passed in record token.
-func (d *decred) cmdGetComments(payload string) (string, error) {
-	log.Tracef("decred cmdGetComments")
+func (d *hdfchain) cmdGetComments(payload string) (string, error) {
+	log.Tracef("hdfchain cmdGetComments")
 
 	gc, err := decredplugin.DecodeGetComments([]byte(payload))
 	if err != nil {
@@ -877,8 +877,8 @@ func (d *decred) cmdGetComments(payload string) (string, error) {
 // [token]numComments map for the provided list of censorship tokens. If a
 // provided token does not correspond to an actual proposal then it will not
 // be included in the returned map.
-func (d *decred) cmdGetNumComments(payload string) (string, error) {
-	log.Tracef("decred cmdGetNumComments")
+func (d *hdfchain) cmdGetNumComments(payload string) (string, error) {
+	log.Tracef("hdfchain cmdGetNumComments")
 
 	gnc, err := decredplugin.DecodeGetNumComments([]byte(payload))
 	if err != nil {
@@ -921,8 +921,8 @@ func (d *decred) cmdGetNumComments(payload string) (string, error) {
 }
 
 // cmdCommentLikes returns all of the comment likes for the passed in comment.
-func (d *decred) cmdCommentLikes(payload string) (string, error) {
-	log.Tracef("decred cmdCommentLikes")
+func (d *hdfchain) cmdCommentLikes(payload string) (string, error) {
+	log.Tracef("hdfchain cmdCommentLikes")
 
 	cl, err := decredplugin.DecodeCommentLikes([]byte(payload))
 	if err != nil {
@@ -956,8 +956,8 @@ func (d *decred) cmdCommentLikes(payload string) (string, error) {
 
 // cmdProposalLikes returns all of the comment likes for all comments of the
 // passed in record token.
-func (d *decred) cmdProposalCommentsLikes(payload string) (string, error) {
-	log.Tracef("decred cmdProposalCommentsLikes")
+func (d *hdfchain) cmdProposalCommentsLikes(payload string) (string, error) {
+	log.Tracef("hdfchain cmdProposalCommentsLikes")
 
 	cl, err := decredplugin.DecodeGetProposalCommentsLikes([]byte(payload))
 	if err != nil {
@@ -1015,8 +1015,8 @@ func authorizeVoteInsert(tx *gorm.DB, av AuthorizeVote) error {
 
 // cmdAuthorizeVote creates a AuthorizeVote record using the passed in payloads
 // and inserts it into the database.
-func (d *decred) cmdAuthorizeVote(cmdPayload, replyPayload string) (string, error) {
-	log.Tracef("decred cmdAuthorizeVote")
+func (d *hdfchain) cmdAuthorizeVote(cmdPayload, replyPayload string) (string, error) {
+	log.Tracef("hdfchain cmdAuthorizeVote")
 
 	av, err := decredplugin.DecodeAuthorizeVote([]byte(cmdPayload))
 	if err != nil {
@@ -1057,8 +1057,8 @@ func startVoteInsert(db *gorm.DB, sv StartVote) error {
 
 // cmdStartVote creates a StartVote record using the passed in payloads and
 // inserts it into the database.
-func (d *decred) cmdStartVote(cmdPayload, replyPayload string) (string, error) {
-	log.Tracef("decred cmdStartVote")
+func (d *hdfchain) cmdStartVote(cmdPayload, replyPayload string) (string, error) {
+	log.Tracef("hdfchain cmdStartVote")
 
 	// Handle start vote versioning. This command accepts both v1 and
 	// v2 start votes in order to allow rebuilding the start vote cache
@@ -1134,8 +1134,8 @@ func (d *decred) cmdStartVote(cmdPayload, replyPayload string) (string, error) {
 	return replyPayload, nil
 }
 
-func (d *decred) cmdStartVoteRunoff(cmdPayload, replyPayload string) (string, error) {
-	log.Tracef("decred cmdStartVoteRunoff")
+func (d *hdfchain) cmdStartVoteRunoff(cmdPayload, replyPayload string) (string, error) {
+	log.Tracef("hdfchain cmdStartVoteRunoff")
 
 	sv, err := decredplugin.DecodeStartVoteRunoff([]byte(cmdPayload))
 	if err != nil {
@@ -1191,8 +1191,8 @@ func (d *decred) cmdStartVoteRunoff(cmdPayload, replyPayload string) (string, er
 
 // cmdVoteDetails returns the AuthorizeVote and StartVote records for the
 // passed in record token.
-func (d *decred) cmdVoteDetails(payload string) (string, error) {
-	log.Tracef("decred cmdVoteDetails")
+func (d *hdfchain) cmdVoteDetails(payload string) (string, error) {
+	log.Tracef("hdfchain cmdVoteDetails")
 
 	vd, err := decredplugin.DecodeVoteDetails([]byte(payload))
 	if err != nil {
@@ -1271,8 +1271,8 @@ func (d *decred) cmdVoteDetails(payload string) (string, error) {
 
 // cmdNewBallot creates CastVote records using the passed in payloads and
 // inserts them into the database.
-func (d *decred) cmdNewBallot(cmdPayload, replyPayload string) (string, error) {
-	log.Tracef("decred cmdNewBallot")
+func (d *hdfchain) cmdNewBallot(cmdPayload, replyPayload string) (string, error) {
+	log.Tracef("hdfchain cmdNewBallot")
 
 	b, err := decredplugin.DecodeBallot([]byte(cmdPayload))
 	if err != nil {
@@ -1310,8 +1310,8 @@ func (d *decred) cmdNewBallot(cmdPayload, replyPayload string) (string, error) {
 
 // cmdProposalVotes returns the StartVote record and all CastVote records for
 // the passed in record token.
-func (d *decred) cmdProposalVotes(payload string) (string, error) {
-	log.Tracef("decred cmdProposalVotes")
+func (d *hdfchain) cmdProposalVotes(payload string) (string, error) {
+	log.Tracef("hdfchain cmdProposalVotes")
 
 	vr, err := decredplugin.DecodeVoteResults([]byte(payload))
 	if err != nil {
@@ -1348,11 +1348,11 @@ func (d *decred) cmdProposalVotes(payload string) (string, error) {
 	return string(vrrb), nil
 }
 
-// cmdInventory returns the decred plugin inventory.
-func (d *decred) cmdInventory() (string, error) {
-	log.Tracef("decred cmdInventory")
+// cmdInventory returns the hdfchain plugin inventory.
+func (d *hdfchain) cmdInventory() (string, error) {
+	log.Tracef("hdfchain cmdInventory")
 
-	// XXX the only part of the decred plugin inventory that we return
+	// XXX the only part of the hdfchain plugin inventory that we return
 	// at the moment is comments. This is because comments are the only
 	// thing politeiawww currently needs on startup.
 
@@ -1383,7 +1383,7 @@ func (d *decred) cmdInventory() (string, error) {
 // cmdLoadVoteResults creates vote results entries for any proposals that have
 // a finished voting period but have not yet been added to the vote results
 // table. The vote results table is lazy loaded.
-func (d *decred) cmdLoadVoteResults(payload string) (string, error) {
+func (d *hdfchain) cmdLoadVoteResults(payload string) (string, error) {
 	log.Tracef("cmdLoadVoteResults")
 
 	lvs, err := decredplugin.DecodeLoadVoteResults([]byte(payload))
@@ -1409,8 +1409,8 @@ func (d *decred) cmdLoadVoteResults(payload string) (string, error) {
 // categorized by stage of the voting process. This call relies on the lazy
 // loaded VoteResults table. A cache.ErrRecordNotFound is returned if the
 // VoteResults table is not up-to-date.
-func (d *decred) cmdTokenInventory(payload string) (string, error) {
-	log.Tracef("decred cmdTokenInventory")
+func (d *hdfchain) cmdTokenInventory(payload string) (string, error) {
+	log.Tracef("hdfchain cmdTokenInventory")
 
 	ti, err := decredplugin.DecodeTokenInventory([]byte(payload))
 	if err != nil {
@@ -1643,7 +1643,7 @@ func (d *decred) cmdTokenInventory(payload string) (string, error) {
 // This function pulls data from the the lazy loaded VoteResults table. A
 // cache.ErrRecordNotFound error is returned if the VoteResults table is not
 // up-to-date.
-func (d *decred) cmdBatchVoteSummary(payload string) (string, error) {
+func (d *hdfchain) cmdBatchVoteSummary(payload string) (string, error) {
 	log.Tracef("cmdBatchVoteSummary")
 
 	bvs, err := decredplugin.DecodeBatchVoteSummary([]byte(payload))
@@ -1673,7 +1673,7 @@ func (d *decred) cmdBatchVoteSummary(payload string) (string, error) {
 // This function pulls data from the the lazy loaded VoteResults table. A
 // cache.ErrRecordNotFound error is returned if the VoteResults table is not
 // up-to-date.
-func (d *decred) cmdVoteSummary(payload string) (string, error) {
+func (d *hdfchain) cmdVoteSummary(payload string) (string, error) {
 	log.Tracef("cmdVoteSummary")
 
 	vs, err := decredplugin.DecodeVoteSummary([]byte(payload))
@@ -1699,7 +1699,7 @@ func (d *decred) cmdVoteSummary(payload string) (string, error) {
 // that have linked to the given proposal token. If the provided token does not
 // correspond to an actual proposal record then a nil value is returned instead
 // of a []string.
-func (d *decred) linkedFrom(token string) ([]string, error) {
+func (d *hdfchain) linkedFrom(token string) ([]string, error) {
 	// Ensure the token corresponds to an actual record
 	ok, err := recordExists(d.recordsdb, token, "1")
 	if err != nil {
@@ -1744,7 +1744,7 @@ func (d *decred) linkedFrom(token string) ([]string, error) {
 	return linkedFrom, nil
 }
 
-func (d *decred) cmdLinkedFrom(payload string) (string, error) {
+func (d *hdfchain) cmdLinkedFrom(payload string) (string, error) {
 	log.Tracef("cmdLinkedFrom")
 
 	lf, err := decredplugin.DecodeLinkedFrom([]byte(payload))
@@ -1829,11 +1829,11 @@ func proposalMetadataNew(r Record) (*ProposalMetadata, error) {
 	}, nil
 }
 
-// hookPostNewRecord executes the decred plugin post new record hook. This
+// hookPostNewRecord executes the hdfchain plugin post new record hook. This
 // includes inserting a ProposalMetadata record for the given proposal.
 //
 // This function must be called using a transaction.
-func (d *decred) hookPostNewRecord(tx *gorm.DB, payload string) error {
+func (d *hdfchain) hookPostNewRecord(tx *gorm.DB, payload string) error {
 	var r Record
 	err := json.Unmarshal([]byte(payload), &r)
 	if err != nil {
@@ -1844,7 +1844,7 @@ func (d *decred) hookPostNewRecord(tx *gorm.DB, payload string) error {
 		return err
 	}
 	if pm.Name == "" {
-		// XXX Commented out as a temporary workaround for CMS using decred
+		// XXX Commented out as a temporary workaround for CMS using hdfchain
 		// plugin. This needs to be fixed once the plugin architecture is
 		// sorted out.
 		//
@@ -1875,13 +1875,13 @@ func (d *decred) hookPostNewRecord(tx *gorm.DB, payload string) error {
 	return nil
 }
 
-// hookPostUpdateRecord executes the decred plugin post update record hook.
+// hookPostUpdateRecord executes the hdfchain plugin post update record hook.
 // This includes updating the ProposalMetadata in the cache for the given
 // proposal. The existing metadata is first deleted before the new metadata is
 // inserted.
 //
 // This function must be called using a transaction.
-func (d *decred) hookPostUpdateRecord(tx *gorm.DB, payload string) error {
+func (d *hdfchain) hookPostUpdateRecord(tx *gorm.DB, payload string) error {
 	var r Record
 	err := json.Unmarshal([]byte(payload), &r)
 	if err != nil {
@@ -1892,7 +1892,7 @@ func (d *decred) hookPostUpdateRecord(tx *gorm.DB, payload string) error {
 		return err
 	}
 	if pm.Name == "" {
-		// XXX Commented out as a temporary workaround for CMS using decred
+		// XXX Commented out as a temporary workaround for CMS using hdfchain
 		// plugin. This needs to be fixed once the plugin architecture is
 		// sorted out.
 		//
@@ -1923,26 +1923,26 @@ func (d *decred) hookPostUpdateRecord(tx *gorm.DB, payload string) error {
 	return nil
 }
 
-// hookPostUpdateRecordMetadata executes the decred plugin post update record
+// hookPostUpdateRecordMetadata executes the hdfchain plugin post update record
 // metadata hook.
-func (d *decred) hookPostUpdateRecordMetadata(tx *gorm.DB, payload string) error {
+func (d *hdfchain) hookPostUpdateRecordMetadata(tx *gorm.DB, payload string) error {
 	// piwww does not currently use the UpdateRecordMetadata route.
 	// If this changes, this panic is here as a reminder that any piwww
 	// mdstream tables, such as ProposalMetadata and StartVote, need to
 	// be properly updated in this hook.
 
-	// XXX Commented out as a temporary workaround for CMS using decred
+	// XXX Commented out as a temporary workaround for CMS using hdfchain
 	// plugin. This needs to be fixed once the plugin architecture is
 	// sorted out.
 	//
-	// panic("cache decred plugin: hookPostUpdateRecordMetadata not implemented")
+	// panic("cache hdfchain plugin: hookPostUpdateRecordMetadata not implemented")
 
 	return nil
 }
 
-// Hook executes the given decred plugin hook.
-func (d *decred) Hook(tx *gorm.DB, hookID, payload string) error {
-	log.Tracef("decred Hook: %v", hookID)
+// Hook executes the given hdfchain plugin hook.
+func (d *hdfchain) Hook(tx *gorm.DB, hookID, payload string) error {
+	log.Tracef("hdfchain Hook: %v", hookID)
 
 	switch hookID {
 	case pluginHookPostNewRecord:
@@ -1956,12 +1956,12 @@ func (d *decred) Hook(tx *gorm.DB, hookID, payload string) error {
 	return nil
 }
 
-// Exec executes a decred plugin command.  Plugin commands that write data to
+// Exec executes a hdfchain plugin command.  Plugin commands that write data to
 // the cache require both the command payload and the reply payload.  Plugin
 // commands that fetch data from the cache require only the command payload.
 // All commands return the appropriate reply payload.
-func (d *decred) Exec(cmd, cmdPayload, replyPayload string) (string, error) {
-	log.Tracef("decred Exec: %v", cmd)
+func (d *hdfchain) Exec(cmd, cmdPayload, replyPayload string) (string, error) {
+	log.Tracef("hdfchain Exec: %v", cmd)
 
 	switch cmd {
 	case decredplugin.CmdAuthorizeVote:
@@ -2011,15 +2011,15 @@ func (d *decred) Exec(cmd, cmdPayload, replyPayload string) (string, error) {
 	return "", cache.ErrInvalidPluginCmd
 }
 
-// createTables creates the cache tables needed by the decred plugin if they do
-// not already exist. A decred plugin version record is inserted into the
+// createTables creates the cache tables needed by the hdfchain plugin if they do
+// not already exist. A hdfchain plugin version record is inserted into the
 // database during table creation.
 //
 // This function must be called within a transaction.
-func (d *decred) createTables(tx *gorm.DB) error {
+func (d *hdfchain) createTables(tx *gorm.DB) error {
 	log.Tracef("createTables")
 
-	// Create decred plugin tables
+	// Create hdfchain plugin tables
 	if !tx.HasTable(tableProposalMetadata) {
 		err := tx.CreateTable(&ProposalMetadata{}).Error
 		if err != nil {
@@ -2075,7 +2075,7 @@ func (d *decred) createTables(tx *gorm.DB) error {
 		}
 	}
 
-	// Check if a decred version record exists. Insert one
+	// Check if a hdfchain version record exists. Insert one
 	// if no version record is found.
 	if !tx.HasTable(tableVersions) {
 		// This should never happen
@@ -2096,12 +2096,12 @@ func (d *decred) createTables(tx *gorm.DB) error {
 	return err
 }
 
-// droptTables drops all decred plugin tables from the cache and remove the
-// decred plugin version record.
+// droptTables drops all hdfchain plugin tables from the cache and remove the
+// hdfchain plugin version record.
 //
 // This function must be called within a transaction.
-func (d *decred) dropTables(tx *gorm.DB) error {
-	// Drop decred plugin tables
+func (d *hdfchain) dropTables(tx *gorm.DB) error {
+	// Drop hdfchain plugin tables
 	err := tx.DropTableIfExists(tableComments, tableCommentLikes,
 		tableCastVotes, tableAuthorizeVotes, tableVoteOptions,
 		tableStartVotes, tableVoteOptionResults, tableVoteResults,
@@ -2110,21 +2110,21 @@ func (d *decred) dropTables(tx *gorm.DB) error {
 		return err
 	}
 
-	// Remove decred plugin version record
+	// Remove hdfchain plugin version record
 	return tx.Delete(&Version{
 		ID: decredplugin.ID,
 	}).Error
 }
 
-// build the decred plugin cache using the passed in inventory.
+// build the hdfchain plugin cache using the passed in inventory.
 //
 // This function cannot be called using a transaction because it could
 // potentially exceed cockroachdb's transaction size limit.
-func (d *decred) build() error {
-	log.Tracef("decred build")
+func (d *hdfchain) build() error {
+	log.Tracef("hdfchain build")
 
-	// Drop all decred plugin tables
-	log.Debugf("Dropping decred plugin tables")
+	// Drop all hdfchain plugin tables
+	log.Debugf("Dropping hdfchain plugin tables")
 	tx := d.recordsdb.Begin()
 	err := d.dropTables(tx)
 	if err != nil {
@@ -2136,8 +2136,8 @@ func (d *decred) build() error {
 		return err
 	}
 
-	// Create decred plugin tables
-	log.Debugf("Building decred plugin tables")
+	// Create hdfchain plugin tables
+	log.Debugf("Building hdfchain plugin tables")
 	tx = d.recordsdb.Begin()
 	err = d.createTables(tx)
 	if err != nil {
@@ -2208,7 +2208,7 @@ func (d *decred) build() error {
 		if pm.Name == "" {
 			// XXX we cannot return an error here until the plugin
 			// architecture is sorted out. Right now, politeiad registers
-			// the decred plugin by default. CMS needs a way to register
+			// the hdfchain plugin by default. CMS needs a way to register
 			// just the functionality it needs so that proposal specific
 			// tables do not get built for CMS.
 			// return fmt.Errorf("no proposal user metadata found %v",
@@ -2226,13 +2226,13 @@ func (d *decred) build() error {
 	return nil
 }
 
-// Build drops all existing decred plugin tables from the database, recreates
-// them, then uses the passed in inventory payload to build the decred plugin
+// Build drops all existing hdfchain plugin tables from the database, recreates
+// them, then uses the passed in inventory payload to build the hdfchain plugin
 // cache.
-func (d *decred) Build(payload string) error {
-	log.Tracef("decred Build")
+func (d *hdfchain) Build(payload string) error {
+	log.Tracef("hdfchain Build")
 
-	// Build the decred plugin cache. This is not run using
+	// Build the hdfchain plugin cache. This is not run using
 	// a transaction because it could potentially exceed
 	// cockroachdb's transaction size limit.
 	err := d.build()
@@ -2251,11 +2251,11 @@ func (d *decred) Build(payload string) error {
 	return err
 }
 
-// Setup creates the decred plugin tables if they do not already exist.  A
-// decred plugin version record is inserted into the database during table
+// Setup creates the hdfchain plugin tables if they do not already exist.  A
+// hdfchain plugin version record is inserted into the database during table
 // creation.
-func (d *decred) Setup() error {
-	log.Tracef("decred: Setup")
+func (d *hdfchain) Setup() error {
+	log.Tracef("hdfchain: Setup")
 
 	tx := d.recordsdb.Begin()
 	err := d.createTables(tx)
@@ -2267,11 +2267,11 @@ func (d *decred) Setup() error {
 	return tx.Commit().Error
 }
 
-// CheckVersion retrieves the decred plugin version record from the database,
-// if one exists, and checks that it matches the version of the current decred
+// CheckVersion retrieves the hdfchain plugin version record from the database,
+// if one exists, and checks that it matches the version of the current hdfchain
 // plugin cache implementation.
-func (d *decred) CheckVersion() error {
-	log.Tracef("decred: CheckVersion")
+func (d *hdfchain) CheckVersion() error {
+	log.Tracef("hdfchain: CheckVersion")
 
 	// Sanity check. Ensure version table exists.
 	if !d.recordsdb.HasTable(tableVersions) {
@@ -2280,7 +2280,7 @@ func (d *decred) CheckVersion() error {
 
 	// Lookup version record. If the version is not found or
 	// if there is a version mismatch, return an error so
-	// that the decred plugin cache can be built/rebuilt.
+	// that the hdfchain plugin cache can be built/rebuilt.
 	var v Version
 	err := d.recordsdb.
 		Where("id = ?", decredplugin.ID).
@@ -2299,10 +2299,10 @@ func (d *decred) CheckVersion() error {
 	return err
 }
 
-// newDecredPlugin returns a cache decred plugin context.
-func newDecredPlugin(db *gorm.DB, p cache.Plugin) *decred {
+// newDecredPlugin returns a cache hdfchain plugin context.
+func newDecredPlugin(db *gorm.DB, p cache.Plugin) *hdfchain {
 	log.Tracef("newDecredPlugin")
-	return &decred{
+	return &hdfchain{
 		recordsdb: db,
 		version:   decredVersion,
 		settings:  p.Settings,

@@ -152,7 +152,7 @@ const VersionStartVote = 1
 // StartVote instructs the plugin to commence voting on a proposal with the
 // provided vote bits.
 type StartVote struct {
-	// decred plugin only data
+	// hdfchain plugin only data
 	Version uint   `json:"version"` // Version of this structure
 	Token   string `json:"token"`   // Token
 
@@ -355,7 +355,7 @@ func DecodeVoteSummaryReply(payload []byte) (*VoteSummaryReply, error) {
 	return &v, nil
 }
 
-// Inventory is used to retrieve the decred plugin inventory.
+// Inventory is used to retrieve the hdfchain plugin inventory.
 type Inventory struct{}
 
 // EncodeInventory encodes Inventory into a JSON byte slice.

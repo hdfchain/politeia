@@ -14,7 +14,7 @@ import (
 	"github.com/hdfchain/politeia/politeiawww/user/cockroachdb"
 	"github.com/hdfchain/politeia/politeiawww/user/localdb"
 	"github.com/hdfchain/politeia/wsdcrdata"
-	"github.com/decred/slog"
+	"github.com/hdfchain/slog"
 	"github.com/jrick/logrotate/rotator"
 )
 

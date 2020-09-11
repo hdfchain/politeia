@@ -11,8 +11,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/decred/dcrdata/pubsub/v4/psclient"
-	"github.com/decred/dcrdata/semver"
+	"github.com/hdfchain/hdfdata/pubsub/v4/psclient"
+	"github.com/hdfchain/hdfdata/semver"
 )
 
 type StatusT int

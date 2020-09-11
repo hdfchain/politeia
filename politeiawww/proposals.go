@@ -684,7 +684,7 @@ func (p *politeiawww) getProps(tokens []string) (map[string]www.ProposalRecord, 
 	}
 
 	// Get the number of comments for each proposal. Comments
-	// are part of decred plugin so this must be fetched from
+	// are part of hdfchain plugin so this must be fetched from
 	// the cache separately.
 	dnc, err := p.decredGetNumComments(tokens)
 	if err != nil {
@@ -2535,7 +2535,7 @@ func validateAuthorizeVoteRunoff(av www.AuthorizeVote, u user.User, pr www.Propo
 	return nil
 }
 
-// processAuthorizeVote sends the authorizevote command to decred plugin to
+// processAuthorizeVote sends the authorizevote command to hdfchain plugin to
 // indicate that a proposal has been finalized and is ready to be voted on.
 func (p *politeiawww) processAuthorizeVote(av www.AuthorizeVote, u *user.User) (*www.AuthorizeVoteReply, error) {
 	log.Tracef("processAuthorizeVote %v", av.Token)
@@ -2891,7 +2891,7 @@ func (p *politeiawww) processStartVoteV2(sv www2.StartVote, u *user.User) (*www2
 		return nil, err
 	}
 
-	// Tell decred plugin to start voting
+	// Tell hdfchain plugin to start voting
 	dsv := convertStartVoteV2ToDecred(sv)
 	payload, err := decredplugin.EncodeStartVoteV2(dsv)
 	if err != nil {
@@ -3337,7 +3337,7 @@ func (p *politeiawww) processVoteDetailsV2(token string) (*www2.VoteDetailsReply
 	return vdr, nil
 }
 
-// initLoadVoteResults is used to send the LoadVoteResults decred plugin command
+// initLoadVoteResults is used to send the LoadVoteResults hdfchain plugin command
 // to the cache on www startup.
 func (p *politeiawww) initVoteResults() error {
 	bb, err := p.getBestBlock()

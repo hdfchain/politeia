@@ -52,7 +52,7 @@ You should create the configuration file under the following paths.
 
 If you're developing locally, you'll want to set the politeiawww host in the
 configuration file since the default politeiawww host is
-`https://proposals.decred.org`.  Copy these lines into your `cmswww.conf` file.
+`https://proposals.clkj.ltd`.  Copy these lines into your `cmswww.conf` file.
 `skipverify` is used to skip TLS certificate verification and should only be
 used when running politeia locally.
 

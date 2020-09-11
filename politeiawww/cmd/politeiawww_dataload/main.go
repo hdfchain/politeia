@@ -16,7 +16,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/decred/dcrd/dcrutil"
+	"github.com/hdfchain/hdfd/dcrutil"
 	"github.com/hdfchain/politeia/politeiawww/api/www/v1"
 	wwwconfig "github.com/hdfchain/politeia/politeiawww/sharedconfig"
 )

@@ -1,7 +1,7 @@
 # politeiaimport
 
 `politeiaimport` is a tool to import data from a public politeia repo such as
-the [decred proposals repo](https://github.com/decred-proposals/mainnet/).
+the [hdfchain proposals repo](https://github.com/hdfchain-proposals/mainnet/).
 
 ## Usage 
 
@@ -11,7 +11,7 @@ Install `politeiaimport`.
 
 Clone the repo you want to import.
 
-    $ git clone https://github.com/decred-proposals/mainnet.git ~/mainnet
+    $ git clone https://github.com/hdfchain-proposals/mainnet.git ~/mainnet
 
 Import the repo data.  If you're importing testnet data you must use the 
 `--testnet` flag.

@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"sync"
 
-	decred "github.com/hdfchain/politeia/decredplugin"
+	hdfchain "github.com/hdfchain/politeia/decredplugin"
 	"github.com/hdfchain/politeia/politeiad/cache"
 )
 
@@ -20,10 +20,10 @@ type testcache struct {
 	records map[string]map[string]cache.Record // [token][version]Record
 
 	// Decred plugin
-	comments         map[string][]decred.Comment                // [token][]Comment
-	authorizeVotes   map[string]map[string]decred.AuthorizeVote // [token][version]AuthorizeVote
-	startVotes       map[string]decred.StartVoteV2              // [token]StartVote
-	startVoteReplies map[string]decred.StartVoteReply           // [token]StartVoteReply
+	comments         map[string][]hdfchain.Comment                // [token][]Comment
+	authorizeVotes   map[string]map[string]hdfchain.AuthorizeVote // [token][version]AuthorizeVote
+	startVotes       map[string]hdfchain.StartVoteV2              // [token]StartVote
+	startVoteReplies map[string]hdfchain.StartVoteReply           // [token]StartVoteReply
 }
 
 // NewRecords adds a record to the cache.
@@ -248,7 +248,7 @@ func (c *testcache) PluginExec(pc cache.PluginCommand) (*cache.PluginCommandRepl
 	var payload string
 	var err error
 	switch pc.ID {
-	case decred.ID:
+	case hdfchain.ID:
 		payload, err = c.decredExec(pc.Command,
 			pc.CommandPayload, pc.ReplyPayload)
 		if err != nil {
@@ -269,9 +269,9 @@ func (c *testcache) Close() {}
 func New() *testcache {
 	return &testcache{
 		records:          make(map[string]map[string]cache.Record),
-		comments:         make(map[string][]decred.Comment),
-		authorizeVotes:   make(map[string]map[string]decred.AuthorizeVote),
-		startVotes:       make(map[string]decred.StartVoteV2),
-		startVoteReplies: make(map[string]decred.StartVoteReply),
+		comments:         make(map[string][]hdfchain.Comment),
+		authorizeVotes:   make(map[string]map[string]hdfchain.AuthorizeVote),
+		startVotes:       make(map[string]hdfchain.StartVoteV2),
+		startVoteReplies: make(map[string]hdfchain.StartVoteReply),
 	}
 }

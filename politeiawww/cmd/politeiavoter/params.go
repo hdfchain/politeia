@@ -6,13 +6,13 @@
 package main
 
 import (
-	"github.com/decred/dcrd/chaincfg"
-	"github.com/decred/dcrd/wire"
-	"github.com/decred/dcrwallet/netparams"
+	"github.com/hdfchain/hdfd/chaincfg"
+	"github.com/hdfchain/hdfd/wire"
+	"github.com/hdfchain/hdfwallet/netparams"
 )
 
 // activeNetParams is a pointer to the parameters specific to the
-// currently active decred network.
+// currently active hdfchain network.
 var activeNetParams = &mainNetParams
 
 // params is used to group parameters for various networks such as the main
@@ -49,7 +49,7 @@ var simNetParams = params{
 	WalletRPCServerPort: netparams.SimNetParams.GRPCServerPort,
 }
 
-// netName returns the name used when referring to a decred network.  At the
+// netName returns the name used when referring to a hdfchain network.  At the
 // time of writing, dcrd currently places blocks for testnet version 0 in the
 // data and log directory "testnet", which does not match the Name field of the
 // chaincfg parameters.  This function can be used to override this directory name

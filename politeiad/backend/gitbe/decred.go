@@ -21,11 +21,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/decred/dcrd/chaincfg/chainhash"
-	"github.com/decred/dcrd/dcrec/secp256k1"
-	"github.com/decred/dcrd/dcrutil"
-	"github.com/decred/dcrd/wire"
-	dcrdataapi "github.com/decred/dcrdata/api/types/v4"
+	"github.com/hdfchain/hdfd/chaincfg/chainhash"
+	"github.com/hdfchain/hdfd/dcrec/secp256k1"
+	"github.com/hdfchain/hdfd/dcrutil"
+	"github.com/hdfchain/hdfd/wire"
+	dcrdataapi "github.com/hdfchain/hdfdata/api/types/v4"
 	"github.com/hdfchain/politeia/decredplugin"
 	"github.com/hdfchain/politeia/mdstream"
 	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
@@ -127,7 +127,7 @@ var (
 	journalAddLike []byte
 
 	// Plugin specific data that CANNOT be treated as metadata
-	pluginDataDir = filepath.Join("plugins", "decred")
+	pluginDataDir = filepath.Join("plugins", "hdfchain")
 
 	// Cached values, requires lock. These caches are built on startup.
 	decredPluginVotesCache         = make(map[string]map[string]struct{})             // [token][ticket]struct{}
@@ -326,7 +326,7 @@ func (g *gitBackEnd) getNewCid(token string) (string, error) {
 }
 
 // verifyMessage verifies a message is properly signed.
-// Copied from https://github.com/decred/dcrd/blob/0fc55252f912756c23e641839b1001c21442c38a/rpcserver.go#L5605
+// Copied from https://github.com/hdfchain/hdfd/blob/0fc55252f912756c23e641839b1001c21442c38a/rpcserver.go#L5605
 func (g *gitBackEnd) verifyMessage(address, message, signature string) (bool, error) {
 	// Decode the provided address.
 	addr, err := dcrutil.DecodeAddress(address)
@@ -633,7 +633,7 @@ func (g *gitBackEnd) flushJournalsUnwind(id string) error {
 	return g.gitClean(g.unvetted)
 }
 
-// flushCommentflushes comments journal to decred plugin directory in
+// flushCommentflushes comments journal to hdfchain plugin directory in
 // git. It returns the filename that was coppied into git repo.
 //
 // Must be called WITH the mutex held.
@@ -821,7 +821,7 @@ func (g *gitBackEnd) flushCommentJournals() error {
 	return nil
 }
 
-// flushVotes flushes votes journal to decred plugin directory in git. It
+// flushVotes flushes votes journal to hdfchain plugin directory in git. It
 // returns the filename that was coppied into git repo.
 //
 // Must be called WITH the mutex held.
@@ -1622,7 +1622,7 @@ func (g *gitBackEnd) pluginAuthorizeVote(payload string) (string, error) {
 	return string(avrb), nil
 }
 
-// validateStartVote validates the vote bits and the vote params of a decred
+// validateStartVote validates the vote bits and the vote params of a hdfchain
 // plugin StartVote.
 func validateStartVoteV2(sv decredplugin.StartVoteV2) error {
 	// Verify signature
@@ -1659,7 +1659,7 @@ func validateStartVoteV2(sv decredplugin.StartVoteV2) error {
 	return nil
 }
 
-// prepareStartVoteReply prepares a decred plugin StartVoteReply.
+// prepareStartVoteReply prepares a hdfchain plugin StartVoteReply.
 func prepareStartVoteReply(voteDuration, ticketMaturity uint32) (*decredplugin.StartVoteReply, error) {
 	// Get best block
 	bb, err := bestBlock()
@@ -2802,8 +2802,8 @@ func (g *gitBackEnd) pluginProposalVotes(payload string) (string, error) {
 	return string(reply), nil
 }
 
-// pluginInventory returns the decred plugin inventory for the specified
-// records. If no record tokens are specified then the decred plugin inventory
+// pluginInventory returns the hdfchain plugin inventory for the specified
+// records. If no record tokens are specified then the hdfchain plugin inventory
 // for all vetted records will be returned.
 func (g *gitBackEnd) pluginInventory(payload string) (string, error) {
 	log.Tracef("pluginInventory")
@@ -2815,7 +2815,7 @@ func (g *gitBackEnd) pluginInventory(payload string) (string, error) {
 
 	var tokens []string
 	if len(inv.Tokens) == 0 {
-		// No records specified. Return the decred plugin data for all
+		// No records specified. Return the hdfchain plugin data for all
 		// vetted records.
 		g.Lock()
 		tokens, err = g.getVettedTokens()
@@ -2824,12 +2824,12 @@ func (g *gitBackEnd) pluginInventory(payload string) (string, error) {
 			return "", err
 		}
 	} else {
-		// Records were specified. Only return the decred plugin data for
+		// Records were specified. Only return the hdfchain plugin data for
 		// the specified records.
 		tokens = inv.Tokens
 	}
 
-	log.Debugf("Fetching decred plugin inventory for %x record", len(tokens))
+	log.Debugf("Fetching hdfchain plugin inventory for %x record", len(tokens))
 
 	// Convert tokens to a map
 	include := make(map[string]struct{}, len(tokens))
@@ -2837,7 +2837,7 @@ func (g *gitBackEnd) pluginInventory(payload string) (string, error) {
 		include[v] = struct{}{}
 	}
 
-	// Compile decred plugin metadata streams for all versions of the
+	// Compile hdfchain plugin metadata streams for all versions of the
 	// specified records.
 	var (
 		authVotes       = make([]decredplugin.AuthorizeVote, 0, len(include))
@@ -2860,7 +2860,7 @@ func (g *gitBackEnd) pluginInventory(payload string) (string, error) {
 			return "", err
 		}
 
-		// Compile decred plugin metadata streams from all versions of
+		// Compile hdfchain plugin metadata streams from all versions of
 		// the record.
 		for version > 0 {
 			// Lookup record
@@ -2870,7 +2870,7 @@ func (g *gitBackEnd) pluginInventory(payload string) (string, error) {
 					token, version, err)
 			}
 
-			// Check for decred plugin metadata streams
+			// Check for hdfchain plugin metadata streams
 			var svt decredplugin.StartVoteTuple
 			for _, v := range r.Metadata {
 				switch v.ID {

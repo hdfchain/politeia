@@ -11,13 +11,13 @@ import (
 	"strconv"
 
 	"github.com/hdfchain/politeia/decredplugin"
-	decred "github.com/hdfchain/politeia/decredplugin"
+	hdfchain "github.com/hdfchain/politeia/decredplugin"
 	"github.com/hdfchain/politeia/mdstream"
 	www "github.com/hdfchain/politeia/politeiawww/api/www/v1"
 )
 
 func (c *testcache) getComments(payload string) (string, error) {
-	gc, err := decred.DecodeGetComments([]byte(payload))
+	gc, err := hdfchain.DecodeGetComments([]byte(payload))
 	if err != nil {
 		return "", err
 	}
@@ -25,8 +25,8 @@ func (c *testcache) getComments(payload string) (string, error) {
 	c.RLock()
 	defer c.RUnlock()
 
-	gcrb, err := decred.EncodeGetCommentsReply(
-		decred.GetCommentsReply{
+	gcrb, err := hdfchain.EncodeGetCommentsReply(
+		hdfchain.GetCommentsReply{
 			Comments: c.comments[gc.Token],
 		})
 	if err != nil {
@@ -37,12 +37,12 @@ func (c *testcache) getComments(payload string) (string, error) {
 }
 
 func (c *testcache) authorizeVote(cmdPayload, replyPayload string) (string, error) {
-	av, err := decred.DecodeAuthorizeVote([]byte(cmdPayload))
+	av, err := hdfchain.DecodeAuthorizeVote([]byte(cmdPayload))
 	if err != nil {
 		return "", err
 	}
 
-	avr, err := decred.DecodeAuthorizeVoteReply([]byte(replyPayload))
+	avr, err := hdfchain.DecodeAuthorizeVoteReply([]byte(replyPayload))
 	if err != nil {
 		return "", err
 	}
@@ -55,7 +55,7 @@ func (c *testcache) authorizeVote(cmdPayload, replyPayload string) (string, erro
 
 	_, ok := c.authorizeVotes[av.Token]
 	if !ok {
-		c.authorizeVotes[av.Token] = make(map[string]decred.AuthorizeVote)
+		c.authorizeVotes[av.Token] = make(map[string]hdfchain.AuthorizeVote)
 	}
 
 	c.authorizeVotes[av.Token][avr.RecordVersion] = *av
@@ -64,12 +64,12 @@ func (c *testcache) authorizeVote(cmdPayload, replyPayload string) (string, erro
 }
 
 func (c *testcache) startVote(cmdPayload, replyPayload string) (string, error) {
-	sv, err := decred.DecodeStartVoteV2([]byte(cmdPayload))
+	sv, err := hdfchain.DecodeStartVoteV2([]byte(cmdPayload))
 	if err != nil {
 		return "", err
 	}
 
-	svr, err := decred.DecodeStartVoteReply([]byte(replyPayload))
+	svr, err := hdfchain.DecodeStartVoteReply([]byte(replyPayload))
 	if err != nil {
 		return "", err
 	}
@@ -77,7 +77,7 @@ func (c *testcache) startVote(cmdPayload, replyPayload string) (string, error) {
 	// Version must be added to the StartVote. This is done by
 	// politeiad but the updated StartVote does not travel to the
 	// cache.
-	sv.Version = decred.VersionStartVote
+	sv.Version = hdfchain.VersionStartVote
 
 	c.Lock()
 	defer c.Unlock()
@@ -90,7 +90,7 @@ func (c *testcache) startVote(cmdPayload, replyPayload string) (string, error) {
 }
 
 func (c *testcache) voteDetails(payload string) (string, error) {
-	vd, err := decred.DecodeVoteDetails([]byte(payload))
+	vd, err := hdfchain.DecodeVoteDetails([]byte(payload))
 	if err != nil {
 		return "", err
 	}
@@ -107,7 +107,7 @@ func (c *testcache) voteDetails(payload string) (string, error) {
 	// Prepare reply
 	_, ok := c.authorizeVotes[vd.Token]
 	if !ok {
-		c.authorizeVotes[vd.Token] = make(map[string]decred.AuthorizeVote)
+		c.authorizeVotes[vd.Token] = make(map[string]hdfchain.AuthorizeVote)
 	}
 
 	sv := c.startVotes[vd.Token]
@@ -116,8 +116,8 @@ func (c *testcache) voteDetails(payload string) (string, error) {
 		return "", err
 	}
 
-	vdb, err := decred.EncodeVoteDetailsReply(
-		decred.VoteDetailsReply{
+	vdb, err := hdfchain.EncodeVoteDetailsReply(
+		hdfchain.VoteDetailsReply{
 			AuthorizeVote: c.authorizeVotes[vd.Token][r.Version],
 			StartVote: decredplugin.StartVote{
 				Version: sv.Version,
@@ -132,7 +132,7 @@ func (c *testcache) voteDetails(payload string) (string, error) {
 	return string(vdb), nil
 }
 
-func (c *testcache) voteSummaryReply(token string) (*decred.VoteSummaryReply, error) {
+func (c *testcache) voteSummaryReply(token string) (*hdfchain.VoteSummaryReply, error) {
 	c.RLock()
 	defer c.RUnlock()
 
@@ -158,22 +158,22 @@ func (c *testcache) voteSummaryReply(token string) (*decred.VoteSummaryReply, er
 		duration = uint32(end - start)
 	}
 
-	vsr := decred.VoteSummaryReply{
-		Authorized:          av.Action == decred.AuthVoteActionAuthorize,
+	vsr := hdfchain.VoteSummaryReply{
+		Authorized:          av.Action == hdfchain.AuthVoteActionAuthorize,
 		Type:                sv.Vote.Type,
 		Duration:            duration,
 		EndHeight:           svr.EndHeight,
 		EligibleTicketCount: 0,
 		QuorumPercentage:    sv.Vote.QuorumPercentage,
 		PassPercentage:      sv.Vote.PassPercentage,
-		Results:             []decred.VoteOptionResult{},
+		Results:             []hdfchain.VoteOptionResult{},
 	}
 
 	return &vsr, nil
 }
 
 func (c *testcache) voteSummary(cmdPayload string) (string, error) {
-	vs, err := decred.DecodeVoteSummary([]byte(cmdPayload))
+	vs, err := hdfchain.DecodeVoteSummary([]byte(cmdPayload))
 	if err != nil {
 		return "", err
 	}
@@ -181,7 +181,7 @@ func (c *testcache) voteSummary(cmdPayload string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	reply, err := decred.EncodeVoteSummaryReply(*vsr)
+	reply, err := hdfchain.EncodeVoteSummaryReply(*vsr)
 	if err != nil {
 		return "", err
 	}
@@ -189,12 +189,12 @@ func (c *testcache) voteSummary(cmdPayload string) (string, error) {
 }
 
 func (c *testcache) voteSummaries(cmdPayload string) (string, error) {
-	bvs, err := decred.DecodeBatchVoteSummary([]byte(cmdPayload))
+	bvs, err := hdfchain.DecodeBatchVoteSummary([]byte(cmdPayload))
 	if err != nil {
 		return "", err
 	}
 
-	s := make(map[string]decred.VoteSummaryReply, len(bvs.Tokens))
+	s := make(map[string]hdfchain.VoteSummaryReply, len(bvs.Tokens))
 	for _, token := range bvs.Tokens {
 		vsr, err := c.voteSummaryReply(token)
 		if err != nil {
@@ -203,8 +203,8 @@ func (c *testcache) voteSummaries(cmdPayload string) (string, error) {
 		s[token] = *vsr
 	}
 
-	reply, err := decred.EncodeBatchVoteSummaryReply(
-		decred.BatchVoteSummaryReply{
+	reply, err := hdfchain.EncodeBatchVoteSummaryReply(
+		hdfchain.BatchVoteSummaryReply{
 			Summaries: s,
 		})
 	if err != nil {
@@ -281,7 +281,7 @@ func (c *testcache) linkedFrom(cmdPayload string) (string, error) {
 }
 
 func (c *testcache) getNumComments(payload string) (string, error) {
-	gnc, err := decred.DecodeGetNumComments([]byte(payload))
+	gnc, err := hdfchain.DecodeGetNumComments([]byte(payload))
 	if err != nil {
 		return "", err
 	}
@@ -291,8 +291,8 @@ func (c *testcache) getNumComments(payload string) (string, error) {
 		numComments[token] = len(c.comments[token])
 	}
 
-	gncr, err := decred.EncodeGetNumCommentsReply(
-		decred.GetNumCommentsReply{
+	gncr, err := hdfchain.EncodeGetNumCommentsReply(
+		hdfchain.GetNumCommentsReply{
 			NumComments: numComments,
 		})
 
@@ -305,21 +305,21 @@ func (c *testcache) getNumComments(payload string) (string, error) {
 
 func (c *testcache) decredExec(cmd, cmdPayload, replyPayload string) (string, error) {
 	switch cmd {
-	case decred.CmdGetComments:
+	case hdfchain.CmdGetComments:
 		return c.getComments(cmdPayload)
-	case decred.CmdAuthorizeVote:
+	case hdfchain.CmdAuthorizeVote:
 		return c.authorizeVote(cmdPayload, replyPayload)
-	case decred.CmdStartVote:
+	case hdfchain.CmdStartVote:
 		return c.startVote(cmdPayload, replyPayload)
-	case decred.CmdVoteDetails:
+	case hdfchain.CmdVoteDetails:
 		return c.voteDetails(cmdPayload)
-	case decred.CmdGetNumComments:
+	case hdfchain.CmdGetNumComments:
 		return c.getNumComments(cmdPayload)
-	case decred.CmdVoteSummary:
+	case hdfchain.CmdVoteSummary:
 		return c.voteSummary(cmdPayload)
-	case decred.CmdBatchVoteSummary:
+	case hdfchain.CmdBatchVoteSummary:
 		return c.voteSummaries(cmdPayload)
-	case decred.CmdLinkedFrom:
+	case hdfchain.CmdLinkedFrom:
 		return c.linkedFrom(cmdPayload)
 	}
 

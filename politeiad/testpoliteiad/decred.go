@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"time"
 
-	decred "github.com/hdfchain/politeia/decredplugin"
+	hdfchain "github.com/hdfchain/politeia/decredplugin"
 	v1 "github.com/hdfchain/politeia/politeiad/api/v1"
 )
 
@@ -19,7 +19,7 @@ const (
 )
 
 func (p *TestPoliteiad) authorizeVote(payload string) (string, error) {
-	av, err := decred.DecodeAuthorizeVote([]byte(payload))
+	av, err := hdfchain.DecodeAuthorizeVote([]byte(payload))
 	if err != nil {
 		return "", err
 	}
@@ -28,7 +28,7 @@ func (p *TestPoliteiad) authorizeVote(payload string) (string, error) {
 	s := p.identity.SignMessage([]byte(av.Signature))
 	av.Receipt = hex.EncodeToString(s[:])
 	av.Timestamp = time.Now().Unix()
-	av.Version = decred.VersionAuthorizeVote
+	av.Version = hdfchain.VersionAuthorizeVote
 
 	p.Lock()
 	defer p.Unlock()
@@ -36,7 +36,7 @@ func (p *TestPoliteiad) authorizeVote(payload string) (string, error) {
 	// Store authorize vote
 	_, ok := p.authorizeVotes[av.Token]
 	if !ok {
-		p.authorizeVotes[av.Token] = make(map[string]decred.AuthorizeVote)
+		p.authorizeVotes[av.Token] = make(map[string]hdfchain.AuthorizeVote)
 	}
 
 	r, err := p.record(av.Token)
@@ -47,8 +47,8 @@ func (p *TestPoliteiad) authorizeVote(payload string) (string, error) {
 	p.authorizeVotes[av.Token][r.Version] = *av
 
 	// Prepare reply
-	avrb, err := decred.EncodeAuthorizeVoteReply(
-		decred.AuthorizeVoteReply{
+	avrb, err := hdfchain.EncodeAuthorizeVoteReply(
+		hdfchain.AuthorizeVoteReply{
 			Action:        av.Action,
 			RecordVersion: r.Version,
 			Receipt:       av.Receipt,
@@ -62,7 +62,7 @@ func (p *TestPoliteiad) authorizeVote(payload string) (string, error) {
 }
 
 func (p *TestPoliteiad) startVote(payload string) (string, error) {
-	sv, err := decred.DecodeStartVoteV2([]byte(payload))
+	sv, err := hdfchain.DecodeStartVoteV2([]byte(payload))
 	if err != nil {
 		return "", err
 	}
@@ -71,18 +71,18 @@ func (p *TestPoliteiad) startVote(payload string) (string, error) {
 	defer p.Unlock()
 
 	// Store start vote
-	sv.Version = decred.VersionStartVote
+	sv.Version = hdfchain.VersionStartVote
 	p.startVotes[sv.Vote.Token] = *sv
 
 	// Prepare reply
 	endHeight := bestBlock + sv.Vote.Duration
-	svr := decred.StartVoteReply{
-		Version:          decred.VersionStartVoteReply,
+	svr := hdfchain.StartVoteReply{
+		Version:          hdfchain.VersionStartVoteReply,
 		StartBlockHeight: strconv.FormatUint(uint64(bestBlock), 10),
 		EndHeight:        strconv.FormatUint(uint64(endHeight), 10),
 		EligibleTickets:  []string{},
 	}
-	svrb, err := decred.EncodeStartVoteReply(svr)
+	svrb, err := hdfchain.EncodeStartVoteReply(svr)
 	if err != nil {
 		return "", err
 	}
@@ -94,7 +94,7 @@ func (p *TestPoliteiad) startVote(payload string) (string, error) {
 }
 
 func (p *TestPoliteiad) startVoteRunoff(payload string) (string, error) {
-	svr, err := decred.DecodeStartVoteRunoff([]byte(payload))
+	svr, err := hdfchain.DecodeStartVoteRunoff([]byte(payload))
 	if err != nil {
 		return "", err
 	}
@@ -103,7 +103,7 @@ func (p *TestPoliteiad) startVoteRunoff(payload string) (string, error) {
 	defer p.Unlock()
 
 	// Store authorize votes
-	avReply := make(map[string]decred.AuthorizeVoteReply)
+	avReply := make(map[string]hdfchain.AuthorizeVoteReply)
 	for _, av := range svr.AuthorizeVotes {
 		r, err := p.record(av.Token)
 		if err != nil {
@@ -111,20 +111,20 @@ func (p *TestPoliteiad) startVoteRunoff(payload string) (string, error) {
 		}
 		// Fill client data
 		s := p.identity.SignMessage([]byte(av.Signature))
-		av.Version = decred.VersionAuthorizeVote
+		av.Version = hdfchain.VersionAuthorizeVote
 		av.Receipt = hex.EncodeToString(s[:])
 		av.Timestamp = time.Now().Unix()
-		av.Version = decred.VersionAuthorizeVote
+		av.Version = hdfchain.VersionAuthorizeVote
 
 		// Store
 		_, ok := p.authorizeVotes[av.Token]
 		if !ok {
-			p.authorizeVotes[av.Token] = make(map[string]decred.AuthorizeVote)
+			p.authorizeVotes[av.Token] = make(map[string]hdfchain.AuthorizeVote)
 		}
 		p.authorizeVotes[av.Token][r.Version] = av
 
 		// Prepare response
-		avr := decred.AuthorizeVoteReply{
+		avr := hdfchain.AuthorizeVoteReply{
 			Action:        av.Action,
 			RecordVersion: r.Version,
 			Receipt:       av.Receipt,
@@ -134,13 +134,13 @@ func (p *TestPoliteiad) startVoteRunoff(payload string) (string, error) {
 	}
 
 	// Store start votes
-	svReply := decred.StartVoteReply{}
+	svReply := hdfchain.StartVoteReply{}
 	for _, sv := range svr.StartVotes {
-		sv.Version = decred.VersionStartVote
+		sv.Version = hdfchain.VersionStartVote
 		p.startVotes[sv.Vote.Token] = sv
 		// Prepare response
 		endHeight := bestBlock + sv.Vote.Duration
-		svReply.Version = decred.VersionStartVoteReply
+		svReply.Version = hdfchain.VersionStartVoteReply
 		svReply.StartBlockHeight = strconv.FormatUint(uint64(bestBlock), 10)
 		svReply.EndHeight = strconv.FormatUint(uint64(endHeight), 10)
 		svReply.EligibleTickets = []string{}
@@ -149,14 +149,14 @@ func (p *TestPoliteiad) startVoteRunoff(payload string) (string, error) {
 	// Store start vote runoff
 	p.startVotesRunoff[svr.Token] = *svr
 
-	response := decred.StartVoteRunoffReply{
+	response := hdfchain.StartVoteRunoffReply{
 		AuthorizeVoteReplies: avReply,
 		StartVoteReply:       svReply,
 	}
 
 	p.startVotesRunoffReplies[svr.Token] = response
 
-	svrReply, err := decred.EncodeStartVoteRunoffReply(response)
+	svrReply, err := hdfchain.EncodeStartVoteRunoffReply(response)
 	if err != nil {
 		return "", err
 	}
@@ -167,15 +167,15 @@ func (p *TestPoliteiad) startVoteRunoff(payload string) (string, error) {
 // decredExec executes the passed in plugin command.
 func (p *TestPoliteiad) decredExec(pc v1.PluginCommand) (string, error) {
 	switch pc.Command {
-	case decred.CmdStartVote:
+	case hdfchain.CmdStartVote:
 		return p.startVote(pc.Payload)
-	case decred.CmdStartVoteRunoff:
+	case hdfchain.CmdStartVoteRunoff:
 		return p.startVoteRunoff(pc.Payload)
-	case decred.CmdAuthorizeVote:
+	case hdfchain.CmdAuthorizeVote:
 		return p.authorizeVote(pc.Payload)
-	case decred.CmdBestBlock:
+	case hdfchain.CmdBestBlock:
 		return strconv.FormatUint(uint64(bestBlock), 10), nil
-	case decred.CmdVoteSummary:
+	case hdfchain.CmdVoteSummary:
 		// This is a cache plugin command. No work needed here.
 		return "", nil
 	}

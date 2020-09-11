@@ -16,7 +16,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/decred/slog"
+	"github.com/hdfchain/slog"
 )
 
 type testWriter struct {

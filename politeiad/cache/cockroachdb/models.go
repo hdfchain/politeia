@@ -84,7 +84,7 @@ func (Record) TableName() string {
 // the most recent proposal version since this is the only metadata that
 // currently needs to be queried.
 //
-// This is a decred plugin model.
+// This is a hdfchain plugin model.
 type ProposalMetadata struct {
 	Token  string `gorm:"primary_key"` // Censorship token
 	Name   string `gorm:"not null"`    // Proposal name
@@ -95,7 +95,7 @@ type ProposalMetadata struct {
 // Comment represents a record comment, including all of the server side
 // metadata.
 //
-// This is a decred plugin model.
+// This is a hdfchain plugin model.
 type Comment struct {
 	Key       string `gorm:"primary_key"`       // Primary key (token+commentID)
 	Token     string `gorm:"not null"`          // Censorship token
@@ -117,7 +117,7 @@ func (Comment) TableName() string {
 // LikeComment describes a comment upvote/downvote.  The server side metadata
 // is not included.
 //
-// This is a decred plugin model.
+// This is a hdfchain plugin model.
 type LikeComment struct {
 	Key       uint   `gorm:"primary_key"`       // Primary key
 	Token     string `gorm:"not null"`          // Censorship token
@@ -135,7 +135,7 @@ func (LikeComment) TableName() string {
 // AuthorizeVote is used to indicate that a record has been finalized and is
 // ready to be voted on.
 //
-// This is a decred plugin model.
+// This is a hdfchain plugin model.
 type AuthorizeVote struct {
 	Key       string `gorm:"primary_key"`       // Primary key (token+version)
 	Token     string `gorm:"not null"`          // Censorship token
@@ -154,7 +154,7 @@ func (AuthorizeVote) TableName() string {
 
 // VoteOption describes a single vote option.
 //
-// This is a decred plugin model.
+// This is a hdfchain plugin model.
 type VoteOption struct {
 	Key         uint   `gorm:"primary_key"` // Primary key
 	Token       string `gorm:"not null"`    // StartVote foreign key
@@ -185,7 +185,7 @@ func (VoteOption) TableName() string {
 // from the cache. The cache StartVote must be queried directly to obtain this
 // data.
 //
-// This is a decred plugin model.
+// This is a hdfchain plugin model.
 type StartVote struct {
 	Token               string       `gorm:"primary_key"`       // Censorship token
 	Version             uint         `gorm:"not null"`          // StartVote struct version
@@ -212,7 +212,7 @@ func (StartVote) TableName() string {
 
 // CastVote records a signed vote.
 //
-// This is a decred plugin model.
+// This is a hdfchain plugin model.
 type CastVote struct {
 	Key       uint   `gorm:"primary_key"`       // Primary key
 	Token     string `gorm:"not null"`          // Censorship token
@@ -233,7 +233,7 @@ func (CastVote) TableName() string {
 // VoteOptionResults records the vote result for a vote option. A
 // VoteOptionResult should only be created once the proposal vote has finished.
 //
-// This is a decred plugin model.
+// This is a hdfchain plugin model.
 type VoteOptionResult struct {
 	Key       string     `gorm:"primary_key"` // Primary key (token+votebit)
 	Token     string     `gorm:"not null"`    // Censorship token (VoteResults foreign key)
@@ -251,7 +251,7 @@ func (VoteOptionResult) TableName() string {
 // vote was approved/rejected.  A vote result entry should only be created once
 // the voting period has ended.  The vote results table is lazy loaded.
 //
-// This is a decred plugin model.
+// This is a hdfchain plugin model.
 type VoteResults struct {
 	Token    string             `gorm:"primary_key"`      // Censorship token
 	Approved bool               `gorm:"not null"`         // Vote was approved

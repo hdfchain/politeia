@@ -680,7 +680,7 @@ func stringInSlice(arr []string, str string) bool {
 	return false
 }
 
-// processNewCommentDCC sends a new comment decred plugin command to politeaid
+// processNewCommentDCC sends a new comment hdfchain plugin command to politeaid
 // then fetches the new comment from the cache and returns it.
 func (p *politeiawww) processNewCommentDCC(nc www.NewComment, u *user.User) (*www.NewCommentReply, error) {
 	log.Tracef("processNewCommentDCC: %v %v", nc.Token, u.ID)
@@ -1510,7 +1510,7 @@ func (p *politeiawww) processStartVoteDCC(sv cms.StartVote, u *user.User) (*cms.
 		}
 	}
 
-	// Tell decred plugin to start voting
+	// Tell hdfchain plugin to start voting
 	payload, err := cmsplugin.EncodeStartVote(dsv)
 	if err != nil {
 		return nil, err

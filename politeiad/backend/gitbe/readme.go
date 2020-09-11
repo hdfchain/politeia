@@ -18,7 +18,7 @@ https://github.com/hdfchain/politeia
 
 ## Contact
 
-https://decred.org/community
+https://clkj.ltd/community
 
 `
 )

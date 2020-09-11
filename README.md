@@ -295,7 +295,7 @@ The result should look something like this:
 
 At this point, you can:
 
-* Follow the instructions at [decred/politeiagui](https://github.com/hdfchain/politeiagui)
+* Follow the instructions at [hdfchain/politeiagui](https://github.com/hdfchain/politeiagui)
 to setup Politeia and access it through the UI.
 * Use the [politeiawwwcli](https://github.com/hdfchain/politeia/tree/master/politeiawww/cmd/politeiawwwcli) tool to interact with politeiawww.
 * Use the [politeia](https://github.com/hdfchain/politeia/tree/master/politeiad/cmd/politeia) tool to interact directly with politeiad.
@@ -417,15 +417,15 @@ environment variables, do it normally as building from source:
 
 ## Integrated Projects / External APIs / Official URLs
 
-* https://faucet.decred.org - instance of [testnetfaucet](https://github.com/decred/testnetfaucet)
+* https://faucet.clkj.ltd - instance of [testnetfaucet](https://github.com/hdfchain/testnetfaucet)
   which is used by **politeiawww_refclient** to satisfy paywall requests in an
   automated fashion.
 
-* https://test-proposals.decred.org/ - testing/development instance of Politeia.
+* https://test-proposals.clkj.ltd/ - testing/development instance of Politeia.
 
-* https://pi-staging.decred.org/ - politeia staging environment.
+* https://pi-staging.clkj.ltd/ - politeia staging environment.
 
-* https://proposals.decred.org/ - live production instance of Politeia.
+* https://proposals.clkj.ltd/ - live production instance of Politeia.
 
 ## Library and interfaces
 

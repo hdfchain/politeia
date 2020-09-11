@@ -10,7 +10,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/decred/dcrd/certgen"
+	"github.com/hdfchain/hdfd/certgen"
 )
 
 // GenCertPair generates a key/cert pair to the paths provided.

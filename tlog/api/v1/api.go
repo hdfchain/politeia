@@ -3,7 +3,7 @@ package v1
 import (
 	"fmt"
 
-	dcrtime "github.com/decred/dcrtime/api/v1"
+	dcrtime "github.com/hdfchain/dcrtime/api/v1"
 	"github.com/google/trillian"
 )
 

@@ -11,7 +11,7 @@ import (
 	"errors"
 	"regexp"
 
-	"github.com/decred/dcrtime/merkle"
+	"github.com/hdfchain/dcrtime/merkle"
 	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
 	"github.com/hdfchain/politeia/politeiad/api/v1/mime"
 )
@@ -70,9 +70,9 @@ const (
 	RecordStatusArchived          RecordStatusT = 6 // Vetted record that has been archived
 
 	// Default network bits
-	DefaultMainnetHost = "politeia.decred.org"
+	DefaultMainnetHost = "politeia.clkj.ltd"
 	DefaultMainnetPort = "49374"
-	DefaultTestnetHost = "politeia-testnet.decred.org"
+	DefaultTestnetHost = "politeia-testnet.clkj.ltd"
 	DefaultTestnetPort = "59374"
 
 	Forward = "X-Forwarded-For"

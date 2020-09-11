@@ -13,8 +13,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/decred/dcrd/chaincfg"
-	"github.com/decred/dcrd/hdkeychain"
+	"github.com/hdfchain/hdfd/chaincfg"
+	"github.com/hdfchain/hdfd/hdkeychain"
 	"github.com/hdfchain/politeia/cmsplugin"
 	"github.com/hdfchain/politeia/politeiad/api/v1/mime"
 	cms "github.com/hdfchain/politeia/politeiawww/api/cms/v1"
@@ -661,7 +661,7 @@ func dccComments(u user, token string) ([]www.Comment, error) {
 // testDCC tests the DCC (Decred Contractor Clearance) routes. See the proposal
 // below for more information about the DCC process.
 //
-// https://proposals.decred.org/proposals/fa38a35
+// https://proposals.clkj.ltd/proposals/fa38a35
 //
 // A new cms user must have their contractor type updated before they are able
 // to submit invoices. There are currently two ways for this to happen.

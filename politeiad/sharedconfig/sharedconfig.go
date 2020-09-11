@@ -5,7 +5,7 @@
 package sharedconfig
 
 import (
-	"github.com/decred/dcrd/dcrutil"
+	"github.com/hdfchain/hdfd/dcrutil"
 )
 
 const (

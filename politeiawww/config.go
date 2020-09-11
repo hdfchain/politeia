@@ -23,7 +23,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/decred/dcrd/hdkeychain"
+	"github.com/hdfchain/hdfd/hdkeychain"
 	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
 	"github.com/hdfchain/politeia/util/version"
 
@@ -54,8 +54,8 @@ const (
 	defaultMailAddress    = "Politeia <noreply@example.org>"
 	defaultCMSMailAddress = "Contractor Management System <noreply@example.org>"
 
-	defaultDcrdataMainnet = "dcrdata.decred.org:443"
-	defaultDcrdataTestnet = "testnet.decred.org:443"
+	defaultDcrdataMainnet = "dcrdata.clkj.ltd:443"
+	defaultDcrdataTestnet = "testnet.clkj.ltd:443"
 
 	// dust value can be found increasing the amount value until we get false
 	// from IsDustAmount function. Amounts can not be lower than dust

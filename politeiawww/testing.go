@@ -21,8 +21,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/decred/dcrd/chaincfg"
-	"github.com/decred/dcrtime/merkle"
+	"github.com/hdfchain/hdfd/chaincfg"
+	"github.com/hdfchain/dcrtime/merkle"
 	"github.com/hdfchain/politeia/decredplugin"
 	"github.com/hdfchain/politeia/mdstream"
 	pd "github.com/hdfchain/politeia/politeiad/api/v1"

@@ -17,7 +17,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/decred/dcrwallet/rpc/walletrpc"
+	"github.com/hdfchain/hdfwallet/rpc/walletrpc"
 	cms "github.com/hdfchain/politeia/politeiawww/api/cms/v1"
 	www "github.com/hdfchain/politeia/politeiawww/api/www/v1"
 	www2 "github.com/hdfchain/politeia/politeiawww/api/www/v2"

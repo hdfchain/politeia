@@ -24,9 +24,9 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/decred/dcrd/chaincfg"
-	v1 "github.com/decred/dcrtime/api/v1"
-	"github.com/decred/dcrtime/merkle"
+	"github.com/hdfchain/hdfd/chaincfg"
+	v1 "github.com/hdfchain/dcrtime/api/v1"
+	"github.com/hdfchain/dcrtime/merkle"
 	"github.com/hdfchain/politeia/cmsplugin"
 	"github.com/hdfchain/politeia/decredplugin"
 	pd "github.com/hdfchain/politeia/politeiad/api/v1"
@@ -101,7 +101,7 @@ var (
 		// out files, which helps when running on Windows.
 		"core.autocrlf": "false",
 		"user.name":     "Politeia",
-		"user.email":    "noreply@decred.org",
+		"user.email":    "noreply@clkj.ltd",
 	}
 
 	errNothingToDo = errors.New("nothing to do")
@@ -3023,7 +3023,7 @@ func New(anp *chaincfg.Params, root string, dcrtimeHost string, gitPath string, 
 
 	switch mode {
 	case piMode:
-		// Setup decred plugin settings
+		// Setup hdfchain plugin settings
 		var voteDurationMin, voteDurationMax string
 		switch anp.Name {
 		case chaincfg.MainNetParams.Name:

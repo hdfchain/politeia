@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/decred/dcrwallet/rpc/walletrpc"
+	"github.com/hdfchain/hdfwallet/rpc/walletrpc"
 	"github.com/hdfchain/politeia/decredplugin"
 	v1 "github.com/hdfchain/politeia/politeiawww/api/www/v1"
 	"github.com/hdfchain/politeia/politeiawww/cmd/shared"

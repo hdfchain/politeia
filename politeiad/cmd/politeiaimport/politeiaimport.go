@@ -13,7 +13,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/decred/dcrd/chaincfg"
+	"github.com/hdfchain/hdfd/chaincfg"
 	"github.com/hdfchain/politeia/politeiad/backend/gitbe"
 	"github.com/hdfchain/politeia/politeiad/sharedconfig"
 	"github.com/hdfchain/politeia/util"
@@ -161,7 +161,7 @@ func _main() error {
 			// the journals use a different directory structure
 			// then unvetted/vetted.
 			//
-			// unvetted/[token]/plugin/decred/comments.journal
+			// unvetted/[token]/plugin/hdfchain/comments.journal
 			// journals/[token]/comments.journal
 
 			// Parse token dirname

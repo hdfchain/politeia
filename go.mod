@@ -11,25 +11,25 @@ require (
 	github.com/coreos/pkg v0.0.0-20180928190104-399ea9e2e55f // indirect
 	github.com/dajohi/goemail v1.0.0
 	github.com/davecgh/go-spew v1.1.1
-	github.com/decred/dcrd/blockchain/stake v1.1.0
-	github.com/decred/dcrd/certgen v1.1.0
-	github.com/decred/dcrd/chaincfg v1.5.1
-	github.com/decred/dcrd/chaincfg/chainhash v1.0.2
-	github.com/decred/dcrd/dcrec/secp256k1 v1.0.2
-	github.com/decred/dcrd/dcrutil v1.4.0
-	github.com/decred/dcrd/hdkeychain v1.1.1
-	github.com/decred/dcrd/txscript v1.1.0 // indirect
-	github.com/decred/dcrd/wire v1.3.0
-	github.com/decred/dcrdata/api/types/v4 v4.0.4
-	github.com/decred/dcrdata/explorer/types/v2 v2.1.1
-	github.com/decred/dcrdata/pubsub/types/v3 v3.0.5
-	github.com/decred/dcrdata/pubsub/v4 v4.0.3-0.20191219212733-19f656d6d679
-	github.com/decred/dcrdata/semver v1.0.0
-	github.com/decred/dcrtime v0.0.0-20191018193024-8d8b4ef0458e
-	github.com/decred/dcrwallet v1.2.3-0.20190128160919-849f7c01c12d
-	github.com/decred/dcrwallet/rpc/walletrpc v0.2.0
-	github.com/decred/go-socks v1.1.0
-	github.com/decred/slog v1.0.0
+	github.com/hdfchain/hdfd/blockchain/stake v1.1.0
+	github.com/hdfchain/hdfd/certgen v1.1.0
+	github.com/hdfchain/hdfd/chaincfg v1.5.1
+	github.com/hdfchain/hdfd/chaincfg/chainhash v1.0.2
+	github.com/hdfchain/hdfd/dcrec/secp256k1 v1.0.2
+	github.com/hdfchain/hdfd/dcrutil v1.4.0
+	github.com/hdfchain/hdfd/hdkeychain v1.1.1
+	github.com/hdfchain/hdfd/txscript v1.1.0 // indirect
+	github.com/hdfchain/hdfd/wire v1.3.0
+	github.com/hdfchain/hdfdata/api/types/v4 v4.0.4
+	github.com/hdfchain/hdfdata/explorer/types/v2 v2.1.1
+	github.com/hdfchain/hdfdata/pubsub/types/v3 v3.0.5
+	github.com/hdfchain/hdfdata/pubsub/v4 v4.0.3-0.20191219212733-19f656d6d679
+	github.com/hdfchain/hdfdata/semver v1.0.0
+	github.com/hdfchain/dcrtime v0.0.0-20191018193024-8d8b4ef0458e
+	github.com/hdfchain/hdfwallet v1.2.3-0.20190128160919-849f7c01c12d
+	github.com/hdfchain/hdfwallet/rpc/walletrpc v0.2.0
+	github.com/hdfchain/go-socks v1.1.0
+	github.com/hdfchain/slog v1.0.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/go-test/deep v1.0.1
 	github.com/gogo/protobuf v1.3.0 // indirect

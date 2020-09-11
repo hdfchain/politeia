@@ -17,7 +17,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/decred/dcrd/dcrutil"
+	"github.com/hdfchain/hdfd/dcrutil"
 	"github.com/hdfchain/politeia/mdstream"
 	pd "github.com/hdfchain/politeia/politeiad/api/v1"
 	"github.com/hdfchain/politeia/politeiad/api/v1/identity"

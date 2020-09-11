@@ -4,7 +4,7 @@ Welcome to Decred's Contractor Management System!  This site is being designed
 to be a functional interface for contractors to submit and invoices be processed
 and, in the future, have a seat at the table in some of the contractor level 
 decision making, as discussed in the stakeholder approved proposal for the 
-[DCC](https://proposals.decred.org/proposals/fa38a3593d9a3f6cb2478a24c25114f5097c572f6dadf24c78bb521ed10992a4).
+[DCC](https://proposals.clkj.ltd/proposals/fa38a3593d9a3f6cb2478a24c25114f5097c572f6dadf24c78bb521ed10992a4).
 
 To begin, we will be inviting contractors to the site to begin to submit 
 invoices for their completed labor or expenses.  These invoices would then be 
@@ -41,7 +41,7 @@ Once successfully registered a user may login via the form on the right.
 ### How to create invoices
 
 Once registered a user may submit invoices at
-[https://cms.decred.org/invoices/new](https://cms.decred.org/invoices/new).  
+[https://cms.clkj.ltd/invoices/new](https://cms.clkj.ltd/invoices/new).  
 This form is relatively self explantory, but here is a quick description of each
 of the currently required fields:
 

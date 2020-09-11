@@ -29,13 +29,13 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/decred/dcrd/blockchain/stake"
-	"github.com/decred/dcrd/chaincfg/chainhash"
-	"github.com/decred/dcrd/dcrec/secp256k1"
-	"github.com/decred/dcrd/dcrutil"
-	"github.com/decred/dcrd/wire"
-	dcrdataapi "github.com/decred/dcrdata/api/types/v4"
-	pb "github.com/decred/dcrwallet/rpc/walletrpc"
+	"github.com/hdfchain/hdfd/blockchain/stake"
+	"github.com/hdfchain/hdfd/chaincfg/chainhash"
+	"github.com/hdfchain/hdfd/dcrec/secp256k1"
+	"github.com/hdfchain/hdfd/dcrutil"
+	"github.com/hdfchain/hdfd/wire"
+	dcrdataapi "github.com/hdfchain/hdfdata/api/types/v4"
+	pb "github.com/hdfchain/hdfwallet/rpc/walletrpc"
 	"github.com/hdfchain/politeia/decredplugin"
 	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
 	v1 "github.com/hdfchain/politeia/politeiawww/api/www/v1"
@@ -95,7 +95,7 @@ func ProvidePrivPassphrase() ([]byte, error) {
 }
 
 // verifyMessage verifies a message is properly signed.
-// Copied from https://github.com/decred/dcrd/blob/0fc55252f912756c23e641839b1001c21442c38a/rpcserver.go#L5605
+// Copied from https://github.com/hdfchain/hdfd/blob/0fc55252f912756c23e641839b1001c21442c38a/rpcserver.go#L5605
 func verifyMessage(address, message, signature string) (bool, error) {
 	// Decode the provided address.
 	addr, err := dcrutil.DecodeAddress(address)
@@ -1060,9 +1060,9 @@ func (c *ctx) voteStatus(token string) (*v1.VoteStatusReply, error) {
 func (c *ctx) _bestBlock() (uint32, error) {
 	var url string
 	if c.cfg.TestNet {
-		url = "https://testnet.decred.org:443/api/block/best"
+		url = "https://testnet.clkj.ltd:443/api/block/best"
 	} else {
-		url = "https://dcrdata.decred.org:443/api/block/best"
+		url = "https://dcrdata.clkj.ltd:443/api/block/best"
 	}
 
 	log.Debugf("Request: GET %v", url)

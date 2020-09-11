@@ -13,7 +13,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/decred/dcrtime/merkle"
+	"github.com/hdfchain/dcrtime/merkle"
 )
 
 func tempFile(size int) string {

@@ -192,7 +192,7 @@ func validateComment(c www.NewComment) error {
 	return nil
 }
 
-// processNewComment sends a new comment decred plugin command to politeaid
+// processNewComment sends a new comment hdfchain plugin command to politeaid
 // then fetches the new comment from the cache and returns it.
 func (p *politeiawww) processNewComment(nc www.NewComment, u *user.User) (*www.NewCommentReply, error) {
 	log.Tracef("processNewComment: %v %v", nc.Token, u.ID)
@@ -347,7 +347,7 @@ func (p *politeiawww) processNewComment(nc www.NewComment, u *user.User) (*www.N
 	}, nil
 }
 
-// processNewCommentInvoice sends a new comment decred plugin command to politeaid
+// processNewCommentInvoice sends a new comment hdfchain plugin command to politeaid
 // then fetches the new comment from the cache and returns it.
 func (p *politeiawww) processNewCommentInvoice(nc www.NewComment, u *user.User) (*www.NewCommentReply, error) {
 	log.Tracef("processNewComment: %v %v", nc.Token, u.ID)
@@ -628,7 +628,7 @@ func (p *politeiawww) processLikeComment(lc www.LikeComment, u *user.User) (*www
 	}, nil
 }
 
-// processCensorComment sends a censor comment decred plugin command to
+// processCensorComment sends a censor comment hdfchain plugin command to
 // politeiad then returns the censor comment receipt.
 func (p *politeiawww) processCensorComment(cc www.CensorComment, u *user.User) (*www.CensorCommentReply, error) {
 	log.Tracef("processCensorComment: %v: %v", cc.Token, cc.CommentID)

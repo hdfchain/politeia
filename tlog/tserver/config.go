@@ -17,8 +17,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/decred/dcrd/dcrutil"
-	v1 "github.com/decred/dcrtime/api/v1"
+	"github.com/hdfchain/hdfd/dcrutil"
+	v1 "github.com/hdfchain/dcrtime/api/v1"
 	"github.com/hdfchain/politeia/util"
 	"github.com/hdfchain/politeia/util/version"
 	flags "github.com/jessevdk/go-flags"

@@ -21,7 +21,7 @@ import (
 	"strconv"
 	"strings"
 
-	v1 "github.com/decred/dcrtime/api/v1"
+	v1 "github.com/hdfchain/dcrtime/api/v1"
 	"github.com/hdfchain/politeia/politeiad/sharedconfig"
 	"github.com/hdfchain/politeia/util"
 	"github.com/hdfchain/politeia/util/version"
@@ -39,8 +39,8 @@ const (
 	defaultMainnetPort = "49374"
 	defaultTestnetPort = "59374"
 
-	defaultMainnetDcrdata = "dcrdata.decred.org:443"
-	defaultTestnetDcrdata = "testnet.decred.org:443"
+	defaultMainnetDcrdata = "dcrdata.clkj.ltd:443"
+	defaultTestnetDcrdata = "testnet.clkj.ltd:443"
 
 	// Currently available modes to run politeia, by default piwww, is used.
 	politeiaWWWMode = "piwww"

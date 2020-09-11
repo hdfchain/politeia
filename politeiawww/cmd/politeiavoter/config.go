@@ -16,8 +16,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/decred/dcrd/dcrutil"
-	"github.com/decred/go-socks/socks"
+	"github.com/hdfchain/hdfd/dcrutil"
+	"github.com/hdfchain/go-socks/socks"
 	"github.com/hdfchain/politeia/util/version"
 	flags "github.com/jessevdk/go-flags"
 )
@@ -354,9 +354,9 @@ func loadConfig() (*config, []string, error) {
 	// Determine default connections
 	if cfg.PoliteiaWWW == "" {
 		if activeNetParams.Name == "mainnet" {
-			cfg.PoliteiaWWW = "https://proposals.decred.org/api"
+			cfg.PoliteiaWWW = "https://proposals.clkj.ltd/api"
 		} else {
-			cfg.PoliteiaWWW = "https://test-proposals.decred.org/api"
+			cfg.PoliteiaWWW = "https://test-proposals.clkj.ltd/api"
 		}
 	}
 

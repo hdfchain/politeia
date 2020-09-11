@@ -15,8 +15,8 @@ import (
 	"net/http"
 	"time"
 
-	v1 "github.com/decred/dcrtime/api/v1"
-	"github.com/decred/dcrtime/merkle"
+	v1 "github.com/hdfchain/dcrtime/api/v1"
+	"github.com/hdfchain/dcrtime/merkle"
 )
 
 var (

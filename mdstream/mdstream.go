@@ -29,9 +29,9 @@ const (
 	IDDCCStatusChange      = 7
 	IDDCCSupportOpposition = 8
 
-	// Note that 13 is in use by the decred plugin
-	// Note that 14 is in use by the decred plugin
-	// Note that 15 is in use by the decred plugin
+	// Note that 13 is in use by the hdfchain plugin
+	// Note that 14 is in use by the hdfchain plugin
+	// Note that 15 is in use by the hdfchain plugin
 
 	// mdstream current supported versions
 	VersionProposalGeneral      = 2

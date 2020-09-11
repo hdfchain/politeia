@@ -12,8 +12,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/decred/dcrd/dcrutil"
-	pstypes "github.com/decred/dcrdata/pubsub/types/v3"
+	"github.com/hdfchain/hdfd/dcrutil"
+	pstypes "github.com/hdfchain/hdfdata/pubsub/types/v3"
 	"github.com/hdfchain/politeia/mdstream"
 	pd "github.com/hdfchain/politeia/politeiad/api/v1"
 	"github.com/hdfchain/politeia/politeiad/cache"

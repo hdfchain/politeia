@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/decred/dcrwallet/rpc/walletrpc"
+	"github.com/hdfchain/hdfwallet/rpc/walletrpc"
 )
 
 // InventoryCmd retreives the proposals that are being voted on.

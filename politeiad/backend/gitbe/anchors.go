@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/decred/dcrtime/merkle"
+	"github.com/hdfchain/dcrtime/merkle"
 )
 
 // An anchor corresponds to a set of git commit hashes, along with their

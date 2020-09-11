@@ -16,15 +16,15 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/decred/dcrd/dcrutil"
+	"github.com/hdfchain/hdfd/dcrutil"
 	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
 	"github.com/hdfchain/politeia/util/version"
 	flags "github.com/jessevdk/go-flags"
 )
 
 const (
-	defaultHost              = "https://proposals.decred.org/api"
-	defaultFaucetHost        = "https://faucet.decred.org/requestfaucet"
+	defaultHost              = "https://proposals.clkj.ltd/api"
+	defaultFaucetHost        = "https://faucet.clkj.ltd/requestfaucet"
 	defaultWalletHost        = "127.0.0.1"
 	defaultWalletTestnetPort = "19111"
 

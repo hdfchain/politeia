@@ -5,7 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 
-	"github.com/decred/dcrtime/merkle"
+	"github.com/hdfchain/dcrtime/merkle"
 	v1 "github.com/hdfchain/politeia/politeiawww/api/www/v1"
 	"github.com/hdfchain/politeia/util"
 )

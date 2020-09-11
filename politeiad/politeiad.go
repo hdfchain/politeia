@@ -1084,7 +1084,7 @@ func (p *politeia) buildCacheDecredPlugin(tokens [][]byte) error {
 		}
 		_, reply, err := p.backend.Plugin(decredplugin.CmdInventory, string(b))
 		if err != nil {
-			return fmt.Errorf("backend decred plugin inventory %x: %v", token, err)
+			return fmt.Errorf("backend hdfchain plugin inventory %x: %v", token, err)
 		}
 		ir, err := decredplugin.DecodeInventoryReply([]byte(reply))
 		if err != nil {

@@ -3,7 +3,7 @@ package v1
 import (
 	"fmt"
 
-	"github.com/decred/dcrd/dcrutil"
+	"github.com/hdfchain/hdfd/dcrutil"
 	"github.com/hdfchain/politeia/cmsplugin"
 	www "github.com/hdfchain/politeia/politeiawww/api/www/v1"
 )
@@ -242,8 +242,8 @@ const (
 	ErrorStatusDCCVoteStillLive               www.ErrorStatusT = 1055
 	ErrorStatusDCCDuplicateVote               www.ErrorStatusT = 1056
 
-	ProposalsMainnet = "https://proposals.decred.org"
-	ProposalsTestnet = "https://test-proposals.decred.org"
+	ProposalsMainnet = "https://proposals.clkj.ltd"
+	ProposalsTestnet = "https://test-proposals.clkj.ltd"
 )
 
 var (

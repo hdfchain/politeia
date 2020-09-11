@@ -16,7 +16,7 @@ import (
 	"github.com/hdfchain/politeia/util"
 )
 
-// decredGetComment sends the decred plugin getcomment command to the cache and
+// decredGetComment sends the hdfchain plugin getcomment command to the cache and
 // returns the specified comment.
 func (p *politeiawww) decredGetComment(gc decredplugin.GetComment) (*decredplugin.Comment, error) {
 	// Setup plugin command
@@ -45,7 +45,7 @@ func (p *politeiawww) decredGetComment(gc decredplugin.GetComment) (*decredplugi
 	return &gcr.Comment, nil
 }
 
-// decredCommentGetByID retrieves the specified decred plugin comment from the
+// decredCommentGetByID retrieves the specified hdfchain plugin comment from the
 // cache.
 func (p *politeiawww) decredCommentGetByID(token, commentID string) (*decredplugin.Comment, error) {
 	gc := decredplugin.GetComment{
@@ -55,7 +55,7 @@ func (p *politeiawww) decredCommentGetByID(token, commentID string) (*decredplug
 	return p.decredGetComment(gc)
 }
 
-// decredCommentGetBySignature retrieves the specified decred plugin comment
+// decredCommentGetBySignature retrieves the specified hdfchain plugin comment
 // from the cache.
 func (p *politeiawww) decredCommentGetBySignature(token, sig string) (*decredplugin.Comment, error) {
 	gc := decredplugin.GetComment{
@@ -65,7 +65,7 @@ func (p *politeiawww) decredCommentGetBySignature(token, sig string) (*decredplu
 	return p.decredGetComment(gc)
 }
 
-// decredGetComments sends the decred plugin getcomments command to the cache
+// decredGetComments sends the hdfchain plugin getcomments command to the cache
 // and returns all of the comments for the passed in proposal token.
 func (p *politeiawww) decredGetComments(token string) ([]decredplugin.Comment, error) {
 	// Setup plugin command
@@ -98,7 +98,7 @@ func (p *politeiawww) decredGetComments(token string) ([]decredplugin.Comment, e
 	return gcr.Comments, nil
 }
 
-// decredGetNumComments sends the decred plugin command GetNumComments to the
+// decredGetNumComments sends the hdfchain plugin command GetNumComments to the
 // cache and returns the number of comments for each of the specified
 // proposals. If a provided token does not correspond to an actual proposal
 // then it will not be included in the returned map. It is the responability
@@ -135,7 +135,7 @@ func (p *politeiawww) decredGetNumComments(tokens []string) (map[string]int, err
 	return gncr.NumComments, nil
 }
 
-// decredCommentLikes sends the decred plugin commentlikes command to the cache
+// decredCommentLikes sends the hdfchain plugin commentlikes command to the cache
 // and returns all of the comment likes for the passed in comment.
 func (p *politeiawww) decredCommentLikes(token, commentID string) ([]decredplugin.LikeComment, error) {
 	// Setup plugin command
@@ -169,7 +169,7 @@ func (p *politeiawww) decredCommentLikes(token, commentID string) ([]decredplugi
 	return clr.CommentLikes, nil
 }
 
-// decredPropCommentLikes sends the decred plugin proposalcommentslikes command
+// decredPropCommentLikes sends the hdfchain plugin proposalcommentslikes command
 // to the cache and returns all of the comment likes for the passed in proposal
 // token.
 func (p *politeiawww) decredPropCommentLikes(token string) ([]decredplugin.LikeComment, error) {
@@ -204,7 +204,7 @@ func (p *politeiawww) decredPropCommentLikes(token string) ([]decredplugin.LikeC
 	return pclr.CommentsLikes, nil
 }
 
-// decredVoteDetails sends the decred plugin votedetails command to the cache
+// decredVoteDetails sends the hdfchain plugin votedetails command to the cache
 // and returns the vote details for the passed in proposal.
 func (p *politeiawww) decredVoteDetails(token string) (*decredplugin.VoteDetailsReply, error) {
 	// Setup plugin command
@@ -237,7 +237,7 @@ func (p *politeiawww) decredVoteDetails(token string) (*decredplugin.VoteDetails
 	return vdr, nil
 }
 
-// decredProposalVotes sends the decred plugin proposalvotes command to the
+// decredProposalVotes sends the hdfchain plugin proposalvotes command to the
 // cache and returns the vote results for the passed in proposal.
 func (p *politeiawww) decredProposalVotes(token string) (*decredplugin.VoteResultsReply, error) {
 	// Setup plugin command
@@ -270,8 +270,8 @@ func (p *politeiawww) decredProposalVotes(token string) (*decredplugin.VoteResul
 	return vrr, nil
 }
 
-// decredInventory sends the decred plugin inventory command to the cache and
-// returns the decred plugin inventory.
+// decredInventory sends the hdfchain plugin inventory command to the cache and
+// returns the hdfchain plugin inventory.
 func (p *politeiawww) decredInventory() (*decredplugin.InventoryReply, error) {
 	// Setup plugin command
 	i := decredplugin.Inventory{}
@@ -300,7 +300,7 @@ func (p *politeiawww) decredInventory() (*decredplugin.InventoryReply, error) {
 	return ir, nil
 }
 
-// decredTokenInventory sends the decred plugin tokeninventory command to the
+// decredTokenInventory sends the hdfchain plugin tokeninventory command to the
 // cache.
 //
 // This function should not be called directly in most circumstances due to its
@@ -387,7 +387,7 @@ func (p *politeiawww) decredLoadVoteResults(bestBlock uint64) (*decredplugin.Loa
 	return reply, nil
 }
 
-// decredBatchVoteSummary uses the decred plugin batch vote summary command to
+// decredBatchVoteSummary uses the hdfchain plugin batch vote summary command to
 // request a vote summary for a set of proposals from the cache.
 //
 // This function should not be called directly in most circumstances due to its
@@ -422,7 +422,7 @@ func (p *politeiawww) decredBatchVoteSummary(tokens []string, bestBlock uint64) 
 	return reply, nil
 }
 
-// decredVoteSummary uses the decred plugin vote summary command to request a
+// decredVoteSummary uses the hdfchain plugin vote summary command to request a
 // vote summary for a specific proposal from the cache.
 //
 // This function should not be called directly in most circumstances due to its

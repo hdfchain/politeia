@@ -20,12 +20,12 @@ import (
 	"testing"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/decred/dcrd/chaincfg"
+	"github.com/hdfchain/hdfd/chaincfg"
 	pd "github.com/hdfchain/politeia/politeiad/api/v1"
 	"github.com/hdfchain/politeia/politeiad/api/v1/mime"
 	"github.com/hdfchain/politeia/politeiad/backend"
 	"github.com/hdfchain/politeia/util"
-	"github.com/decred/slog"
+	"github.com/hdfchain/slog"
 )
 
 func validateMD(got, want *backend.RecordMetadata) error {

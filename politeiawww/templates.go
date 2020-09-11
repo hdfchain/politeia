@@ -126,14 +126,14 @@ Click the link below to continue resetting your password:
 You are receiving this email because a password reset was initiated for {{.Email}}
 on Politeia. If you did not perform this action, it is possible that your account has been
 compromised. Please contact Politeia administrators through Matrix on the
-#politeia:decred.org channel.
+#politeia:clkj.ltd channel.
 `
 
 const templateUserPasswordChangedRaw = `
 You are receiving this email to notify you that your password has changed for 
 {{.Email}} on Politeia. If you did not perform this action, it is possible that 
 your account has been compromised. Please contact Politeia administrators 
-through Matrix on the #politeia:decred.org channel for further instructions.
+through Matrix on the #politeia:clkj.ltd channel for further instructions.
 `
 
 const templateUpdateUserKeyEmailRaw = `
@@ -264,11 +264,11 @@ Contractor Management System
 `
 
 const templateNewInvoiceCommentRaw = `
-An administrator has submitted a new comment to your invoice, please login to cms.decred.org to view the message.
+An administrator has submitted a new comment to your invoice, please login to cms.clkj.ltd to view the message.
 `
 
 const templateNewInvoiceStatusUpdateRaw = `
-An invoice's status has been updated, please login to cms.decred.org to review the changes.
+An invoice's status has been updated, please login to cms.clkj.ltd to review the changes.
 
 Updated Invoice Token: {{.Token}}
 
