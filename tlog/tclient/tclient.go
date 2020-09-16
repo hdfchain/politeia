@@ -19,7 +19,7 @@ import (
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/hdfchain/hdfd/dcrutil"
-	dcrtime "github.com/hdfchain/dcrtime/api/v1"
+	hdftime "github.com/hdfchain/hdftime/api/v1"
 	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
 	v1 "github.com/hdfchain/politeia/tlog/api/v1"
 	tlogutil "github.com/hdfchain/politeia/tlog/util"
@@ -200,7 +200,7 @@ func printProof(p trillian.Proof) {
 	}
 }
 
-func printAnchor(a dcrtime.ChainInformation) {
+func printAnchor(a hdftime.ChainInformation) {
 	fmt.Printf("Timestamp : %v\n", a.ChainTimestamp)
 	fmt.Printf("Tx        : %v\n", a.Transaction)
 	fmt.Printf("MerkleRoot: %v\n", a.MerkleRoot)

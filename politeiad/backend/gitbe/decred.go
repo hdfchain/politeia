@@ -21,11 +21,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/hdfchain/hdfd/chaincfg/chainhash"
+	"github.com/hdfchain/hdfd/chaincfg/v3/chainhash"
 	"github.com/hdfchain/hdfd/dcrec/secp256k1"
 	"github.com/hdfchain/hdfd/dcrutil"
 	"github.com/hdfchain/hdfd/wire"
-	dcrdataapi "github.com/hdfchain/hdfdata/api/types/v4"
+	hdfdataapi "github.com/hdfchain/hdfdata/api/types/v5"
 	"github.com/hdfchain/politeia/decredplugin"
 	"github.com/hdfchain/politeia/mdstream"
 	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
@@ -164,7 +164,7 @@ func init() {
 	}
 }
 
-func getDecredPlugin(dcrdataHost string) backend.Plugin {
+func getDecredPlugin(hdfdataHost string) backend.Plugin {
 	decredPlugin := backend.Plugin{
 		ID:       decredplugin.ID,
 		Version:  decredplugin.Version,
@@ -173,8 +173,8 @@ func getDecredPlugin(dcrdataHost string) backend.Plugin {
 
 	decredPlugin.Settings = append(decredPlugin.Settings,
 		backend.PluginSetting{
-			Key:   "dcrdata",
-			Value: dcrdataHost,
+			Key:   "hdfdata",
+			Value: hdfdataHost,
 		},
 	)
 
@@ -380,8 +380,8 @@ func (g *gitBackEnd) verifyMessage(address, message, signature string) (bool, er
 	return a.EncodeAddress() == address, nil
 }
 
-func bestBlock() (*dcrdataapi.BlockDataBasic, error) {
-	url := decredPluginSettings["dcrdata"] + "/api/block/best"
+func bestBlock() (*hdfdataapi.BlockDataBasic, error) {
+	url := decredPluginSettings["hdfdata"] + "/api/block/best"
 	log.Debugf("connecting to %v", url)
 	// XXX this http command needs a reasonable timeout.
 	r, err := http.Get(url)
@@ -394,14 +394,14 @@ func bestBlock() (*dcrdataapi.BlockDataBasic, error) {
 	if r.StatusCode != http.StatusOK {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			return nil, fmt.Errorf("dcrdata error: %v %v %v",
+			return nil, fmt.Errorf("hdfdata error: %v %v %v",
 				r.StatusCode, url, err)
 		}
-		return nil, fmt.Errorf("dcrdata error: %v %v %s",
+		return nil, fmt.Errorf("hdfdata error: %v %v %s",
 			r.StatusCode, url, body)
 	}
 
-	var bdb dcrdataapi.BlockDataBasic
+	var bdb hdfdataapi.BlockDataBasic
 	decoder := json.NewDecoder(r.Body)
 	if err := decoder.Decode(&bdb); err != nil {
 		return nil, err
@@ -410,9 +410,9 @@ func bestBlock() (*dcrdataapi.BlockDataBasic, error) {
 	return &bdb, nil
 }
 
-func block(block uint32) (*dcrdataapi.BlockDataBasic, error) {
+func block(block uint32) (*hdfdataapi.BlockDataBasic, error) {
 	h := strconv.FormatUint(uint64(block), 10)
-	url := decredPluginSettings["dcrdata"] + "/api/block/" + h
+	url := decredPluginSettings["hdfdata"] + "/api/block/" + h
 	log.Debugf("connecting to %v", url)
 	r, err := http.Get(url)
 	if err != nil {
@@ -423,14 +423,14 @@ func block(block uint32) (*dcrdataapi.BlockDataBasic, error) {
 	if r.StatusCode != http.StatusOK {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			return nil, fmt.Errorf("dcrdata error: %v %v %v",
+			return nil, fmt.Errorf("hdfdata error: %v %v %v",
 				r.StatusCode, url, err)
 		}
-		return nil, fmt.Errorf("dcrdata error: %v %v %s",
+		return nil, fmt.Errorf("hdfdata error: %v %v %s",
 			r.StatusCode, url, body)
 	}
 
-	var bdb dcrdataapi.BlockDataBasic
+	var bdb hdfdataapi.BlockDataBasic
 	decoder := json.NewDecoder(r.Body)
 	if err := decoder.Decode(&bdb); err != nil {
 		return nil, err
@@ -440,7 +440,7 @@ func block(block uint32) (*dcrdataapi.BlockDataBasic, error) {
 }
 
 func snapshot(hash string) ([]string, error) {
-	url := decredPluginSettings["dcrdata"] + "/api/stake/pool/b/" + hash +
+	url := decredPluginSettings["hdfdata"] + "/api/stake/pool/b/" + hash +
 		"/full?sort=true"
 	log.Debugf("connecting to %v", url)
 	r, err := http.Get(url)
@@ -452,10 +452,10 @@ func snapshot(hash string) ([]string, error) {
 	if r.StatusCode != http.StatusOK {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			return nil, fmt.Errorf("dcrdata error: %v %v %v",
+			return nil, fmt.Errorf("hdfdata error: %v %v %v",
 				r.StatusCode, url, err)
 		}
-		return nil, fmt.Errorf("dcrdata error: %v %v %s",
+		return nil, fmt.Errorf("hdfdata error: %v %v %s",
 			r.StatusCode, url, body)
 	}
 
@@ -468,9 +468,9 @@ func snapshot(hash string) ([]string, error) {
 	return tickets, nil
 }
 
-func batchTransactions(hashes []string) ([]dcrdataapi.TrimmedTx, error) {
-	// Request body is dcrdataapi.Txns marshalled to JSON
-	reqBody, err := json.Marshal(dcrdataapi.Txns{
+func batchTransactions(hashes []string) ([]hdfdataapi.TrimmedTx, error) {
+	// Request body is hdfdataapi.Txns marshalled to JSON
+	reqBody, err := json.Marshal(hdfdataapi.Txns{
 		Transactions: hashes,
 	})
 	if err != nil {
@@ -478,7 +478,7 @@ func batchTransactions(hashes []string) ([]dcrdataapi.TrimmedTx, error) {
 	}
 
 	// Make the POST request
-	url := decredPluginSettings["dcrdata"] + "/api/txs/trimmed"
+	url := decredPluginSettings["hdfdata"] + "/api/txs/trimmed"
 	log.Debugf("connecting to %v", url)
 	r, err := http.Post(url, "application/json; charset=utf-8",
 		bytes.NewReader(reqBody))
@@ -490,15 +490,15 @@ func batchTransactions(hashes []string) ([]dcrdataapi.TrimmedTx, error) {
 	if r.StatusCode != http.StatusOK {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			return nil, fmt.Errorf("dcrdata error: %v %v %v",
+			return nil, fmt.Errorf("hdfdata error: %v %v %v",
 				r.StatusCode, url, err)
 		}
-		return nil, fmt.Errorf("dcrdata error: %v %v %s",
+		return nil, fmt.Errorf("hdfdata error: %v %v %s",
 			r.StatusCode, url, body)
 	}
 
 	// Unmarshal the response
-	var ttx []dcrdataapi.TrimmedTx
+	var ttx []hdfdataapi.TrimmedTx
 	decoder := json.NewDecoder(r.Body)
 	if err := decoder.Decode(&ttx); err != nil {
 		return nil, err
@@ -513,7 +513,7 @@ type largestCommitmentResult struct {
 }
 
 func largestCommitmentAddresses(hashes []string) ([]largestCommitmentResult, error) {
-	// Batch request all of the transaction info from dcrdata.
+	// Batch request all of the transaction info from hdfdata.
 	ttxs, err := batchTransactions(hashes)
 	if err != nil {
 		return nil, err

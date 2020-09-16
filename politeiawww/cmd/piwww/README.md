@@ -85,7 +85,7 @@ confirmations before you'll be allowed to submit proposals.**
 ### Assign admin privileges and create proposal credits
 
 Proposal credits are required in order to submit a proposal. They are a spam
-prevention measure that would normally need to be purchased using DCR, but if
+prevention measure that would normally need to be purchased using HDF, but if
 you're running politeiawww locally, you can use the politeiawww_dbutil tool to
 add proposal credits to your account.  You'll also need to give your user admin
 privileges if you want to be able make proposals public and to start the
@@ -159,7 +159,7 @@ tool.
 ### Voting on a proposal - piwww
 
 You can also vote on proposals using `piww`, but it only works on testnet and
-you have to be running your dcrwallet locally using the default port.  If you
+you have to be running your hdfwallet locally using the default port.  If you
 are doing these things, then you can use the `inventory`, `vote`, and `tally`
 commands.
 

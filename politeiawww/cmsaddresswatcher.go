@@ -22,7 +22,7 @@ import (
 	database "github.com/hdfchain/politeia/politeiawww/cmsdatabase"
 	"github.com/hdfchain/politeia/politeiawww/user"
 	"github.com/hdfchain/politeia/util"
-	"github.com/hdfchain/politeia/wsdcrdata"
+	"github.com/hdfchain/politeia/wshdfdata"
 	"github.com/google/uuid"
 )
 
@@ -66,7 +66,7 @@ func (p *politeiawww) monitorCMSAddressWatcher() {
 		if !ok {
 			// Check if the websocket was shut down intentionally or was
 			// dropped unexpectedly.
-			if p.wsDcrdata.Status() == wsdcrdata.StatusShutdown {
+			if p.wsDcrdata.Status() == wshdfdata.StatusShutdown {
 				return
 			}
 			log.Infof("Dcrdata websocket connection unexpectedly dropped")
@@ -115,14 +115,14 @@ func (p *politeiawww) monitorCMSAddressWatcher() {
 		// Setup a new messages channel using the new connection.
 		receiver = p.wsDcrdata.Receive()
 
-		log.Infof("Successfully reconnected dcrdata websocket")
+		log.Infof("Successfully reconnected hdfdata websocket")
 	}
 }
 
 func (p *politeiawww) setupCMSAddressWatcher() {
 	// Ensure connection is open. If connection is closed, establish a
 	// new connection before continuing.
-	if p.wsDcrdata.Status() != wsdcrdata.StatusOpen {
+	if p.wsDcrdata.Status() != wshdfdata.StatusOpen {
 		p.wsDcrdata.Reconnect()
 	}
 
@@ -156,7 +156,7 @@ func (p *politeiawww) restartCMSAddressesWatching() error {
 					Address:      strings.TrimSpace(invoice.PaymentAddress),
 					TimeStarted:  listenStartDate.Unix(),
 					Status:       cms.PaymentStatusWatching,
-					AmountNeeded: int64(payout.DCRTotal),
+					AmountNeeded: int64(payout.HDFTotal),
 				}
 				err = p.cmsDB.UpdateInvoice(&invoice)
 				if err != nil {
@@ -186,7 +186,7 @@ func (p *politeiawww) restartCMSAddressesWatching() error {
 func (p *politeiawww) checkHistoricalPayments(payment *database.Payments) bool {
 	// Get all txs since start time of watcher
 	txs, err := util.FetchTxsForAddressNotBefore(strings.TrimSpace(payment.Address),
-		payment.TimeStarted, p.dcrdataHostHTTP())
+		payment.TimeStarted, p.hdfdataHostHTTP())
 	if err != nil {
 		// XXX Some sort of 'recheck' or notice that it should do it again?
 		log.Errorf("error FetchTxsForAddressNotBefore for address %s: %v",
@@ -259,7 +259,7 @@ func (p *politeiawww) checkHistoricalPayments(payment *database.Payments) bool {
 // It will return TRUE if paid, otherwise false.  It utilizes the util
 // FetchTx which looks for transaction at a given address.
 func (p *politeiawww) checkPayments(payment *database.Payments, notifiedTx string) bool {
-	tx, err := util.FetchTx(payment.Address, notifiedTx, p.dcrdataHostHTTP())
+	tx, err := util.FetchTx(payment.Address, notifiedTx, p.hdfdataHostHTTP())
 	if err != nil {
 		log.Errorf("error FetchTxs for address %s: %v", payment.Address, err)
 		return false

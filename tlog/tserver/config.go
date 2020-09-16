@@ -18,7 +18,7 @@ import (
 	"strings"
 
 	"github.com/hdfchain/hdfd/dcrutil"
-	v1 "github.com/hdfchain/dcrtime/api/v1"
+	v1 "github.com/hdfchain/hdftime/api/v1"
 	"github.com/hdfchain/politeia/util"
 	"github.com/hdfchain/politeia/util/version"
 	flags "github.com/jessevdk/go-flags"
@@ -51,7 +51,7 @@ var (
 // to parse and execute service commands specified via the -s flag.
 var runServiceCommand func(string) error
 
-// config defines the configuration options for dcrd.
+// config defines the configuration options for hdfd.
 //
 // See loadConfig for details on the configuration load process.
 type config struct {
@@ -75,8 +75,8 @@ type config struct {
 	RPCUser       string `long:"rpcuser" description:"RPC user name for privileged commands"`
 	RPCPass       string `long:"rpcpass" description:"RPC password for privileged commands"`
 	TrillianHost  string `long:"trillianhost" description:"Trillian log host"`
-	DcrtimeHost   string `long:"dcrtimehost" description:"Dcrtime ip:port"`
-	DcrtimeCert   string `long:"dcrtimecert" description:"File containing the https certificate file for dcrtimehost"`
+	DcrtimeHost   string `long:"hdftimehost" description:"Dcrtime ip:port"`
+	DcrtimeCert   string `long:"hdftimecert" description:"File containing the https certificate file for hdftimehost"`
 }
 
 // serviceOptions defines the configuration options for the daemon as a service
@@ -522,7 +522,7 @@ func loadConfig() (*config, []string, error) {
 		cfg.DcrtimeCert = cleanAndExpandPath(cfg.DcrtimeCert)
 		path := filepath.Join(cfg.HomeDir, cfg.DcrtimeCert)
 		if !util.FileExists(path) {
-			str := "%s: dcrtimecert " + cfg.DcrtimeCert + " and " +
+			str := "%s: hdftimecert " + cfg.DcrtimeCert + " and " +
 				path + " don't exist"
 			err := fmt.Errorf(str, funcName)
 			fmt.Fprintln(os.Stderr, err)

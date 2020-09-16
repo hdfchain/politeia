@@ -107,7 +107,7 @@ func newProposal(rfp bool, linkto string) (*v1.NewProposal, error) {
 }
 
 // castVotes casts votes on a proposal with a given voteId. If it fails it
-// returns the error and in case of dcrwallet connection error it returns
+// returns the error and in case of hdfwallet connection error it returns
 // true as first returned value
 func castVotes(token string, voteID string) (bool, error) {
 	var vc VoteCmd
@@ -117,9 +117,9 @@ func castVotes(token string, voteID string) (bool, error) {
 	if err != nil {
 		switch {
 		case strings.Contains(err.Error(), "connection refused"):
-			// User is not running a dcrwallet instance locally.
+			// User is not running a hdfwallet instance locally.
 			// This is ok. Print a warning and continue.
-			fmt.Printf("  WARNING: could not connect to dcrwallet\n")
+			fmt.Printf("  WARNING: could not connect to hdfwallet\n")
 			return true, err
 
 		case strings.Contains(err.Error(), "no eligible tickets"):
@@ -293,9 +293,9 @@ func (cmd *TestRunCmd) Execute(args []string) error {
 			return err
 		}
 
-		dcr := float64(lr.PaywallAmount) / 1e8
-		fmt.Printf("  Paid %v DCR to %v with txID %v\n",
-			dcr, lr.PaywallAddress, txID)
+		hdf := float64(lr.PaywallAmount) / 1e8
+		fmt.Printf("  Paid %v HDF to %v with txID %v\n",
+			hdf, lr.PaywallAddress, txID)
 	}
 
 	// Wait for user registration payment confirmations
@@ -342,7 +342,7 @@ func (cmd *TestRunCmd) Execute(args []string) error {
 			return err
 		}
 
-		fmt.Printf("  Paid %v DCR to %v with txID %v\n",
+		fmt.Printf("  Paid %v HDF to %v with txID %v\n",
 			float64(atoms)/1e8, lr.PaywallAddress, txID)
 	}
 
@@ -1303,12 +1303,12 @@ func (cmd *TestRunCmd) Execute(args []string) error {
 
 	// Cast votes
 	fmt.Printf("  Cast votes\n")
-	dcrwalletFailed, err := castVotes(token, vsr.OptionsResult[0].Option.Id)
+	hdfwalletFailed, err := castVotes(token, vsr.OptionsResult[0].Option.Id)
 
 	// Find how many votes the user cast so that
 	// we can compare it against the vote results.
 	var voteCount int
-	if !dcrwalletFailed {
+	if !hdfwalletFailed {
 		// Get proposal vote details
 		var pvt v1.ProposalVoteTuple
 		for _, v := range avr.Votes {
@@ -1535,9 +1535,9 @@ func (cmd *TestRunCmd) Execute(args []string) error {
 
 	// Cast RFP votes
 	fmt.Printf("  Cast 'Yes' votes\n")
-	dcrwalletFailed, err = castVotes(token, vsr.OptionsResult[0].Option.Id)
+	hdfwalletFailed, err = castVotes(token, vsr.OptionsResult[0].Option.Id)
 
-	if !dcrwalletFailed {
+	if !hdfwalletFailed {
 		// Wait to RFP to finish voting
 		var vs v1.VoteSummary
 		for vs.Status != v1.PropVoteStatusFinished {
@@ -1649,11 +1649,11 @@ func (cmd *TestRunCmd) Execute(args []string) error {
 		}
 		// Cast first submission votes
 		fmt.Printf("  Cast first submission votes\n")
-		dcrwalletFailed, err = castVotes(firststoken, vsr.OptionsResult[0].Option.Id)
+		hdfwalletFailed, err = castVotes(firststoken, vsr.OptionsResult[0].Option.Id)
 		if err != nil {
 			return err
 		}
-		if !dcrwalletFailed {
+		if !hdfwalletFailed {
 			// Try cast votes on abandoned & expect error
 			fmt.Println("  Try casting votes on abandoned RFP submission")
 			_, err = castVotes(thirdstoken, vsr.OptionsResult[0].Option.Id)
@@ -1750,7 +1750,7 @@ the politeiawww paywall has been disabled a warning will be logged and the
 payments will be skipped.
 
 Voting:
-The test run will attempt to vote on a proposal.  If a dcrwallet instance is
+The test run will attempt to vote on a proposal.  If a hdfwallet instance is
 not being run locally or if the wallet does not contain any eligible tickets
 a warning will be logged and voting will be skipped.
 

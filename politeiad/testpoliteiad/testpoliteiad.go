@@ -20,7 +20,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/hdfchain/dcrtime/merkle"
+	"github.com/hdfchain/hdftime/merkle"
 	hdfchain "github.com/hdfchain/politeia/decredplugin"
 	v1 "github.com/hdfchain/politeia/politeiad/api/v1"
 	"github.com/hdfchain/politeia/politeiad/api/v1/identity"

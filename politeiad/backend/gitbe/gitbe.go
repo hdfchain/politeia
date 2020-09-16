@@ -24,9 +24,9 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/hdfchain/hdfd/chaincfg"
-	v1 "github.com/hdfchain/dcrtime/api/v1"
-	"github.com/hdfchain/dcrtime/merkle"
+	"github.com/hdfchain/hdfd/chaincfg/v3"
+	v1 "github.com/hdfchain/hdftime/api/v1"
+	"github.com/hdfchain/hdftime/merkle"
 	"github.com/hdfchain/politeia/cmsplugin"
 	"github.com/hdfchain/politeia/decredplugin"
 	pd "github.com/hdfchain/politeia/politeiad/api/v1"
@@ -126,7 +126,7 @@ type gitBackEnd struct {
 	unvetted        string              // Unvettend content
 	vetted          string              // Vetted, public, visible content
 	journals        string              // Journals/cache
-	dcrtimeHost     string              // Dcrtimed host
+	hdftimeHost     string              // Dcrtimed host
 	gitPath         string              // Path to git
 	gitTrace        bool                // Enable git tracing
 	test            bool                // Set during UT
@@ -663,18 +663,18 @@ func (g *gitBackEnd) deltaCommits(path string, lastAnchor []byte) ([]*[sha256.Si
 	return digests, commitMessages, out, nil
 }
 
-// anchor takes a slice of commit digests and anchors them in dcrtime.
+// anchor takes a slice of commit digests and anchors them in hdftime.
 //
 // This function is being clever with the anchors.  It sends two values to
-// dcrtime.  We anchor the merkle root, and we *also* anchor all
+// hdftime.  We anchor the merkle root, and we *also* anchor all
 // individual commit hashes.  We do the last bit in order to be able to
 // externally validate that a commit hash made it into the time stamp.  If we
 // don't do that we'd have to create a tool to verify individual hashes for the
-// truly curious.  This is essentially free because dcrtime compresses all
+// truly curious.  This is essentially free because hdftime compresses all
 // digests into a single merkle root.
 //
 // This function should be called with the lock held.
-// TODO: the physical write to dcrtime needs to come out of the lock.
+// TODO: the physical write to hdftime needs to come out of the lock.
 func (g *gitBackEnd) anchor(digests []*[sha256.Size]byte) error {
 	// Anchor all digests
 	if g.test {
@@ -684,7 +684,7 @@ func (g *gitBackEnd) anchor(digests []*[sha256.Size]byte) error {
 		return nil
 	}
 
-	return util.Timestamp("politeia", g.dcrtimeHost, digests)
+	return util.Timestamp("politeia", g.hdftimeHost, digests)
 }
 
 // appendAuditTrail adds a record to the audit trail.
@@ -798,7 +798,7 @@ func (g *gitBackEnd) anchorRepo(path string) (*[sha256.Size]byte, error) {
 	}
 
 	// Append MerkleRoot to digests.  We have to do this since this is
-	// politeia's lookup key but dcrtime will likely return a different
+	// politeia's lookup key but hdftime will likely return a different
 	// merkle.  Dcrtime returns a different merkle when there are
 	// additional digests in the set.
 	digests = append(digests, anchorKey)
@@ -835,7 +835,7 @@ func (g *gitBackEnd) anchorRepo(path string) (*[sha256.Size]byte, error) {
 }
 
 // anchor verifies if there are new commits in all repos and if that is the
-// case it drops and anchor in dcrtime for each of them.
+// case it drops and anchor in hdftime for each of them.
 func (g *gitBackEnd) anchorAllRepos() error {
 	log.Infof("Dropping anchor")
 	// Lock filesystem
@@ -951,7 +951,7 @@ func (g *gitBackEnd) afterAnchorVerify(vrs []v1.VerifyDigest) error {
 	// Handle verified vrs
 	for _, vr := range vrs {
 		if vr.ChainInformation.ChainTimestamp == 0 {
-			// dcrtime returns 0 when there are not enough
+			// hdftime returns 0 when there are not enough
 			// confirmations yet.
 			return fmt.Errorf("not enough confirmations: %v",
 				vr.Digest)
@@ -974,7 +974,7 @@ func (g *gitBackEnd) afterAnchorVerify(vrs []v1.VerifyDigest) error {
 			return err
 		}
 
-		// Store dcrtime information.
+		// Store hdftime information.
 		// In vetted store the ChainInformation as a json object in
 		// directory anchor.
 		// In Vetted in the record directory add a file called anchor
@@ -1006,7 +1006,7 @@ func (g *gitBackEnd) afterAnchorVerify(vrs []v1.VerifyDigest) error {
 			return err
 		}
 
-		// Mark test anchors as confirmed by dcrtime
+		// Mark test anchors as confirmed by hdftime
 		if g.test {
 			g.testAnchors[vr.Digest] = true
 		}
@@ -1036,7 +1036,7 @@ func (g *gitBackEnd) anchorAllReposCronJob() {
 	}
 }
 
-// verifyAnchor asks dcrtime if an anchor has been verified and returns a TX if
+// verifyAnchor asks hdftime if an anchor has been verified and returns a TX if
 // it has.
 func (g *gitBackEnd) verifyAnchor(digest string) (*v1.VerifyDigest, error) {
 	var (
@@ -1064,8 +1064,8 @@ func (g *gitBackEnd) verifyAnchor(digest string) (*v1.VerifyDigest, error) {
 			},
 		})
 	} else {
-		// Call dcrtime
-		vr, err = util.Verify("politeia", g.dcrtimeHost,
+		// Call hdftime
+		vr, err = util.Verify("politeia", g.hdftimeHost,
 			[]string{digest})
 		if err != nil {
 			return nil, err
@@ -2203,7 +2203,7 @@ func (g *gitBackEnd) getRecord(token []byte, version, repo string, includeFiles 
 }
 
 // fsck performs a git fsck and additionally it validates the git tree against
-// dcrtime.  This is an expensive operation and should not be run during
+// hdftime.  This is an expensive operation and should not be run during
 // runtime.
 //
 // This function must be called WITH holding the lock.
@@ -2219,9 +2219,9 @@ func (g *gitBackEnd) fsck(path string) error {
 	}
 
 	var seenAnchor bool
-	// gitDigests is an index of all git digests to verify with dcrtime
+	// gitDigests is an index of all git digests to verify with hdftime
 	gitDigests := make(map[string]struct{})
-	// confirmedAnchors keeps track of anchors that were timestamped with dcrtime but not verified,
+	// confirmedAnchors keeps track of anchors that were timestamped with hdftime but not verified,
 	// since periodicAnchorChecker only checks recent unconfirmed anchors and ignores older ones
 	confirmedAnchors := make(map[string]struct{})
 	var unconfirmedAnchors []string
@@ -2235,7 +2235,7 @@ func (g *gitBackEnd) fsck(path string) error {
 			// We now have seen an Anchor commit. The following digests are now precious.
 			seenAnchor = true
 			// We should have seen its confirmation already, since we're parsing top to bottom
-			// If we didn't, save the anchor key to verify with dcrtime later
+			// If we didn't, save the anchor key to verify with hdftime later
 			merkleRoot := regexAnchor.FindStringSubmatch(v)[1]
 			_, confirmed := confirmedAnchors[merkleRoot]
 			if !confirmed {
@@ -2269,7 +2269,7 @@ func (g *gitBackEnd) fsck(path string) error {
 		return nil
 	}
 
-	log.Infof("fsck: dcrtime verification started")
+	log.Infof("fsck: hdftime verification started")
 
 	// Verify the unconfirmed anchors
 	vrs := make([]v1.VerifyDigest, 0, len(unconfirmedAnchors))
@@ -2293,7 +2293,7 @@ func (g *gitBackEnd) fsck(path string) error {
 	for d := range gitDigests {
 		digests = append(digests, d)
 	}
-	vr, err := util.Verify("politeia", g.dcrtimeHost, digests)
+	vr, err := util.Verify("politeia", g.hdftimeHost, digests)
 	if err != nil {
 		return err
 	}
@@ -2303,12 +2303,12 @@ func (g *gitBackEnd) fsck(path string) error {
 	for _, v := range vr.Digests {
 		if v.Result != v1.ResultOK {
 			fail = true
-			log.Errorf("dcrtime error: %v %v %v", v.Digest,
+			log.Errorf("hdftime error: %v %v %v", v.Digest,
 				v.Result, v1.Result[v.Result])
 		}
 	}
 	if fail {
-		return fmt.Errorf("dcrtime fsck failed")
+		return fmt.Errorf("hdftime fsck failed")
 	}
 
 	return nil
@@ -2992,7 +2992,7 @@ func (g *gitBackEnd) rebasePR(id string) error {
 }
 
 // New returns a gitBackEnd context.  It verifies that git is installed.
-func New(anp *chaincfg.Params, root string, dcrtimeHost string, gitPath string, id *identity.FullIdentity, gitTrace bool, dcrdataHost string, mode string) (*gitBackEnd, error) {
+func New(anp *chaincfg.Params, root string, hdftimeHost string, gitPath string, id *identity.FullIdentity, gitTrace bool, hdfdataHost string, mode string) (*gitBackEnd, error) {
 
 	// Default to system git
 	if gitPath == "" {
@@ -3007,13 +3007,13 @@ func New(anp *chaincfg.Params, root string, dcrtimeHost string, gitPath string, 
 		vetted:          filepath.Join(root, DefaultVettedPath),
 		journals:        filepath.Join(root, DefaultJournalsPath),
 		gitPath:         gitPath,
-		dcrtimeHost:     dcrtimeHost,
+		hdftimeHost:     hdftimeHost,
 		gitTrace:        gitTrace,
 		exit:            make(chan struct{}),
 		checkAnchor:     make(chan struct{}),
 		testAnchors:     make(map[string]bool),
 		prefixCache:     make(map[string]struct{}),
-		plugins:         []backend.Plugin{getDecredPlugin(dcrdataHost)},
+		plugins:         []backend.Plugin{getDecredPlugin(hdfdataHost)},
 	}
 
 	idJSON, err := id.Marshal()
@@ -3038,7 +3038,7 @@ func New(anp *chaincfg.Params, root string, dcrtimeHost string, gitPath string, 
 		setDecredPluginSetting(decredPluginVoteDurationMin, voteDurationMin)
 		setDecredPluginSetting(decredPluginVoteDurationMax, voteDurationMax)
 	case cmsMode:
-		g.plugins = []backend.Plugin{getDecredPlugin(dcrdataHost),
+		g.plugins = []backend.Plugin{getDecredPlugin(hdfdataHost),
 			getCMSPlugin(anp.Name != "mainnet")}
 
 		setCMSPluginSetting(cmsPluginIdentity, string(idJSON))
@@ -3105,13 +3105,13 @@ func New(anp *chaincfg.Params, root string, dcrtimeHost string, gitPath string, 
 	g.cron.Start()
 
 	// Message user
-	log.Infof("Timestamp host: %v", g.dcrtimeHost)
+	log.Infof("Timestamp host: %v", g.hdftimeHost)
 
-	log.Infof("Running dcrtime fsck on vetted repository")
+	log.Infof("Running hdftime fsck on vetted repository")
 	err = g.fsck(g.vetted)
 	if err != nil {
 		// Log error but continue
-		log.Errorf("fsck: dcrtime %v", err)
+		log.Errorf("fsck: hdftime %v", err)
 	}
 
 	return g, nil

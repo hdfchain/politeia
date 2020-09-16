@@ -4,7 +4,7 @@
 
 package sampleconfig
 
-// FileContents is a string containing the commented example config for dcrd.
+// FileContents is a string containing the commented example config for hdfd.
 const FileContents = `[Application Options]
 
 ; ------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ const FileContents = `[Application Options]
 ; Debug logging level.
 ; Valid levels are {trace, debug, info, warn, error, critical}
 ; You may also specify <subsystem>=<level>,<subsystem2>=<level>,... to set
-; log level for individual subsystems.  Use dcrd --debuglevel=show to list
+; log level for individual subsystems.  Use hdfd --debuglevel=show to list
 ; available subsystems.
 ; debuglevel=info
 

@@ -1341,16 +1341,16 @@ func _main() error {
 	if len(loadedCfg.DcrtimeCert) != 0 {
 		var certPool *x509.CertPool
 		if !util.FileExists(loadedCfg.DcrtimeCert) {
-			return fmt.Errorf("unable to find dcrtime cert %v",
+			return fmt.Errorf("unable to find hdftime cert %v",
 				loadedCfg.DcrtimeCert)
 		}
-		dcrtimeCert, err := ioutil.ReadFile(loadedCfg.DcrtimeCert)
+		hdftimeCert, err := ioutil.ReadFile(loadedCfg.DcrtimeCert)
 		if err != nil {
-			return fmt.Errorf("unable to read dcrtime cert %v: %v",
+			return fmt.Errorf("unable to read hdftime cert %v: %v",
 				loadedCfg.DcrtimeCert, err)
 		}
 		certPool = x509.NewCertPool()
-		if !certPool.AppendCertsFromPEM(dcrtimeCert) {
+		if !certPool.AppendCertsFromPEM(hdftimeCert) {
 			return fmt.Errorf("unable to load cert")
 		}
 	}

@@ -15,7 +15,7 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/hdfchain/hdfd/chaincfg"
+	"github.com/hdfchain/hdfd/chaincfg/v3"
 	exptypes "github.com/hdfchain/hdfdata/explorer/types/v2"
 	pstypes "github.com/hdfchain/hdfdata/pubsub/types/v3"
 	"github.com/hdfchain/politeia/politeiad/api/v1/mime"
@@ -27,7 +27,7 @@ import (
 	utilwww "github.com/hdfchain/politeia/politeiawww/util"
 	"github.com/hdfchain/politeia/util"
 	"github.com/hdfchain/politeia/util/version"
-	"github.com/hdfchain/politeia/wsdcrdata"
+	"github.com/hdfchain/politeia/wshdfdata"
 	"github.com/google/uuid"
 	"github.com/gorilla/csrf"
 	"github.com/gorilla/mux"
@@ -133,12 +133,12 @@ type politeiawww struct {
 	cmsDB cmsdatabase.Database
 	cron  *cron.Cron
 
-	// wsDcrdata is a dcrdata websocket client
-	wsDcrdata *wsdcrdata.Client
+	// wsDcrdata is a hdfdata websocket client
+	wsDcrdata *wshdfdata.Client
 
 	// The current best block is cached and updated using a websocket
-	// subscription to dcrdata. If the websocket connection is not active,
-	// the dcrdata best block route of politeiad is used as a fallback.
+	// subscription to hdfdata. If the websocket connection is not active,
+	// the hdfdata best block route of politeiad is used as a fallback.
 	bestBlock uint64
 	bbMtx     sync.RWMutex
 }
@@ -895,7 +895,7 @@ func (p *politeiawww) updateBestBlock(bestBlock uint64) {
 }
 
 // getBestBlock returns the cached best block if there is an active websocket
-// connection to dcrdata. Otherwise, it requests the best block from politeiad
+// connection to hdfdata. Otherwise, it requests the best block from politeiad
 // using the the hdfchain plugin best block command.
 func (p *politeiawww) getBestBlock() (uint64, error) {
 	p.bbMtx.RLock()
@@ -903,7 +903,7 @@ func (p *politeiawww) getBestBlock() (uint64, error) {
 	p.bbMtx.RUnlock()
 
 	// the cached best block will equal 0 if there is no active websocket
-	// connection to dcrdata, or if no new block messages have been received
+	// connection to hdfdata, or if no new block messages have been received
 	// since a connection was established.
 	if bb == 0 {
 		return p.getBestBlockDecredPlugin()
@@ -928,7 +928,7 @@ func (p *politeiawww) monitorWSDcrdataPi() {
 		if !ok {
 			// Check if the websocket was shut down intentionally or was
 			// dropped unexpectedly.
-			if p.wsDcrdata.Status() == wsdcrdata.StatusShutdown {
+			if p.wsDcrdata.Status() == wshdfdata.StatusShutdown {
 				return
 			}
 			log.Infof("Dcrdata websocket connection unexpectedly dropped")
@@ -977,23 +977,23 @@ func (p *politeiawww) monitorWSDcrdataPi() {
 		// Setup a new messages channel using the new connection.
 		receiver = p.wsDcrdata.Receive()
 
-		log.Infof("Successfully reconnected dcrdata websocket")
+		log.Infof("Successfully reconnected hdfdata websocket")
 	}
 }
 
-// setupWSDcrataPi subscribes and listens to websocket messages from dcrdata
+// setupWSDcrataPi subscribes and listens to websocket messages from hdfdata
 // that are needed for pi.
 func (p *politeiawww) setupWSDcrdataPi() {
 	// Ensure connection is open. If connection is closed, establish a
 	// new connection before continuing.
-	if p.wsDcrdata.Status() != wsdcrdata.StatusOpen {
+	if p.wsDcrdata.Status() != wshdfdata.StatusOpen {
 		p.wsDcrdata.Reconnect()
 	}
 
 	// Setup subscriptions
 	err := p.wsDcrdata.NewBlockSubscribe()
 	if err != nil {
-		log.Errorf("wsdcrdata NewBlockSubscribe: %v", err)
+		log.Errorf("wshdfdata NewBlockSubscribe: %v", err)
 	}
 
 	// Monitor websocket connection in a new go routine

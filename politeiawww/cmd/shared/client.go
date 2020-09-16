@@ -2311,7 +2311,7 @@ func (c *Client) WalletAccounts() (*walletrpc.AccountsResponse, error) {
 	return ar, nil
 }
 
-// CommittedTickets returns the committed tickets that belong to the dcrwallet
+// CommittedTickets returns the committed tickets that belong to the hdfwallet
 // instance out of the the specified list of tickets.
 func (c *Client) CommittedTickets(ct *walletrpc.CommittedTicketsRequest) (*walletrpc.CommittedTicketsResponse, error) {
 	if c.wallet == nil {
@@ -2411,7 +2411,7 @@ func (c *Client) VerifyTOTP(vt *www.VerifyTOTP) (*www.VerifyTOTPReply, error) {
 	return &vtr, nil
 }
 
-// LoadWalletClient connects to a dcrwallet instance.
+// LoadWalletClient connects to a hdfwallet instance.
 func (c *Client) LoadWalletClient() error {
 	creds, err := credentials.NewClientTLSFromFile(c.cfg.WalletCert, "")
 	if err != nil {

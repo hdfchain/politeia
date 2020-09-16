@@ -20,7 +20,7 @@ import (
 	"testing"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/hdfchain/hdfd/chaincfg"
+	"github.com/hdfchain/hdfd/chaincfg/v3"
 	pd "github.com/hdfchain/politeia/politeiad/api/v1"
 	"github.com/hdfchain/politeia/politeiad/api/v1/mime"
 	"github.com/hdfchain/politeia/politeiad/backend"

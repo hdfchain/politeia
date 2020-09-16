@@ -35,8 +35,8 @@ const (
 )
 
 var (
-	dcrwalletHomeDir      = dcrutil.AppDataDir("dcrwallet", false)
-	defaultWalletCertFile = filepath.Join(dcrwalletHomeDir, "rpc.cert")
+	hdfwalletHomeDir      = dcrutil.AppDataDir("hdfwallet", false)
+	defaultWalletCertFile = filepath.Join(hdfwalletHomeDir, "rpc.cert")
 )
 
 // Config represents the piwww configuration settings.

@@ -11,7 +11,7 @@ import (
 	"errors"
 	"regexp"
 
-	"github.com/hdfchain/dcrtime/merkle"
+	"github.com/hdfchain/hdftime/merkle"
 	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
 	"github.com/hdfchain/politeia/politeiad/api/v1/mime"
 )

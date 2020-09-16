@@ -1,79 +1,58 @@
 module github.com/hdfchain/politeia
 
-go 1.13
+go 1.14
 
 require (
 	github.com/agl/ed25519 v0.0.0-20170116200512-5312a6153412
-	github.com/coreos/bbolt v1.3.3 // indirect
-	github.com/coreos/etcd v3.3.15+incompatible // indirect
-	github.com/coreos/go-semver v0.3.0 // indirect
-	github.com/coreos/go-systemd v0.0.0-20190719114852-fd7a80b32e1f // indirect
-	github.com/coreos/pkg v0.0.0-20180928190104-399ea9e2e55f // indirect
-	github.com/dajohi/goemail v1.0.0
+	github.com/asdine/storm/v3 v3.2.1 // indirect
+	github.com/carterjones/signalr v0.3.5 // indirect
+	github.com/dajohi/goemail v1.0.1
 	github.com/davecgh/go-spew v1.1.1
-	github.com/hdfchain/hdfd/blockchain/stake v1.1.0
-	github.com/hdfchain/hdfd/certgen v1.1.0
-	github.com/hdfchain/hdfd/chaincfg v1.5.1
-	github.com/hdfchain/hdfd/chaincfg/chainhash v1.0.2
-	github.com/hdfchain/hdfd/dcrec/secp256k1 v1.0.2
-	github.com/hdfchain/hdfd/dcrutil v1.4.0
-	github.com/hdfchain/hdfd/hdkeychain v1.1.1
-	github.com/hdfchain/hdfd/txscript v1.1.0 // indirect
-	github.com/hdfchain/hdfd/wire v1.3.0
-	github.com/hdfchain/hdfdata/api/types/v4 v4.0.4
-	github.com/hdfchain/hdfdata/explorer/types/v2 v2.1.1
-	github.com/hdfchain/hdfdata/pubsub/types/v3 v3.0.5
-	github.com/hdfchain/hdfdata/pubsub/v4 v4.0.3-0.20191219212733-19f656d6d679
-	github.com/hdfchain/hdfdata/semver v1.0.0
-	github.com/hdfchain/dcrtime v0.0.0-20191018193024-8d8b4ef0458e
-	github.com/hdfchain/hdfwallet v1.2.3-0.20190128160919-849f7c01c12d
-	github.com/hdfchain/hdfwallet/rpc/walletrpc v0.2.0
-	github.com/hdfchain/go-socks v1.1.0
-	github.com/hdfchain/slog v1.0.0
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
-	github.com/go-test/deep v1.0.1
-	github.com/gogo/protobuf v1.3.0 // indirect
-	github.com/golang/groupcache v0.0.0-20190702054246-869f871628b6 // indirect
-	github.com/golang/protobuf v1.3.2
-	github.com/golang/snappy v0.0.1 // indirect
-	github.com/google/certificate-transparency-go v1.0.21 // indirect
-	github.com/google/trillian v1.2.1
-	github.com/google/uuid v1.1.1
-	github.com/gorilla/csrf v1.6.2
-	github.com/gorilla/mux v1.7.3
-	github.com/gorilla/schema v1.1.0
+	github.com/dgraph-io/badger v1.6.1 // indirect
+	github.com/go-test/deep v1.0.7
+	github.com/golang/protobuf v1.4.2
+	github.com/google/trillian v1.3.10
+	github.com/google/uuid v1.1.2
+	github.com/gorilla/csrf v1.7.0
+	github.com/gorilla/mux v1.8.0
+	github.com/gorilla/schema v1.2.0
 	github.com/gorilla/securecookie v1.1.1
-	github.com/gorilla/sessions v1.2.0
-	github.com/gorilla/websocket v1.4.1
-	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0 // indirect
-	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0 // indirect
-	github.com/grpc-ecosystem/grpc-gateway v1.9.3 // indirect
+	github.com/gorilla/sessions v1.2.1
+	github.com/gorilla/websocket v1.4.2
 	github.com/h2non/go-is-svg v0.0.0-20160927212452-35e8c4b0612c
+	github.com/hdfchain/go-socks v1.1.1
+	github.com/hdfchain/hdfd/blockchain/stake/v3 v3.0.0-20200910063743-aa6bbf11f012
+	github.com/hdfchain/hdfd/certgen v0.0.0-20200910063743-aa6bbf11f012
+	github.com/hdfchain/hdfd/chaincfg/v3 v3.0.0-20200910063743-aa6bbf11f012
+	github.com/hdfchain/hdfd/rpcclient/v6 v6.0.0-20200910063743-aa6bbf11f012 // indirect
+	github.com/hdfchain/hdfd/wire v1.3.0
+	github.com/hdfchain/hdfdata/api/types/v5 v5.0.0-20200910103401-3cb921156717
+	github.com/hdfchain/hdfdata/blockdata/v5 v5.0.0-20200910103401-3cb921156717 // indirect
+	github.com/hdfchain/hdfdata/db/dbtypes/v2 v2.0.0-20200910103401-3cb921156717 // indirect
+	github.com/hdfchain/hdfdata/dcrrates v0.0.0-20200910103401-3cb921156717 // indirect
+	github.com/hdfchain/hdfdata/exchanges/v2 v2.0.0-20200910103401-3cb921156717 // indirect
+	github.com/hdfchain/hdfdata/explorer/types/v2 v2.0.0-20200910103401-3cb921156717
+	github.com/hdfchain/hdfdata/mempool/v5 v5.0.0-20200910103401-3cb921156717 // indirect
+	github.com/hdfchain/hdfdata/pubsub/types/v3 v3.0.0-20200910103401-3cb921156717
+	github.com/hdfchain/hdfdata/pubsub/v4 v4.0.0-20200910103401-3cb921156717
+	github.com/hdfchain/hdfdata/rpcutils/v3 v3.0.0-20200910103401-3cb921156717 // indirect
+	github.com/hdfchain/hdfdata/semver v0.0.0-20200910103401-3cb921156717
+	github.com/hdfchain/hdfdata/stakedb/v3 v3.0.0-20200910103401-3cb921156717 // indirect
+	github.com/hdfchain/hdfdata/txhelpers/v4 v4.0.0-20200910103401-3cb921156717 // indirect
+	github.com/hdfchain/hdfwallet v0.0.0-20200910081459-e1799de0430f
+	github.com/hdfchain/slog v1.1.1
 	github.com/jessevdk/go-flags v1.4.0
-	github.com/jinzhu/gorm v1.9.10
-	github.com/jonboulle/clockwork v0.1.0 // indirect
+	github.com/jinzhu/gorm v1.9.16
 	github.com/jrick/logrotate v1.0.0
-	github.com/kylelemons/godebug v1.1.0 // indirect
 	github.com/marcopeereboom/sbox v1.0.0
-	github.com/otiai10/copy v1.0.1
-	github.com/otiai10/curr v0.0.0-20190513014714-f5a3d24e5776 // indirect
+	github.com/otiai10/copy v1.2.0
 	github.com/pmezard/go-difflib v1.0.0
 	github.com/pquerna/otp v1.2.0
-	github.com/prometheus/client_golang v1.1.0 // indirect
-	github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4 // indirect
 	github.com/robfig/cron v1.2.0
-	github.com/soheilhy/cmux v0.1.4 // indirect
 	github.com/subosito/gozaru v0.0.0-20190625071150-416082cce636
 	github.com/syndtr/goleveldb v1.0.0
-	github.com/tmc/grpc-websocket-proxy v0.0.0-20190109142713-0ad062ec5ee5 // indirect
-	github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2 // indirect
-	go.opencensus.io v0.22.0 // indirect
-	go.uber.org/atomic v1.4.0 // indirect
-	go.uber.org/multierr v1.1.0 // indirect
-	go.uber.org/zap v1.10.0 // indirect
-	golang.org/x/crypto v0.0.0-20190829043050-9756ffdc2472
-	golang.org/x/net v0.0.0-20191028085509-fe3aa8a45271
-	golang.org/x/sync v0.0.0-20190423024810-112230192c58
-	google.golang.org/grpc v1.24.0
-	sigs.k8s.io/yaml v1.1.0 // indirect
+	golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a
+	golang.org/x/net v0.0.0-20200904194848-62affa334b73
+	golang.org/x/sync v0.0.0-20200625203802-6e8e738ad208
+	google.golang.org/grpc v1.32.0
 )

@@ -13,7 +13,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/hdfchain/hdfd/chaincfg"
+	"github.com/hdfchain/hdfd/chaincfg/v3"
 	"github.com/hdfchain/politeia/politeiad/backend/gitbe"
 	"github.com/hdfchain/politeia/politeiad/sharedconfig"
 	"github.com/hdfchain/politeia/util"

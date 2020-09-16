@@ -4,9 +4,9 @@ Politeia, or Pi, is the Decred proposal system. It is intended to facilitate the
 
 There are two broad types of proposal:
 1. Proposals that aim to establish stake-voter support for a course of action, e.g. direction of software development, adopting or changing some policy.
-2. Proposals that commit to spending project fund DCR, creating a budget that some entity can draw down against as they demonstrate progress towards the proposal's aim.
+2. Proposals that commit to spending project fund HDF, creating a budget that some entity can draw down against as they demonstrate progress towards the proposal's aim.
 
-There is a fee for submitting a proposal (0.1 DCR), to limit the potential for proposal spamming.
+There is a fee for submitting a proposal (0.1 HDF), to limit the potential for proposal spamming.
 
 When proposals are submitted, they are checked by Politeia administrators. Proposals that are deemed spam or invalid will be censored.
 
@@ -14,7 +14,7 @@ When proposals are submitted, a censorship token is generated, which the proposa
 
 Valid proposals will be displayed on the Politeia platform, where they can be seen by all and discussed by Politeia members.
 
-There is a registration fee (0.1 DCR) for creating a Politeia account. Only members who have paid this fee are eligible to submit proposals and comments, and to make up/down votes on the Politeia web platform. 
+There is a registration fee (0.1 HDF) for creating a Politeia account. Only members who have paid this fee are eligible to submit proposals and comments, and to make up/down votes on the Politeia web platform. 
 
 Up/down votes do not affect proposal funding decisions, they are used as soft signals and to determine display order. Up/down voting is not anonymous, the up/down voting history of Politeia accounts will be public information.
 

@@ -21,7 +21,7 @@ import (
 	"strconv"
 	"strings"
 
-	v1 "github.com/hdfchain/dcrtime/api/v1"
+	v1 "github.com/hdfchain/hdftime/api/v1"
 	"github.com/hdfchain/politeia/politeiad/sharedconfig"
 	"github.com/hdfchain/politeia/util"
 	"github.com/hdfchain/politeia/util/version"
@@ -39,7 +39,7 @@ const (
 	defaultMainnetPort = "49374"
 	defaultTestnetPort = "59374"
 
-	defaultMainnetDcrdata = "dcrdata.clkj.ltd:443"
+	defaultMainnetDcrdata = "hdfdata.clkj.ltd:443"
 	defaultTestnetDcrdata = "testnet.clkj.ltd:443"
 
 	// Currently available modes to run politeia, by default piwww, is used.
@@ -63,7 +63,7 @@ var (
 // to parse and execute service commands specified via the -s flag.
 var runServiceCommand func(string) error
 
-// config defines the configuration options for dcrd.
+// config defines the configuration options for hdfd.
 //
 // See loadConfig for details on the configuration load process.
 type config struct {
@@ -84,8 +84,8 @@ type config struct {
 	HTTPSKey      string `long:"httpskey" description:"File containing the https certificate key"`
 	RPCUser       string `long:"rpcuser" description:"RPC user name for privileged commands"`
 	RPCPass       string `long:"rpcpass" description:"RPC password for privileged commands"`
-	DcrtimeHost   string `long:"dcrtimehost" description:"Dcrtime ip:port"`
-	DcrtimeCert   string `long:"dcrtimecert" description:"File containing the https certificate file for dcrtimehost"`
+	DcrtimeHost   string `long:"hdftimehost" description:"Dcrtime ip:port"`
+	DcrtimeCert   string `long:"hdftimecert" description:"File containing the https certificate file for hdftimehost"`
 	EnableCache   bool   `long:"enablecache" description:"Enable the external cache"`
 	CacheHost     string `long:"cachehost" description:"Cache ip:port"`
 	CacheRootCert string `long:"cacherootcert" description:"File containing the CA certificate for the cache"`
@@ -94,7 +94,7 @@ type config struct {
 	BuildCache    bool   `long:"buildcache" description:"Build the cache from scratch"`
 	Identity      string `long:"identity" description:"File containing the politeiad identity file"`
 	GitTrace      bool   `long:"gittrace" description:"Enable git tracing in logs"`
-	DcrdataHost   string `long:"dcrdatahost" description:"Dcrdata ip:port"`
+	DcrdataHost   string `long:"hdfdatahost" description:"Dcrdata ip:port"`
 	Mode          string `long:"mode" description:"Mode www runs as. Supported values: piwww, cmswww"`
 }
 
@@ -587,7 +587,7 @@ func loadConfig() (*config, []string, error) {
 		cfg.DcrtimeCert = cleanAndExpandPath(cfg.DcrtimeCert)
 		path := filepath.Join(cfg.HomeDir, cfg.DcrtimeCert)
 		if !util.FileExists(path) {
-			str := "%s: dcrtimecert " + cfg.DcrtimeCert + " and " +
+			str := "%s: hdftimecert " + cfg.DcrtimeCert + " and " +
 				path + " don't exist"
 			err := fmt.Errorf(str, funcName)
 			fmt.Fprintln(os.Stderr, err)

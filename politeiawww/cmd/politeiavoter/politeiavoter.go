@@ -29,12 +29,12 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/hdfchain/hdfd/blockchain/stake"
-	"github.com/hdfchain/hdfd/chaincfg/chainhash"
+	"github.com/hdfchain/hdfd/blockchain/stake/v3"
+	"github.com/hdfchain/hdfd/chaincfg/v3/chainhash"
 	"github.com/hdfchain/hdfd/dcrec/secp256k1"
 	"github.com/hdfchain/hdfd/dcrutil"
 	"github.com/hdfchain/hdfd/wire"
-	dcrdataapi "github.com/hdfchain/hdfdata/api/types/v4"
+	hdfdataapi "github.com/hdfchain/hdfdata/api/types/v5"
 	pb "github.com/hdfchain/hdfwallet/rpc/walletrpc"
 	"github.com/hdfchain/politeia/decredplugin"
 	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
@@ -1062,7 +1062,7 @@ func (c *ctx) _bestBlock() (uint32, error) {
 	if c.cfg.TestNet {
 		url = "https://testnet.clkj.ltd:443/api/block/best"
 	} else {
-		url = "https://dcrdata.clkj.ltd:443/api/block/best"
+		url = "https://hdfdata.clkj.ltd:443/api/block/best"
 	}
 
 	log.Debugf("Request: GET %v", url)
@@ -1077,11 +1077,11 @@ func (c *ctx) _bestBlock() (uint32, error) {
 	log.Tracef("Response: %v %v", r.StatusCode, string(responseBody))
 
 	if r.StatusCode != http.StatusOK {
-		return 0, fmt.Errorf("dcrdata error: %v %v %s",
+		return 0, fmt.Errorf("hdfdata error: %v %v %s",
 			r.StatusCode, url, string(responseBody))
 	}
 
-	var bdb dcrdataapi.BlockDataBasic
+	var bdb hdfdataapi.BlockDataBasic
 	err = json.Unmarshal(responseBody, &bdb)
 	if err != nil {
 		return 0, err
@@ -1090,9 +1090,9 @@ func (c *ctx) _bestBlock() (uint32, error) {
 	return bdb.Height, nil
 }
 
-// bestBlock requests the best block from dcrdata and returns the best block
-// height. A bug in dcrdata has caused a best block height of 0 to be returned
-// intermittently. This function retries the dcrdata call until a valid best
+// bestBlock requests the best block from hdfdata and returns the best block
+// height. A bug in hdfdata has caused a best block height of 0 to be returned
+// intermittently. This function retries the hdfdata call until a valid best
 // block height is returned or the maxRetries limit is exceeded.
 func (c *ctx) bestBlock() (uint32, error) {
 	var (
@@ -1111,7 +1111,7 @@ func (c *ctx) bestBlock() (uint32, error) {
 			return 0, err
 		}
 		if bb == 0 {
-			log.Infof("dcrdata returned a best block height of 0; retrying in %v",
+			log.Infof("hdfdata returned a best block height of 0; retrying in %v",
 				sleepInterval)
 			time.Sleep(sleepInterval)
 			continue

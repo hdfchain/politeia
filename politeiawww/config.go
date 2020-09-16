@@ -54,7 +54,7 @@ const (
 	defaultMailAddress    = "Politeia <noreply@example.org>"
 	defaultCMSMailAddress = "Contractor Management System <noreply@example.org>"
 
-	defaultDcrdataMainnet = "dcrdata.clkj.ltd:443"
+	defaultDcrdataMainnet = "hdfdata.clkj.ltd:443"
 	defaultDcrdataTestnet = "testnet.clkj.ltd:443"
 
 	// dust value can be found increasing the amount value until we get false
@@ -112,7 +112,7 @@ type config struct {
 	HTTPSKey                 string `long:"httpskey" description:"File containing the https certificate key"`
 	RPCHost                  string `long:"rpchost" description:"Host for politeiad in this format"`
 	RPCCert                  string `long:"rpccert" description:"File containing the https certificate file"`
-	DcrdataHost              string `long:"dcrdatahost" description:"Dcrdata ip:port"`
+	DcrdataHost              string `long:"hdfdatahost" description:"Dcrdata ip:port"`
 	RPCIdentityFile          string `long:"rpcidentityfile" description:"Path to file containing the politeiad identity"`
 	Identity                 *identity.PublicIdentity
 	RPCUser                  string `long:"rpcuser" description:"RPC user name for privileged commands"`
@@ -132,7 +132,7 @@ type config struct {
 	FetchIdentity            bool   `long:"fetchidentity" description:"Whether or not politeiawww fetches the identity from politeiad."`
 	WebServerAddress         string `long:"webserveraddress" description:"Address for the Politeia web server; it should have this format: <scheme>://<host>[:<port>]"`
 	Interactive              string `long:"interactive" description:"Set to i-know-this-is-a-bad-idea to turn off interactive mode during --fetchidentity."`
-	PaywallAmount            uint64 `long:"paywallamount" description:"Amount of DCR (in atoms) required for a user to register or submit a proposal."`
+	PaywallAmount            uint64 `long:"paywallamount" description:"Amount of HDF (in atoms) required for a user to register or submit a proposal."`
 	PaywallXpub              string `long:"paywallxpub" description:"Extended public key for deriving paywall addresses."`
 	MinConfirmationsRequired uint64 `long:"minconfirmations" description:"Minimum blocks confirmation for accepting paywall as paid. Only works in TestNet."`
 	VoteDurationMin          uint32 `long:"votedurationmin" description:"Minimum duration of a proposal vote in blocks"`
@@ -733,7 +733,7 @@ func loadConfig() (*config, []string, error) {
 		}
 	}
 
-	// Setup dcrdata addresses
+	// Setup hdfdata addresses
 	if cfg.DcrdataHost == "" {
 		if cfg.TestNet {
 			cfg.DcrdataHost = defaultDcrdataTestnet
@@ -859,10 +859,10 @@ func loadConfig() (*config, []string, error) {
 	return &cfg, remainingArgs, nil
 }
 
-func (p *politeiawww) dcrdataHostHTTP() string {
+func (p *politeiawww) hdfdataHostHTTP() string {
 	return fmt.Sprintf("https://%v/api", p.cfg.DcrdataHost)
 }
 
-func (p *politeiawww) dcrdataHostWS() string {
+func (p *politeiawww) hdfdataHostWS() string {
 	return fmt.Sprintf("wss://%v/ps", p.cfg.DcrdataHost)
 }

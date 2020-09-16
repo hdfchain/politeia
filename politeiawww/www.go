@@ -37,7 +37,7 @@ import (
 	"github.com/hdfchain/politeia/politeiawww/user/localdb"
 	"github.com/hdfchain/politeia/util"
 	"github.com/hdfchain/politeia/util/version"
-	"github.com/hdfchain/politeia/wsdcrdata"
+	"github.com/hdfchain/politeia/wshdfdata"
 	"github.com/google/uuid"
 	"github.com/gorilla/csrf"
 	"github.com/gorilla/mux"
@@ -287,7 +287,7 @@ func _main() error {
 
 	if loadedCfg.PaywallAmount != 0 && loadedCfg.PaywallXpub != "" {
 		paywallAmountInDcr := float64(loadedCfg.PaywallAmount) / 1e8
-		log.Infof("Paywall : %v DCR", paywallAmountInDcr)
+		log.Infof("Paywall : %v HDF", paywallAmountInDcr)
 	} else if loadedCfg.PaywallAmount == 0 && loadedCfg.PaywallXpub == "" {
 		log.Infof("Paywall : DISABLED")
 	} else {
@@ -496,13 +496,13 @@ func _main() error {
 	p.router = mux.NewRouter()
 	p.router.Use(recoverMiddleware)
 
-	// Setup dcrdata websocket connection
-	ws, err := wsdcrdata.New(p.dcrdataHostWS())
+	// Setup hdfdata websocket connection
+	ws, err := wshdfdata.New(p.hdfdataHostWS())
 	if err != nil {
 		// Continue even if a websocket connection was not able to be
 		// made. The application specific websocket setup (pi, cms, etc)
 		// can decide whether to attempt reconnection or to exit.
-		log.Errorf("wsdcrdata New: %v", err)
+		log.Errorf("wshdfdata New: %v", err)
 	}
 	p.wsDcrdata = ws
 
@@ -512,9 +512,9 @@ func _main() error {
 		p.setPoliteiaWWWRoutes()
 		p.setUserWWWRoutes()
 
-		// Setup dcrdata websocket subscriptions and monitoring. This is
+		// Setup hdfdata websocket subscriptions and monitoring. This is
 		// done in a go routine so politeiawww startup will continue in
-		// the event that a dcrdata websocket connection was not able to
+		// the event that a hdfdata websocket connection was not able to
 		// be made during client initialization and reconnection attempts
 		// are required.
 		go func() {
@@ -645,9 +645,9 @@ func _main() error {
 		p.cron = cron.New()
 		p.checkInvoiceNotifications()
 
-		// Setup dcrdata websocket subscriptions and monitoring. This is
+		// Setup hdfdata websocket subscriptions and monitoring. This is
 		// done in a go routine so cmswww startup will continue in
-		// the event that a dcrdata websocket connection was not able to
+		// the event that a hdfdata websocket connection was not able to
 		// be made during client initialization and reconnection attempts
 		// are required.
 		go func() {
@@ -735,7 +735,7 @@ done:
 	// Close user db connection
 	p.db.Close()
 
-	// Shutdown all dcrdata websockets
+	// Shutdown all hdfdata websockets
 	if p.wsDcrdata != nil {
 		p.wsDcrdata.Close()
 	}

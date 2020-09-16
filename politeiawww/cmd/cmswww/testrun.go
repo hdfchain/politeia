@@ -13,7 +13,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/hdfchain/hdfd/chaincfg"
+	"github.com/hdfchain/hdfd/chaincfg/v3"
 	"github.com/hdfchain/hdfd/hdkeychain"
 	"github.com/hdfchain/politeia/cmsplugin"
 	"github.com/hdfchain/politeia/politeiad/api/v1/mime"

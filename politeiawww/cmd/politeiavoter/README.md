@@ -22,7 +22,7 @@ testnet=1
 ## Requirements
 
 Voting requires access to wallet GRPC. Therefore this tool needs the wallet
-certificate. By default the tool will look in `~/.dcrwallet/rpc.cert`.
+certificate. By default the tool will look in `~/.hdfwallet/rpc.cert`.
 
 In order to sign votes ```politeiavoter``` requires the wallet passphrase.
 

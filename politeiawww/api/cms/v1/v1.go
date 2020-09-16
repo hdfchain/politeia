@@ -490,7 +490,7 @@ type InvoiceInput struct {
 	ContractorLocation string           `json:"contractorlocation"` // IRL location of contractor
 	ContractorContact  string           `json:"contractorcontact"`  // Contractor email or other contact
 	ContractorRate     uint             `json:"contractorrate"`     // Contractor Pay Rate in USD cents
-	PaymentAddress     string           `json:"paymentaddress"`     //  DCR payment address
+	PaymentAddress     string           `json:"paymentaddress"`     //  HDF payment address
 	LineItems          []LineItemsInput `json:"lineitems"`
 }
 
@@ -608,7 +608,7 @@ type Payout struct {
 	LaborTotal     uint           `json:"labortotal"`   // in USD cents
 	ExpenseTotal   uint           `json:"expensetotal"` // in USD cents
 	Total          uint           `json:"total"`        // in USD cents
-	DCRTotal       dcrutil.Amount `json:"dcrtotal"`     // in DCR atoms
+	HDFTotal       dcrutil.Amount `json:"dcrtotal"`     // in HDF atoms
 	ExchangeRate   uint           `json:"exchangerate"` // in USD cents
 	ApprovedTime   int64          `json:"approvedtime"` // Time of invoice approval (in Unix seconds)
 }

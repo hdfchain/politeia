@@ -11,7 +11,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/hdfchain/hdfd/chaincfg/chainhash"
+	"github.com/hdfchain/hdfd/chaincfg/v3/chainhash"
 	"github.com/hdfchain/hdfwallet/rpc/walletrpc"
 	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
 	"github.com/hdfchain/politeia/politeiawww/api/www/v1"

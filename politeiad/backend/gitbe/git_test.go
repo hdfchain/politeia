@@ -80,7 +80,7 @@ func TestLog(t *testing.T) {
 }
 
 func TestFsck(t *testing.T) {
-	// Test git fsck, we build on top of that with a dcrtime fsck
+	// Test git fsck, we build on top of that with a hdftime fsck
 	log := slog.NewBackend(&testWriter{t}).Logger("TEST")
 	UseLogger(log)
 	g := newGitBackEnd()

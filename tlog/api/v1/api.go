@@ -3,7 +3,7 @@ package v1
 import (
 	"fmt"
 
-	dcrtime "github.com/hdfchain/dcrtime/api/v1"
+	hdftime "github.com/hdfchain/hdftime/api/v1"
 	"github.com/google/trillian"
 )
 
@@ -78,12 +78,12 @@ type DataKeyValue struct {
 	Value string `json:"value"` // Value
 }
 
-// DataAnchor describes what is stored in dcrtime. We store the SHA256 hash of
-// STH.LogRoot in dcrtime
+// DataAnchor describes what is stored in hdftime. We store the SHA256 hash of
+// STH.LogRoot in hdftime
 type DataAnchor struct {
 	RecordId     int64                  `json:"recordid"`     // Record ID this STH belongs to
 	STH          trillian.SignedLogRoot `json:"sth"`          // Signed tree head
-	VerifyDigest dcrtime.VerifyDigest   `json:"verifydigest"` // dcrtime digest structure
+	VerifyDigest hdftime.VerifyDigest   `json:"verifydigest"` // hdftime digest structure
 }
 
 // Record contains user provided data and user attestation.
@@ -182,7 +182,7 @@ type RecordEntryProof struct {
 	Leaf        *trillian.LogLeaf         `json:"leaf,omitempty"`        // Requested Leaf
 	STH         *trillian.SignedLogRoot   `json:"sth,omitempty"`         // Signed tree head
 	Proof       *trillian.Proof           `json:"proof,omitempty"`       // Inclusion proof for STH
-	Anchor      *dcrtime.ChainInformation `json:"anchor,omitempty"`      // Anchor info for STH
+	Anchor      *hdftime.ChainInformation `json:"anchor,omitempty"`      // Anchor info for STH
 	Error       string                    `json:"error,omitempty"`       // Error is set when record could not be retrieved
 }
 

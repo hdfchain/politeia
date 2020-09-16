@@ -17,9 +17,9 @@ be "Approved" for payment.
 Currently, payments will still be processed by hand until the DAE is fully
 operational.
 
-Also note that for the initial months of CMS usage invoice DCR/USD rates will be
+Also note that for the initial months of CMS usage invoice HDF/USD rates will be
 calculated in the same fashion as they had done before.  In the near future,
-once implemented, users will see a given month's DCR/USD rate upon invoice
+once implemented, users will see a given month's HDF/USD rate upon invoice
 submission.  Upon administrator invoice approval, CMS will watch the invoice's
 payment address for the amount expected.  Once observed, the invoice will be
 updated with the pertinent payment information (including the txid etc).
@@ -49,12 +49,12 @@ of the currently required fields:
 * Contractor Location: This is which country you are currently located, or primarily residing.
 * Contractor Contact: Contact information incase an administrator would need to reach out to discuss something, typically an email address or chat nick.
 * Contractor Rate: This is the previously agreed upon rate you will be performing work.
-* Payment Address: This is the DCR address where you would like to receive payment.  
+* Payment Address: This is the HDF address where you would like to receive payment.  
 
 * Line Items:
   * Type: Currently can be 1 (Labor), 2 (Expense), or 3 (Misc)
   * Domain: The broad category of work performed/expenses spent (for example, Development, Marketing, Community etc).
-  * Subdomain: The specific project or program of which the work or expenses are related (for example, Decrediton, dcrd, NYC Event).
+  * Subdomain: The specific project or program of which the work or expenses are related (for example, Decrediton, hdfd, NYC Event).
   * Description: A thorough description of the work or expenses.
   * Labor: The number of hours of work performed.
   * Expenses: The cost of the line item (in USD).

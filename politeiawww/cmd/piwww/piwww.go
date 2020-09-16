@@ -15,7 +15,7 @@ import (
 
 	flags "github.com/jessevdk/go-flags"
 
-	"github.com/hdfchain/hdfd/chaincfg/chainhash"
+	"github.com/hdfchain/hdfd/chaincfg/v3/chainhash"
 	"github.com/hdfchain/hdfd/dcrutil"
 	"github.com/hdfchain/politeia/politeiad/api/v1/mime"
 	v1 "github.com/hdfchain/politeia/politeiawww/api/www/v1"
@@ -88,7 +88,7 @@ type piwww struct {
 	ResendVerification ResendVerificationCmd    `command:"resendverification" description:"(public) resend the user verification email"`
 	ResetPassword      shared.ResetPasswordCmd  `command:"resetpassword" description:"(public) reset the password for a user that is not logged in"`
 	Secret             shared.SecretCmd         `command:"secret" description:"(user)   ping politeiawww"`
-	SendFaucetTx       SendFaucetTxCmd          `command:"sendfaucettx" description:"         send a DCR transaction using the Decred testnet faucet"`
+	SendFaucetTx       SendFaucetTxCmd          `command:"sendfaucettx" description:"         send a HDF transaction using the Decred testnet faucet"`
 	SetProposalStatus  SetProposalStatusCmd     `command:"setproposalstatus" description:"(admin)  set the status of a proposal"`
 	SetTOTP            shared.SetTOTPCmd        `command:"settotp" description:"(user)  set the key for TOTP"`
 	StartVote          StartVoteCmd             `command:"startvote" description:"(admin)  start the voting period on a proposal"`

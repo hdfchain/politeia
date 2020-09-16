@@ -39,15 +39,15 @@ var (
 	defaultConfigFile     = filepath.Join(defaultHomeDir, defaultConfigFilename)
 	defaultLogDir         = filepath.Join(defaultHomeDir, defaultLogDirname)
 	defaultVoteDir        = filepath.Join(defaultHomeDir, defaultVoteDirname)
-	dcrwalletHomeDir      = dcrutil.AppDataDir("dcrwallet", false)
-	defaultWalletCertFile = filepath.Join(dcrwalletHomeDir, "rpc.cert")
+	hdfwalletHomeDir      = dcrutil.AppDataDir("hdfwallet", false)
+	defaultWalletCertFile = filepath.Join(hdfwalletHomeDir, "rpc.cert")
 )
 
 // runServiceCommand is only set to a real function on Windows.  It is used
 // to parse and execute service commands specified via the -s flag.
 var runServiceCommand func(string) error
 
-// config defines the configuration options for dcrd.
+// config defines the configuration options for hdfd.
 //
 // See loadConfig for details on the configuration load process.
 type config struct {

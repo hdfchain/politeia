@@ -27,7 +27,7 @@ The politeia stack is as follows:
 ~~~~~~~~ Internet ~~~~~~~~~
             |
 +-------------------------+
-|        dcrtimed         |
+|        hdftimed         |
 +-------------------------+
 ```
 ## API Documentation
@@ -350,7 +350,7 @@ provided in the README of
 #### Paywall
 
 This politeiawww feature prevents users from submitting new proposals and
-comments until a payment in DCR has been paid. By default, it needs a
+comments until a payment in HDF has been paid. By default, it needs a
 transaction with 2 confirmations to accept the payment.
 
 Setting up the paywall requires a master public key for an account to

@@ -9,7 +9,7 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	"github.com/hdfchain/dcrtime/api/v1"
+	"github.com/hdfchain/hdftime/api/v1"
 	pd "github.com/hdfchain/politeia/politeiad/api/v1"
 	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
 )

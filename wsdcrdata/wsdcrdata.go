@@ -2,7 +2,7 @@
 // Use of this source code is governed by an ISC
 // license that can be found in the LICENSE file.
 
-package wsdcrdata
+package wshdfdata
 
 import (
 	"context"
@@ -28,8 +28,8 @@ const (
 	actionSubscribe   = "subscribe"
 	actionUnsubscribe = "unsubscribe"
 
-	// eventAddress is used to subscribe to events for a specific dcr
-	// address. The dcr address must be appended onto the eventAddress
+	// eventAddress is used to subscribe to events for a specific hdf
+	// address. The hdf address must be appended onto the eventAddress
 	// string.
 	eventAddress = "address:"
 
@@ -47,11 +47,11 @@ var (
 	ErrSubNotFound = errors.New("subscription not found")
 
 	// ErrReconnecting is emitted when attempting to use the Client
-	// while it is in the process of reconnecting to dcrdata. All
+	// while it is in the process of reconnecting to hdfdata. All
 	// subscribe/unsubscribe actions that are attempted while the
 	// client is reconnecting are recorded and completed once the new
 	// connection has been made.
-	ErrReconnecting = errors.New("reconnecting to dcrdata")
+	ErrReconnecting = errors.New("reconnecting to hdfdata")
 
 	// ErrShutdown is emitted when attempting to use the Client after
 	// it has already been shut down.
@@ -61,19 +61,19 @@ var (
 // pendingEvent represents an event action (subscribe/unsubscribe) that is
 // attempted to be made while the Client is in a StateReconnecting state. The
 // pending event actions are replayed in the order in which they were received
-// once a new dcrdata connection has been established.
+// once a new hdfdata connection has been established.
 type pendingEvent struct {
 	event  string // Websocket event
 	action string // Subscribe/unsubscribe
 }
 
-// Client is a dcrdata websocket client for managing dcrdata websocket
+// Client is a hdfdata websocket client for managing hdfdata websocket
 // subscriptions.
 type Client struct {
 	sync.Mutex
 	url           string
 	status        StatusT             // Websocket status
-	client        *psclient.Client    // dcrdata websocket client
+	client        *psclient.Client    // hdfdata websocket client
 	subscriptions map[string]struct{} // Active subscriptions
 
 	// pending contains events that were attempted to be subscribed to
@@ -174,7 +174,7 @@ func (c *Client) pendingGet() []pendingEvent {
 	return p
 }
 
-// subscribe subscribes the dcrdata client to an event.
+// subscribe subscribes the hdfdata client to an event.
 func (c *Client) subscribe(event string) error {
 	// Check connection status
 	switch c.Status() {
@@ -210,7 +210,7 @@ func (c *Client) subscribe(event string) error {
 	return nil
 }
 
-// unsubscribe ubsubscribes the dcrdata client from an event.
+// unsubscribe ubsubscribes the hdfdata client from an event.
 func (c *Client) unsubscribe(event string) error {
 	// Check connection status
 	switch c.Status() {
@@ -285,7 +285,7 @@ func (c *Client) NewBlockUnsubscribe() error {
 }
 
 // Receive returns a new channel that receives websocket messages from the
-// dcrdata server.
+// hdfdata server.
 func (c *Client) Receive() <-chan *psclient.ClientMessage {
 	log.Tracef("Receive")
 
@@ -326,9 +326,9 @@ func (c *Client) Reconnect() {
 	// made and all previous subscriptions have been resubscribed to.
 	var done bool
 	for !done {
-		log.Infof("Attempting to reconnect dcrdata websocket")
+		log.Infof("Attempting to reconnect hdfdata websocket")
 
-		// Reconnect to dcrdata
+		// Reconnect to hdfdata
 		client, err := psclientNew(c.url)
 		if err != nil {
 			log.Errorf("New client failed: %v", err)
@@ -427,7 +427,7 @@ func (c *Client) Reconnect() {
 	}
 }
 
-// Close closes the dcrdata websocket client.
+// Close closes the hdfdata websocket client.
 func (c *Client) Close() error {
 	log.Tracef("Close")
 
@@ -472,12 +472,12 @@ func psclientNew(url string) (*psclient.Client, error) {
 }
 
 // New returns a new Client.
-func New(dcrdataURL string) (*Client, error) {
-	// Setup dcrdata connection. If there is an error when connecting
-	// to dcrdata, return both the error and the Client so that the
+func New(hdfdataURL string) (*Client, error) {
+	// Setup hdfdata connection. If there is an error when connecting
+	// to hdfdata, return both the error and the Client so that the
 	// caller can decide if reconnection attempts should be made.
 	var status StatusT
-	c, err := psclientNew(dcrdataURL)
+	c, err := psclientNew(hdfdataURL)
 	if err == nil {
 		// Connection is good
 		status = StatusOpen
@@ -488,7 +488,7 @@ func New(dcrdataURL string) (*Client, error) {
 	}
 
 	return &Client{
-		url:           dcrdataURL,
+		url:           hdfdataURL,
 		status:        status,
 		client:        c,
 		subscriptions: make(map[string]struct{}),

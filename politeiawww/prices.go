@@ -22,10 +22,10 @@ const poloURL = "https://poloniex.com/public"
 const httpTimeout = time.Second * 3
 const pricePeriod = 900
 
-const dcrSymbolBinance = "DCRBTC"
+const dcrSymbolBinance = "HDFBTC"
 const usdtSymbolBinance = "BTCUSDT"
 
-const dcrSymbolPolo = "BTC_DCR"
+const dcrSymbolPolo = "BTC_HDF"
 const usdtSymbolPolo = "USDT_BTC"
 
 type poloChartData struct {
@@ -37,7 +37,7 @@ type poloChartData struct {
 // after that date then use Binance instead.
 var endPoloDate = time.Date(2019, 4, 1, 0, 0, 0, 0, time.UTC)
 
-// getMonthAverage returns the average USD/DCR price for a given month
+// getMonthAverage returns the average USD/HDF price for a given month
 func (p *politeiawww) getMonthAverage(month time.Month, year int) (uint, error) {
 	startTime := time.Date(year, month, 1, 0, 0, 0, 0, time.UTC)
 	endTime := startTime.AddDate(0, 1, 0)
@@ -58,7 +58,7 @@ func (p *politeiawww) getMonthAverage(month time.Month, year int) (uint, error) 
 
 	// Use Binance if start date is AFTER 3/31/19
 	if startTime.Before(endPoloDate) {
-		// Download BTC/DCR and USDT/BTC prices from Polo
+		// Download BTC/HDF and USDT/BTC prices from Polo
 		dcrPrices, err = getPricesPolo(dcrSymbolPolo, unixStart, unixEnd)
 		if err != nil {
 			return 0, fmt.Errorf("getPricesPolo %v: %v", dcrSymbolPolo, err)
@@ -68,7 +68,7 @@ func (p *politeiawww) getMonthAverage(month time.Month, year int) (uint, error) 
 			return 0, fmt.Errorf("getPricesPolo %v: %v", usdtSymbolPolo, err)
 		}
 	} else {
-		// Download BTC/DCR and USDT/BTC prices from Binance
+		// Download BTC/HDF and USDT/BTC prices from Binance
 		dcrPrices, err = getPricesBinance(dcrSymbolBinance, unixStart, unixEnd)
 		if err != nil {
 			return 0, fmt.Errorf("getPricesBinance %v: %v", dcrSymbolBinance, err)
@@ -82,15 +82,15 @@ func (p *politeiawww) getMonthAverage(month time.Month, year int) (uint, error) 
 	usdtDcrPrices := make(map[uint64]float64)
 
 	// Select only timestamps which appear in both charts to
-	// populate the result set. Multiply BTC/DCR rate by
-	// USDT/BTC rate to get USDT/DCR rate.
-	for timestamp, dcr := range dcrPrices {
+	// populate the result set. Multiply BTC/HDF rate by
+	// USDT/BTC rate to get USDT/HDF rate.
+	for timestamp, hdf := range dcrPrices {
 		if btc, ok := btcPrices[timestamp]; ok {
-			usdtDcrPrices[timestamp] = dcr * btc
+			usdtDcrPrices[timestamp] = hdf * btc
 		}
 	}
 
-	// Calculate and return the average of all USDT/DCR prices
+	// Calculate and return the average of all USDT/HDF prices
 	var average float64
 	for _, price := range usdtDcrPrices {
 		average += price

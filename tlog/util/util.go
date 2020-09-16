@@ -12,7 +12,7 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	"github.com/hdfchain/dcrtime/merkle"
+	"github.com/hdfchain/hdftime/merkle"
 	"github.com/hdfchain/politeia/politeiad/api/v1/identity"
 	v1 "github.com/hdfchain/politeia/tlog/api/v1"
 	"github.com/hdfchain/politeia/util"

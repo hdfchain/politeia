@@ -45,7 +45,7 @@ func (cmd *InvoiceExchangeRateCmd) Execute(args []string) error {
 
 const invoiceExchangeRateHelpMsg = `invoiceexchangerate [flags]"
 
-Request an USD/DCR exchange rate for a given month.
+Request an USD/HDF exchange rate for a given month.
 
 Arguments:
 1. month			 (string, required)   Month (MM, 01-12)

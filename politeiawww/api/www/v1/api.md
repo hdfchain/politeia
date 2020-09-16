@@ -549,7 +549,7 @@ Checks that a user has paid his user registration fee.
 |-|-|-|
 | haspaid | boolean | Whether or not a transaction on the blockchain that was sent to the `paywalladdress` |
 | paywalladdress | String | The address in which to send the transaction containing the `paywallamount`.  If the user has already paid, this field will be empty or not present. |
-| paywallamount | Int64 | The amount of DCR (in atoms) to send to `paywalladdress`.  If the user has already paid, this field will be empty or not present. |
+| paywallamount | Int64 | The amount of HDF (in atoms) to send to `paywalladdress`.  If the user has already paid, this field will be empty or not present. |
 | paywalltxnotbefore | Int64 | The minimum UNIX time (in seconds) required for the block containing the transaction sent to `paywalladdress`.  If the user has already paid, this field will be empty or not present. |
 
 On failure the call shall return `400 Bad Request` and one of the following
@@ -2842,7 +2842,7 @@ Reply:
 | username | string | Unique username. |
 | isadmin | boolean | Whether the user is an admin or not. |
 | newuserpaywalladdress | string | The address in which to send the transaction containing the `newuserpaywallamount`.  If the user has already paid, this field will be empty or not present. |
-| newuserpaywallamount | int64 | The amount of DCR (in atoms) to send to `newuserpaywalladdress`.  If the user has already paid, this field will be empty or not present. |
+| newuserpaywallamount | int64 | The amount of HDF (in atoms) to send to `newuserpaywalladdress`.  If the user has already paid, this field will be empty or not present. |
 | newuserpaywalltxnotbefore | int64 | The minimum UNIX time (in seconds) required for the block containing the transaction sent to `newuserpaywalladdress`.  If the user has already paid, this field will be empty or not present. |
 | newuserpaywalltx | string | The transaction used to pay the `newuserpaywallamount` at `newuserpaywalladdress`. |
 | newuserpaywallpollexpiry | int64 | The UNIX time (in seconds) for when the server will stop polling the server for transactions at `newuserpaywalladdress`. |
@@ -2976,7 +2976,7 @@ or [`Me`](#me) call.
 | email | string | Current user email address. |
 | publickey | string | Current public key. |
 | paywalladdress | String | The address in which to send the transaction containing the `paywallamount`.  If the user has already paid, this field will be empty or not present. |
-| paywallamount | Int64 | The amount of DCR (in atoms) to send to `paywalladdress`.  If the user has already paid, this field will be empty or not present. |
+| paywallamount | Int64 | The amount of HDF (in atoms) to send to `paywalladdress`.  If the user has already paid, this field will be empty or not present. |
 | paywalltxnotbefore | Int64 | The minimum UNIX time (in seconds) required for the block containing the transaction sent to `paywalladdress`.  If the user has already paid, this field will be empty or not present. |
 | lastlogintime | int64 | The UNIX timestamp of the last login date; it will be 0 if the user has not logged in before. |
 | sessionmaxage | int64 | The UNIX timestamp of the session max age. |

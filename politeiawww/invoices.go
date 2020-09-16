@@ -954,7 +954,7 @@ func (p *politeiawww) processSetInvoiceStatus(sis cms.SetInvoiceStatus, u *user.
 	dbInvoice.StatusChangeReason = c.Reason
 	dbInvoice.Status = c.NewStatus
 
-	// Calculate amount of DCR needed
+	// Calculate amount of HDF needed
 	payout, err := calculatePayout(*dbInvoice)
 	if err != nil {
 		return nil, err
@@ -966,7 +966,7 @@ func (p *politeiawww) processSetInvoiceStatus(sis cms.SetInvoiceStatus, u *user.
 			Address:      strings.TrimSpace(dbInvoice.PaymentAddress),
 			TimeStarted:  time.Now().Unix(),
 			Status:       cms.PaymentStatusWatching,
-			AmountNeeded: int64(payout.DCRTotal),
+			AmountNeeded: int64(payout.HDFTotal),
 		}
 	}
 
@@ -1852,7 +1852,7 @@ func calculatePayout(inv database.Invoice) (cms.Payout, error) {
 	payout.Year = inv.Year
 	payout.Total = payout.LaborTotal + payout.ExpenseTotal
 	if inv.ExchangeRate > 0 {
-		payout.DCRTotal, err = dcrutil.NewAmount(float64(payout.Total) /
+		payout.HDFTotal, err = dcrutil.NewAmount(float64(payout.Total) /
 			float64(inv.ExchangeRate))
 		if err != nil {
 			log.Errorf("calculatePayout %v: NewAmount: %v",

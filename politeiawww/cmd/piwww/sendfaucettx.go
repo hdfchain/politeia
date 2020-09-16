@@ -11,10 +11,10 @@ import (
 )
 
 // SendFaucetTxCmd uses the Decred testnet faucet to send the specified amount
-// of DCR (in atoms) to the specified address.
+// of HDF (in atoms) to the specified address.
 type SendFaucetTxCmd struct {
 	Args struct {
-		Address       string `positional-arg-name:"address" required:"true"` // DCR address
+		Address       string `positional-arg-name:"address" required:"true"` // HDF address
 		Amount        uint64 `positional-arg-name:"amount" required:"true"`  // Amount in atoms
 		OverrideToken string `positional-arg-name:"overridetoken"`           // Faucet override token
 	} `positional-args:"true"`
@@ -24,11 +24,11 @@ type SendFaucetTxCmd struct {
 func (cmd *SendFaucetTxCmd) Execute(args []string) error {
 	address := cmd.Args.Address
 	atoms := cmd.Args.Amount
-	dcr := float64(atoms) / 1e8
+	hdf := float64(atoms) / 1e8
 
 	if address == "" && atoms == 0 {
-		return fmt.Errorf("Invalid arguments. Unable to pay %v DCR to %v",
-			dcr, address)
+		return fmt.Errorf("Invalid arguments. Unable to pay %v HDF to %v",
+			hdf, address)
 	}
 
 	txID, err := util.PayWithTestnetFaucet(cfg.FaucetHost, address, atoms,
@@ -44,8 +44,8 @@ func (cmd *SendFaucetTxCmd) Execute(args []string) error {
 		fmt.Printf(`{"txid":"%v"}`, txID)
 		fmt.Printf("\n")
 	default:
-		fmt.Printf("Paid %v DCR to %v with txID %v\n",
-			dcr, address, txID)
+		fmt.Printf("Paid %v HDF to %v with txID %v\n",
+			hdf, address, txID)
 	}
 
 	return nil
@@ -55,8 +55,8 @@ func (cmd *SendFaucetTxCmd) Execute(args []string) error {
 // is specified.
 const sendFaucetTxHelpMsg = `sendfaucettx "address" "amount" "overridetoken"
 
-Use the Decred testnet faucet to send DCR (in atoms) to an address. One atom is
-one hundred millionth of a single DCR (0.00000001 DCR).
+Use the Decred testnet faucet to send HDF (in atoms) to an address. One atom is
+one hundred millionth of a single HDF (0.00000001 HDF).
 
 Arguments:
 1. address          (string, required)   Receiving address
@@ -64,4 +64,4 @@ Arguments:
 3. overridetoken    (string, optional)   Override token for testnet faucet
 
 Result:
-Paid [amount] DCR to [address] with txID [transaction id]`
+Paid [amount] HDF to [address] with txID [transaction id]`

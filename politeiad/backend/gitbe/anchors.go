@@ -12,15 +12,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/hdfchain/dcrtime/merkle"
+	"github.com/hdfchain/hdftime/merkle"
 )
 
 // An anchor corresponds to a set of git commit hashes, along with their
-// merkle root, that get checkpointed in dcrtime. This provides censorship
+// merkle root, that get checkpointed in hdftime. This provides censorship
 // resistance by anchoring activity on politeia to the blockchain.
 //
 // To help process anchors, we need to look up the last anchor and unconfirmed anchors that
-// have not been checkpointed in dcrtime yet. To identify these, we parse the
+// have not been checkpointed in hdftime yet. To identify these, we parse the
 // git log, which keeps a record of all anchors dropped and anchors confirmed.
 
 // AnchorType discriminates between the various Anchor record types.
@@ -41,7 +41,7 @@ type Anchor struct {
 	// commit messages is in Messages[15].
 }
 
-// LastAnchor stores the last commit anchored in dcrtime.
+// LastAnchor stores the last commit anchored in hdftime.
 type LastAnchor struct {
 	Last   []byte // Last git digest that was anchored
 	Time   int64  // OS time when record was created
@@ -49,7 +49,7 @@ type LastAnchor struct {
 }
 
 // UnconfirmedAnchor stores Merkle roots of anchors that have not been confirmed
-// yet by dcrtime.
+// yet by hdftime.
 type UnconfirmedAnchor struct {
 	Merkles [][]byte // List of Merkle root that points to Anchor records
 }

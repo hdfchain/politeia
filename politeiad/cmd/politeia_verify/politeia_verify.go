@@ -14,7 +14,7 @@ import (
 	"os"
 
 	"github.com/agl/ed25519"
-	"github.com/hdfchain/dcrtime/merkle"
+	"github.com/hdfchain/hdftime/merkle"
 )
 
 var (

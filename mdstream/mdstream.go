@@ -380,7 +380,7 @@ type InvoicePayment struct {
 	Version        uint   `json:"version"`        // Version of the struct
 	TxIDs          string `json:"txids"`          // TxIDs captured from the payment, separated by commas
 	Timestamp      int64  `json:"timeupdated"`    // Time of last payment update
-	AmountReceived int64  `json:"amountreceived"` // Amount of DCR payment currently received
+	AmountReceived int64  `json:"amountreceived"` // Amount of HDF payment currently received
 }
 
 // EncodeInvoicePayment encodes a InvoicePayment into a JSON byte slice.

@@ -1007,7 +1007,7 @@ func convertRecordToDatabaseInvoice(p pd.Record) (*cmsdatabase.Invoice, error) {
 	}
 	payment := cmsdatabase.Payments{
 		Address:      dbInvoice.PaymentAddress,
-		AmountNeeded: int64(payout.DCRTotal),
+		AmountNeeded: int64(payout.HDFTotal),
 	}
 	for _, m := range p.Metadata {
 		switch m.ID {

@@ -25,7 +25,7 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/hdfchain/hdfd/chaincfg"
+	"github.com/hdfchain/hdfd/chaincfg/v3"
 	"github.com/hdfchain/politeia/decredplugin"
 	"github.com/hdfchain/politeia/politeiad/backend/gitbe"
 	"github.com/hdfchain/politeia/politeiawww/sharedconfig"

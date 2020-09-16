@@ -19,16 +19,16 @@ import (
 	"strings"
 	"time"
 
-	"github.com/hdfchain/hdfd/chaincfg"
+	"github.com/hdfchain/hdfd/chaincfg/v3"
 	"github.com/hdfchain/hdfd/dcrutil"
 	"github.com/hdfchain/hdfd/hdkeychain"
 )
 
 const (
-	dcrdataTimeout = 3 * time.Second // Dcrdata request timeout
+	hdfdataTimeout = 3 * time.Second // Dcrdata request timeout
 	faucetTimeout  = 5 * time.Second // Testnet faucet request timeout
 
-	// Must match dcrwallets udb.ExternalBranch
+	// Must match hdfwallets udb.ExternalBranch
 	externalBranch uint32 = 0
 )
 
@@ -62,7 +62,7 @@ type BETransactionPrevOut struct {
 
 // BETransactionVout holds the transaction amount information.
 type BETransactionVout struct {
-	Amount       json.Number               `json:"value"`        // Transaction amount (in DCR)
+	Amount       json.Number               `json:"value"`        // Transaction amount (in HDF)
 	ScriptPubkey BETransactionScriptPubkey `json:"scriptPubkey"` // Transaction script info
 }
 
@@ -74,7 +74,7 @@ type BETransactionScriptPubkey struct {
 
 // TxDetails is an object representing a transaction.
 // XXX This was previously being used to standardize the different responses
-// from the dcrdata and insight APIs. Support for the insight API was removed
+// from the hdfdata and insight APIs. Support for the insight API was removed
 // but parts of politeiawww still consume this struct so it has remained.
 type TxDetails struct {
 	Address        string   // Transaction address
@@ -103,17 +103,17 @@ func makeRequest(url string, timeout time.Duration) ([]byte, error) {
 	if response.StatusCode != http.StatusOK {
 		body, err := ioutil.ReadAll(response.Body)
 		if err != nil {
-			return nil, fmt.Errorf("dcrdata error: %v %v %v",
+			return nil, fmt.Errorf("hdfdata error: %v %v %v",
 				response.StatusCode, url, err)
 		}
-		return nil, fmt.Errorf("dcrdata error: %v %v %s",
+		return nil, fmt.Errorf("hdfdata error: %v %v %s",
 			response.StatusCode, url, body)
 	}
 
 	return ioutil.ReadAll(response.Body)
 }
 
-// DcrStringToAmount converts a DCR amount as a string into a uint64
+// DcrStringToAmount converts a HDF amount as a string into a uint64
 // representing atoms. Supported input variations: "1", ".1", "0.1"
 func DcrStringToAmount(dcrstr string) (uint64, error) {
 	match, err := regexp.MatchString("(\\d*\\.)*\\d+", dcrstr)
@@ -121,7 +121,7 @@ func DcrStringToAmount(dcrstr string) (uint64, error) {
 		return 0, err
 	}
 	if !match {
-		return 0, fmt.Errorf("invalid DCR amount: %v", dcrstr)
+		return 0, fmt.Errorf("invalid HDF amount: %v", dcrstr)
 	}
 
 	var dcrsplit []string
@@ -149,7 +149,7 @@ func DcrStringToAmount(dcrstr string) (uint64, error) {
 }
 
 func fetchTxWithBE(url string, address string, minimumAmount uint64, txnotbefore int64, minConfirmationsRequired uint64) (string, uint64, error) {
-	responseBody, err := makeRequest(url, dcrdataTimeout)
+	responseBody, err := makeRequest(url, hdfdataTimeout)
 	if err != nil {
 		return "", 0, err
 	}
@@ -301,7 +301,7 @@ func PayWithTestnetFaucet(faucetURL string, address string, amount uint64, overr
 // FetchTxWithBlockExplorers uses public block explorers to look for a
 // transaction for the given address that equals or exceeds the given amount,
 // occurs after the txnotbefore time and has the minimum number of confirmations.
-func FetchTxWithBlockExplorers(address string, amount uint64, txnotbefore int64, minConfirmations uint64, dcrdataURL string) (string, uint64, error) {
+func FetchTxWithBlockExplorers(address string, amount uint64, txnotbefore int64, minConfirmations uint64, hdfdataURL string) (string, uint64, error) {
 	// pre-validate that the passed address, amount, and tx are at least
 	// somewhat valid before querying the explorers
 	addr, err := dcrutil.DecodeAddress(address)
@@ -309,23 +309,23 @@ func FetchTxWithBlockExplorers(address string, amount uint64, txnotbefore int64,
 		return "", 0, fmt.Errorf("invalid address %v: %v", addr, err)
 	}
 
-	// Construct proper dcrdata url
-	dcrdataURL += "/address/" + address
+	// Construct proper hdfdata url
+	hdfdataURL += "/address/" + address
 
-	explorerURL := dcrdataURL + "/raw"
+	explorerURL := hdfdataURL + "/raw"
 
-	// Fetch transaction from dcrdata
+	// Fetch transaction from hdfdata
 	txID, amount, err := fetchTxWithBE(explorerURL, address, amount,
 		txnotbefore, minConfirmations)
 	if err != nil {
-		return "", 0, fmt.Errorf("failed to fetch from dcrdata: %v", err)
+		return "", 0, fmt.Errorf("failed to fetch from hdfdata: %v", err)
 	}
 
 	return txID, amount, nil
 }
 
 func fetchTxsWithBE(url string) ([]BETransaction, error) {
-	responseBody, err := makeRequest(url, dcrdataTimeout)
+	responseBody, err := makeRequest(url, hdfdataTimeout)
 	if err != nil {
 		return nil, err
 	}
@@ -369,26 +369,26 @@ func convertBETransactionToTxDetails(address string, tx BETransaction) (*TxDetai
 }
 
 // FetchTxsForAddress fetches the transactions that have been sent to the
-// provided wallet address from the dcrdata block explorer
-func FetchTxsForAddress(address string, dcrdataURL string) ([]TxDetails, error) {
+// provided wallet address from the hdfdata block explorer
+func FetchTxsForAddress(address string, hdfdataURL string) ([]TxDetails, error) {
 	// Get block explorer URL
 	addr, err := dcrutil.DecodeAddress(address)
 	if err != nil {
 		return nil, fmt.Errorf("invalid address %v: %v", addr, err)
 	}
 
-	// Construct proper dcrdata url
-	dcrdataURL += "/address/" + address
+	// Construct proper hdfdata url
+	hdfdataURL += "/address/" + address
 
-	explorerURL := dcrdataURL + "/raw"
+	explorerURL := hdfdataURL + "/raw"
 
-	// Fetch using dcrdata block explorer
-	dcrdataTxs, err := fetchTxsWithBE(explorerURL)
+	// Fetch using hdfdata block explorer
+	hdfdataTxs, err := fetchTxsWithBE(explorerURL)
 	if err != nil {
-		return nil, fmt.Errorf("failed to fetch from dcrdata: %v", err)
+		return nil, fmt.Errorf("failed to fetch from hdfdata: %v", err)
 	}
-	txs := make([]TxDetails, 0, len(dcrdataTxs))
-	for _, tx := range dcrdataTxs {
+	txs := make([]TxDetails, 0, len(hdfdataTxs))
+	for _, tx := range hdfdataTxs {
 		txDetail, err := convertBETransactionToTxDetails(address, tx)
 		if err != nil {
 			return nil, fmt.Errorf("convertBETransactionToTxDetails: %v",
@@ -401,15 +401,15 @@ func FetchTxsForAddress(address string, dcrdataURL string) ([]TxDetails, error) 
 
 // FetchTxsForAddressNotBefore fetches all transactions for a wallet address
 // that occurred after the passed in notBefore timestamp.
-func FetchTxsForAddressNotBefore(address string, notBefore int64, dcrdataURL string) ([]TxDetails, error) {
+func FetchTxsForAddressNotBefore(address string, notBefore int64, hdfdataURL string) ([]TxDetails, error) {
 	// Get block explorer URL
 	addr, err := dcrutil.DecodeAddress(address)
 	if err != nil {
 		return nil, fmt.Errorf("invalid address %v: %v", addr, err)
 	}
 
-	// Construct proper dcrdata url
-	dcrdataURL += "/address/" + address
+	// Construct proper hdfdata url
+	hdfdataURL += "/address/" + address
 
 	// Fetch all txs for the passed in wallet address
 	// that were sent after the notBefore timestamp
@@ -421,15 +421,15 @@ func FetchTxsForAddressNotBefore(address string, notBefore int64, dcrdataURL str
 	)
 	for !done {
 		// Fetch a page of user payment txs
-		url := dcrdataURL + "/count/" + strconv.Itoa(count) +
+		url := hdfdataURL + "/count/" + strconv.Itoa(count) +
 			"/skip/" + strconv.Itoa(skip) + "/raw"
-		dcrdataTxs, err := fetchTxsWithBE(url)
+		hdfdataTxs, err := fetchTxsWithBE(url)
 		if err != nil {
 			return nil, fmt.Errorf("fetchDcrdataAddress: %v", err)
 		}
 		// Convert transactions to TxDetails
-		txs := make([]TxDetails, len(dcrdataTxs))
-		for _, tx := range dcrdataTxs {
+		txs := make([]TxDetails, len(hdfdataTxs))
+		for _, tx := range hdfdataTxs {
 			txDetails, err := convertBETransactionToTxDetails(address, tx)
 			if err != nil {
 				return nil, fmt.Errorf("convertBETransactionToTxDetails: %v",
@@ -466,23 +466,23 @@ func FetchTxsForAddressNotBefore(address string, notBefore int64, dcrdataURL str
 }
 
 // FetchTx fetches a given transaction based on the provided txid.
-func FetchTx(address, txid, dcrdataURL string) (*TxDetails, error) {
+func FetchTx(address, txid, hdfdataURL string) (*TxDetails, error) {
 	// Get block explorer URLs
 	addr, err := dcrutil.DecodeAddress(address)
 	if err != nil {
 		return nil, fmt.Errorf("invalid address %v: %v", addr, err)
 	}
 
-	// Construct proper dcrdata url}
-	dcrdataURL += "/address/" + address
+	// Construct proper hdfdata url}
+	hdfdataURL += "/address/" + address
 
-	primaryURL := dcrdataURL + "/raw"
+	primaryURL := hdfdataURL + "/raw"
 
 	log.Printf("fetching tx %s %s from primary %s\n", address, txid, primaryURL)
-	// Try the primary (dcrdata)
+	// Try the primary (hdfdata)
 	primaryTxs, err := fetchTxsWithBE(primaryURL)
 	if err != nil {
-		return nil, fmt.Errorf("failed to fetch from dcrdata: %v", err)
+		return nil, fmt.Errorf("failed to fetch from hdfdata: %v", err)
 	}
 	for _, tx := range primaryTxs {
 		if strings.TrimSpace(tx.TxId) != strings.TrimSpace(txid) {

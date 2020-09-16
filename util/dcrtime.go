@@ -15,8 +15,8 @@ import (
 	"net/http"
 	"time"
 
-	v1 "github.com/hdfchain/dcrtime/api/v1"
-	"github.com/hdfchain/dcrtime/merkle"
+	v1 "github.com/hdfchain/hdftime/api/v1"
+	"github.com/hdfchain/hdftime/merkle"
 )
 
 var (
@@ -136,7 +136,7 @@ func Timestamp(id, host string, digests []*[sha256.Size]byte) error {
 	return nil
 }
 
-// Verify sends a dcrtime Verify command to the provided host.  It checks and
+// Verify sends a hdftime Verify command to the provided host.  It checks and
 // validates the entire reply.  A single failure is considered terminal and an
 // error is returned.  If the reply is valid it is returned to the caller for
 // further processing.  This means that the caller can be assured that all
